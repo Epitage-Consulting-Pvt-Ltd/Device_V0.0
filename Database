@@ -1,0 +1,9 @@
+Create Database for Employee data
+Code in Python For
+  1. Database creation
+  2. Sending the Punch log to the database
+  3. Pulling the data of all 3 sensors as a single ID for Employee
+  4. Parse Function for setting the Business Logic
+  5. Sending the updated data back to designated server
+  6. Shift management function
+  7. Canteen Time management function
