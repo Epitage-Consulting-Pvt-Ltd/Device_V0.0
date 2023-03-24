@@ -1,0 +1,15 @@
+<RCC>
+  <qresource prefix="userReg">
+    <file>Group 24.png</file>
+  </qresource>
+  <qresource prefix="attendance">
+    <file>attendanceICON.png</file>
+  </qresource>
+  <qresource prefix="canteen">
+    <file>Group 27.png</file>
+  </qresource>
+  <qresource prefix="diagnostic">
+    <file>Group 26.png</file>
+  </qresource>
+  <qresource prefix="misc"/>
+</RCC>
