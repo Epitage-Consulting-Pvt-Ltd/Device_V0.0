@@ -5,9 +5,13 @@ class SvgButtonExample(QWidget):
     def __init__(self):
         super().__init__()
         self.__initUi()
+        self.setWindowTitle("SVG_Testing")
+        # set window size
+        self.setGeometry(100, 100, 480, 800)
+
     def __initUi(self):
         newButton = SvgButton()
-        newButton.setIcon('new.svg')
+        newButton.setIcon('user-plus.svg')
         openButton = SvgButton()
         openButton.setIcon('open.svg')
         saveButton = SvgButton()
