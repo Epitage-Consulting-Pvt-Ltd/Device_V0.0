@@ -4,7 +4,7 @@ from PyQt5.QtCore import Qt
 import sys
 
 
-class Window(QWidget):
+class MenuWindow(QWidget):
     def __init__(self):
         super().__init__()
 
@@ -37,7 +37,7 @@ class Window(QWidget):
 
         # add buttons to the layout using the reusable function
         user_reg = add_button("UserReg_test.png", 0, 0)
-        user_reg.clicked.connect(Window.close) # Checking signal functionality.
+        user_reg.clicked.connect(MenuWindow.close) # Checking signal functionality.
         add_button("Diagnostic_test.png", 0, 1)
         add_button("icon.svg", 1, 0)
         add_button("icon.svg", 1, 1)
@@ -48,8 +48,8 @@ class Window(QWidget):
 if __name__ == '__main__':
     # create the application and main window
     app = QApplication(sys.argv)
-    window = Window()
+    MenuWindow = MenuWindow()
     # show the window and run the event loop
-    window.show()
+    MenuWindow.show()
     sys.exit(app.exec_())
 
