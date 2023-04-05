@@ -31,7 +31,7 @@ class SplashScreen(QMainWindow):
         self.timer.start(35)
 
         self.show()
-
+'''
     def progress(self):
 
         global counter
@@ -47,10 +47,11 @@ class SplashScreen(QMainWindow):
             self.close()
 
         counter += 1
-
+'''
 
 
 if __name__ == "__main__":
     app = QtWidgets.QApplication(sys.argv)
     window = SplashScreen()
     sys.exit(app.exec_())
+

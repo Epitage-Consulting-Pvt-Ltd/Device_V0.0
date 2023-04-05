@@ -1,5 +1,9 @@
 from PyQt5.QtGui import QPixmap, QIcon
 from PyQt5.QtWidgets import QApplication, QPushButton
+import  sys
+def buttonclicked():
+  print("Button Pressed")
+
 
 app = QApplication([])
 
@@ -15,8 +19,11 @@ UserReg_button.setIcon(icon)
 UserReg_button.setIconSize(UserReg_button.size())
 # Set the fixed size of the button
 UserReg_button.setFixedSize(169, 169)
+UserReg_button.clicked.connect(buttonclicked)
+
 
 # Show the button
 UserReg_button.show()
-
 app.exec_()
+
+

@@ -3,9 +3,6 @@ from PyQt5.QtGui import QIcon, QPixmap
 from PyQt5.QtCore import Qt, QTimer, QDate, QTime
 
 
-#Connecting other files
-from functional_grid_testing import MenuWindow
-
 
 import sys
 
@@ -14,7 +11,7 @@ class MainWindow(QMainWindow):
         super().__init__()
 
         # set window title
-        self.setWindowTitle("UI_Testing")
+        self.setWindowTitle("Splash Screen")
 
         # set window size
         self.setGeometry(100, 100, 480, 800)
@@ -54,7 +51,7 @@ class MainWindow(QMainWindow):
         layout_g.addWidget(date_label, 2, 0, 1, 2)
 
         # create an instance of the object
-        obj = MenuWindow()
+        #obj = MenuWindow()
 
         # add menu button to the fourth row
         menu_button = QPushButton("Menu")
@@ -82,6 +79,23 @@ class MainWindow(QMainWindow):
         #date_label = self.centralWidget().findChild(QLabel, "dateLabel")
         current_date = QDate.currentDate().toString(Qt.DefaultLocaleLongDate)
         date_label.setText(current_date)
+class MenuWindow(QMainWindow):
+    def __init__(self):
+        super().__init__()
+        ...
+        # create an instance of the object
+        self.menu_window = MenuWindow()
+
+        # add menu button to the fourth row
+        self.menu_button = QPushButton("Menu")
+        self.menu_button.setStyleSheet("font-size: 18px;")
+        self.menu_button.setFixedSize(200, 50)
+        layout_g.addWidget(self.menu_button, 3, 0, 1, 2, Qt.AlignCenter)
+        self.menu_button.clicked.connect(self.show_menu_window)
+
+    def show_menu_window(self):
+        self.menu_window.show()
+
 
 if __name__ == '__main__':
     # create the application

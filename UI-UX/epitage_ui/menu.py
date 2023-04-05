@@ -20,6 +20,9 @@ class Ui_Menu(object):
         self.label = QtWidgets.QLabel(Menu)
         self.label.setGeometry(QtCore.QRect(110, 40, 271, 71))
         self.label.setObjectName("label")
+
+
+
         self.userReg = QtWidgets.QPushButton(Menu, clicked = lambda: self.regMain())
         self.userReg.setGeometry(QtCore.QRect(70, 140, 151, 151))
         self.userReg.clicked.connect(Menu.close)
@@ -30,6 +33,8 @@ class Ui_Menu(object):
         self.userReg.setStyleSheet("image: url(user-plus.svg);")
         self.userReg.setText("User Registeration")
         self.userReg.setObjectName("userReg")
+
+
         self.attendance = QtWidgets.QPushButton(Menu)
         self.attendance.setGeometry(QtCore.QRect(280, 140, 151, 151))
         font = QtGui.QFont()
@@ -38,6 +43,8 @@ class Ui_Menu(object):
         self.attendance.setStyleSheet("image: url(:/attendance/attendanceICON.png);")
         self.attendance.setText("")
         self.attendance.setObjectName("attendance")
+
+
         self.canteen = QtWidgets.QPushButton(Menu)
         self.canteen.setGeometry(QtCore.QRect(70, 330, 151, 151))
         font = QtGui.QFont()
@@ -46,6 +53,8 @@ class Ui_Menu(object):
         self.canteen.setStyleSheet("image: url(:/canteen/Group 27.png);")
         self.canteen.setText("")
         self.canteen.setObjectName("canteen")
+
+
         self.diagnostic = QtWidgets.QPushButton(Menu)
         self.diagnostic.setGeometry(QtCore.QRect(280, 330, 151, 151))
         font = QtGui.QFont()
@@ -54,6 +63,8 @@ class Ui_Menu(object):
         self.diagnostic.setStyleSheet("image: url(:/diagnostic/Group 26.png);")
         self.diagnostic.setText("")
         self.diagnostic.setObjectName("diagnostic")
+
+
         self.misc = QtWidgets.QPushButton(Menu)
         self.misc.setGeometry(QtCore.QRect(70, 520, 151, 151))
         font = QtGui.QFont()

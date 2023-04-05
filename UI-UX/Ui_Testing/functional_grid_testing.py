@@ -2,6 +2,8 @@ from PyQt5.QtWidgets import QApplication, QWidget, QGridLayout, QPushButton
 from PyQt5.QtGui import QIcon, QImage, QPixmap, QPainter
 from PyQt5.QtCore import Qt
 import sys
+from splashscreen import MainWindow
+
 
 
 class MenuWindow(QWidget):
@@ -37,12 +39,12 @@ class MenuWindow(QWidget):
 
         # add buttons to the layout using the reusable function
         user_reg = add_button("UserReg_test.png", 0, 0)
-        user_reg.clicked.connect(MenuWindow.close) # Checking signal functionality.
+        user_reg.clicked.connect(MainWindow.open) # Checking signal functionality.
         add_button("Diagnostic_test.png", 0, 1)
-        add_button("icon.svg", 1, 0)
-        add_button("icon.svg", 1, 1)
-        add_button("icon.svg", 2, 0)
-        add_button("icon.svg", 2, 1)
+        add_button("Diagnostic_test.png", 1, 0)
+        add_button("Diagnostic_test.png", 1, 1)
+        add_button("Diagnostic_test.png", 2, 0)
+        add_button("Diagnostic_test.png", 2, 1)
 
 
 if __name__ == '__main__':
