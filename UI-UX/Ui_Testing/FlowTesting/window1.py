@@ -1,20 +1,19 @@
+from PyQt5.QtWidgets import QApplication, QMainWindow, QPushButton
 from PyQt5.QtWidgets import QApplication, QMainWindow, QWidget, QGridLayout, QLabel, QPushButton
 from PyQt5.QtGui import QIcon, QPixmap
 from PyQt5.QtCore import Qt, QTimer, QDate, QTime
 
 
 
-import sys
-
-class MainWindow(QMainWindow):
+class Screen1(QMainWindow):
     def __init__(self):
         super().__init__()
 
-        # set window title
-        self.setWindowTitle("Splash Screen")
+        self.initUI()
 
-        # set window size
-        self.setGeometry(100, 100, 480, 800)
+    def initUI(self):
+        self.setWindowTitle('Screen 1')
+        self.setGeometry(0, 0, 480, 800)
 
         # create central widget
         central_widget = QWidget()
@@ -35,14 +34,6 @@ class MainWindow(QMainWindow):
         logo2.setPixmap(pixmap2)
         layout_g.addWidget(logo2, 0, 1)
 
-        '''
-        # add system time to the second row
-        time_label = QLabel()
-        time_label.setAlignment(Qt.AlignCenter)
-        layout_g.addWidget(time_label, 2, 1, 1, 2)
-
-        '''
-
         # add today's date to the third row
         date_label = QLabel()
         date_label.setObjectName("dateLabel")
@@ -50,14 +41,9 @@ class MainWindow(QMainWindow):
         date_label.setStyleSheet("font-size: 12px;")
         layout_g.addWidget(date_label, 2, 0, 1, 2)
 
-
-
-        # add menu button to the fourth row
-        menu_button = QPushButton("Menu")
-        menu_button.setStyleSheet("font-size: 18px;")
-        menu_button.setFixedSize(200, 50)
-        layout_g.addWidget(menu_button, 3, 0, 1, 2, Qt.AlignCenter)
-        #menu_button.clicked.connect(obj.__init__())
+        button = QPushButton('Go to Screen 2', self)
+        button.setGeometry(160, 700, 160, 80)
+        button.clicked.connect(self.go_to_screen2)
 
         # update the time and date labels every second
         timer = QTimer(self)
@@ -65,7 +51,6 @@ class MainWindow(QMainWindow):
         timer.start(1000)
 
     def update_labels(self):
-
         '''
         # update the time label with the current system time
         time_label = self.centralWidget().findChild(QLabel)
@@ -75,18 +60,19 @@ class MainWindow(QMainWindow):
 
         # update the date label with today's date
         date_label = self.centralWidget().findChild(QLabel, "dateLabel")
-        #date_label = self.centralWidget().findChild(QLabel, "dateLabel")
+        # date_label = self.centralWidget().findChild(QLabel, "dateLabel")
         current_date = QDate.currentDate().toString(Qt.DefaultLocaleLongDate)
         date_label.setText(current_date)
 
+    def go_to_screen2(self):
+        from window2 import Screen2
+        self.screen2 = Screen2()
+        self.screen2.show()
+        self.close()
 
 
 if __name__ == '__main__':
-    # create the application
-    app = QApplication(sys.argv)
-    # create the main window
-    window = MainWindow()
-    # show the window
-    window.show()
-    # run the event loop
-    sys.exit(app.exec_())
+    app = QApplication([])
+    screen1 = Screen1()
+    screen1.show()
+    app.exec_()
