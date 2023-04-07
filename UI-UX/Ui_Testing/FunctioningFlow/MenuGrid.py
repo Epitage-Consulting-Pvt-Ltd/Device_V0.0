@@ -17,6 +17,11 @@ class MenuWindow(QWidget):
         layout_g = QGridLayout(self)
         self.setLayout(layout_g)
 
+        # Add 'Back' button
+        self.back_btn = QPushButton('Back', self)
+        self.back_btn.move(20, 25)
+        self.back_btn.clicked.connect(self.close)
+
         # create a reusable function to add buttons to the layout
         def add_button(image_path, row, col):
             # create a QPixmap object from the image path and scale it

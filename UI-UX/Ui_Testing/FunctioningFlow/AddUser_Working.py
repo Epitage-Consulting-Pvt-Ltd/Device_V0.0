@@ -38,7 +38,7 @@ class AddUserWindow(QMainWindow):
 
         # Add 'Save' button
         self.save_btn = QPushButton('Save', self)
-        self.save_btn.move(150, 200)
+        self.save_btn.move(200, 200)
         self.save_btn.resize(100, 30)
         self.save_btn.clicked.connect(self.save_user)
 
