@@ -354,7 +354,7 @@ class Fingerprint():
             """
 
             cnt = 0
-            while not self.capture_finger():
+            while not self.capture_finger():             #capture_finger function
                 cnt += 1
                 if cnt >= try_cnt:
                     return -1
@@ -391,7 +391,7 @@ class Fingerprint():
             return ack
 
     def identify(self):
-        while not self.capture_finger():
+        while not self.capture_finger():                     #capture_finger function
             time.sleep(0.1)
         if self._send_packet("Identify1_N"):
             ack, param, _, _ = self._read_packet()
@@ -435,7 +435,7 @@ if __name__ == '__main__':
                         print("You are an already existing User with ID : %s" %str(idtemp+1))
                         break
                     else:
-                        if f.capture_finger():
+                        if f.capture_finger():                      #capture_finger function             
                             f.enroll()
                             time.sleep(0.5)
                             count = count + 1
@@ -454,12 +454,12 @@ if __name__ == '__main__':
             
             if ch == '3':
                 print("Place your Finger")
-                #print(f.capture_finger())
+                #print(f.capture_finger())                      #capture_finger function
               
                 #time.sleep(2)
 
                 idtemp = f.identify()
-                if f.capture_finger():
+                if f.capture_finger():                      #capture_finger function
                     if idtemp == -1:
                         GPIO.output(11,GPIO.HIGH)
                         print("You are not a valid user ")
