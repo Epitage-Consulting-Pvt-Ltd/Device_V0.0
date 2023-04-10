@@ -1,6 +1,7 @@
 import csv
 from PyQt5.QtWidgets import QApplication, QMainWindow, QPushButton, QLabel, QLineEdit
-
+from FingerPrintAddition import AddNewFingerPrint
+from theme import yellow_state
 class AddUserWindow(QMainWindow):
     def __init__(self):
         super().__init__()
@@ -36,22 +37,37 @@ class AddUserWindow(QMainWindow):
         self.eid_textbox.move(150, 150)
         self.eid_textbox.resize(200, 30)
 
+        # Add fingerprint label and text box
+        self.efingerprint_label = QLabel('Fingerprint ID:', self)
+        self.efingerprint_label.move(50, 200)
+        self.efingerprint_textbox = QPushButton(self)
+        self.efingerprint_textbox.move(150, 200)
+        self.efingerprint_textbox.resize(200, 30)
+        self.efingerprint_textbox.setText("Click here to Register")  # TODO
+        self.efingerprint_textbox.clicked.connect(self.show_fingerprint_window)
+        self.efingerprint_textbox.setStyleSheet(yellow_state)
+
         # Add 'Save' button
         self.save_btn = QPushButton('Save', self)
-        self.save_btn.move(200, 200)
+        self.save_btn.move(200, 250)
         self.save_btn.resize(100, 30)
         self.save_btn.clicked.connect(self.save_user)
+
+    def show_fingerprint_window(self):
+        self.fingerprint = AddNewFingerPrint()
+        self.fingerprint.show()
 
     def save_user(self):
         # Get data from text boxes
         fn = self.fn_textbox.text()
         ln = self.ln_textbox.text()
         eid = self.eid_textbox.text()
+        fp = self.efingerprint_textbox.text()
 
         # Write data to CSV file
         with open('users.csv', 'a') as file:
             writer = csv.writer(file)
-            writer.writerow([fn, ln, eid])
+            writer.writerow([fn, ln, eid,fp])
 
         # Clear text boxes
         self.fn_textbox.clear()

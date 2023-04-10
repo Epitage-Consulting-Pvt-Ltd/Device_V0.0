@@ -2,7 +2,7 @@ from PyQt5.QtWidgets import QApplication, QMainWindow, QWidget, QGridLayout, QLa
 from PyQt5.QtGui import QIcon, QPixmap,QColor, QPalette
 from PyQt5.QtCore import Qt, QTimer, QDate, QTime
 from MenuGrid import MenuWindow
-
+from theme import BACKGROUND_COLOR, FOREGROUND_COLOR, ACCENT_COLOR, BUTTON_STYLE, TABLE_STYLE , WINDOW_BACKGROUND_COLOR, WINDOW_FOREGROUND_COLOR
 
 import sys
 
@@ -18,8 +18,8 @@ class MainWindow(QMainWindow):
 
         # Set window background and foreground colors
         palette = self.palette()
-        palette.setColor(QPalette.Window, QColor(44, 62, 80))  # deep blue
-        palette.setColor(QPalette.WindowText, Qt.white)
+        palette.setColor(QPalette.Window, WINDOW_BACKGROUND_COLOR)
+        palette.setColor(QPalette.WindowText, WINDOW_FOREGROUND_COLOR)
         self.setPalette(palette)
 
         # create central widget
@@ -63,8 +63,7 @@ class MainWindow(QMainWindow):
         menu_button.setStyleSheet("font-size: 24px;")
         menu_button.setFixedSize(200, 50)
         layout_g.addWidget(menu_button, 3, 0, 1, 2, Qt.AlignCenter)
-        menu_button.setStyleSheet("QPushButton {background-color: #FFA500; color: white; border-radius: 5px;}"
-                                 "QPushButton:hover {background-color: #FF8C00;}")
+        menu_button.setStyleSheet(BUTTON_STYLE)
         menu_button.clicked.connect(self.show_menu_grid_window)
 
         # update the time and date labels every second

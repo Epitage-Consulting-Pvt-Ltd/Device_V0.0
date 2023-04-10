@@ -4,6 +4,7 @@ from PyQt5.QtWidgets import QApplication, QWidget, QTableWidget, QTableWidgetIte
 import csv
 from PyQt5.QtGui import QColor, QPalette
 from PyQt5.QtCore import Qt
+from theme import BACKGROUND_COLOR, FOREGROUND_COLOR, ACCENT_COLOR, BUTTON_STYLE, TABLE_STYLE , WINDOW_BACKGROUND_COLOR, WINDOW_FOREGROUND_COLOR
 
 
 class DeleteUserWindow(QWidget):
@@ -20,13 +21,14 @@ class DeleteUserWindow(QWidget):
 
         # Set window background and foreground colors
         palette = self.palette()
-        palette.setColor(QPalette.Window, QColor(44, 62, 80))  # deep blue
-        palette.setColor(QPalette.WindowText, Qt.white)
+        palette.setColor(QPalette.Window, WINDOW_BACKGROUND_COLOR)
+        palette.setColor(QPalette.WindowText, WINDOW_FOREGROUND_COLOR)
         self.setPalette(palette)
 
         # Add 'Back' button
         self.back_btn = QPushButton('Back', self)
         self.back_btn.move(25, 25)
+        self.back_btn.setStyleSheet(BUTTON_STYLE)
         self.back_btn.clicked.connect(self.close)
 
         # Create vertical layout for the main window
@@ -35,8 +37,7 @@ class DeleteUserWindow(QWidget):
         # Create horizontal layout for the delete button and add it to the vertical layout
         hbox = QHBoxLayout()
         delete_btn = QPushButton("Delete")
-        delete_btn.setStyleSheet("QPushButton {background-color: #FFA500; color: white; border-radius: 5px;}"
-                                 "QPushButton:hover {background-color: #FF8C00;}")
+        delete_btn.setStyleSheet(BUTTON_STYLE)
         delete_btn.clicked.connect(self.deleteRows)
         hbox.addStretch(1)
         hbox.addWidget(delete_btn)

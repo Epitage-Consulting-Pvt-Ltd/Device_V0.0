@@ -1,7 +1,8 @@
 from PyQt5.QtWidgets import QApplication, QWidget, QGridLayout, QPushButton
-from PyQt5.QtGui import QIcon, QImage, QPixmap, QPainter
+from PyQt5.QtGui import QIcon, QImage, QPixmap, QPainter, QPalette
 from PyQt5.QtCore import Qt
 import sys
+from theme import BACKGROUND_COLOR, FOREGROUND_COLOR, ACCENT_COLOR, BUTTON_STYLE, TABLE_STYLE , WINDOW_BACKGROUND_COLOR, WINDOW_FOREGROUND_COLOR
 
 from UserMain_Working import UserMainWindow
 
@@ -13,6 +14,12 @@ class MenuWindow(QWidget):
         self.setWindowTitle("UI_Testing")
         self.setGeometry(100, 100, 480, 800)
 
+        # Set window background and foreground colors
+        palette = self.palette()
+        palette.setColor(QPalette.Window, WINDOW_BACKGROUND_COLOR)
+        palette.setColor(QPalette.WindowText, WINDOW_FOREGROUND_COLOR)
+        self.setPalette(palette)
+
         # create a grid layout with 3 rows and 2 columns
         layout_g = QGridLayout(self)
         self.setLayout(layout_g)
@@ -20,6 +27,7 @@ class MenuWindow(QWidget):
         # Add 'Back' button
         self.back_btn = QPushButton('Back', self)
         self.back_btn.move(20, 25)
+        self.back_btn.setStyleSheet(BUTTON_STYLE)
         self.back_btn.clicked.connect(self.close)
 
         # create a reusable function to add buttons to the layout
@@ -44,6 +52,7 @@ class MenuWindow(QWidget):
         # add buttons to the layout using the reusable function
         user_reg = add_button("UserReg.png", 0, 0)
         user_reg.clicked.connect(self.show_user_main_window)
+        user_reg.setStyleSheet(BUTTON_STYLE)
         add_button("Diagnostic_test.png", 0, 1)
         add_button("Diagnostic_test.png", 1, 0)
         add_button("Diagnostic_test.png", 1, 1)
