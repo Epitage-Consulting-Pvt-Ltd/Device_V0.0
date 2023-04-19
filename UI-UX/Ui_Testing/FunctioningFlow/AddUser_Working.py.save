@@ -17,17 +17,22 @@ import subprocess
 #from PyQt5.QtWidgets import QApplication, QMainWindow
 
 #class MyWindow(QMainWindow):
- #   def __init__(self):
-  #      super().__init__()
+#    def __init__(self):
+#       super().__init__()
         
         # add the virtual keyboard widget to the main window
-   #     self.setCentralWidget(keyboard_widget)
+#        self.setCentralWidget(keyboard_widget)
         
-#if __name__ == '__main__':
-#    app = QApplication([])
-#    window = MyWindow()
-#    window.showFullScreen()
-#    app.exec_()
+iif __name__ == '__main__':
+    app = QApplication([])
+    window = MyWindow()
+    window.showFullScreen()
+    app.exec_()
+f __name__ == '__main__':
+    app = QApplication([])
+    window = MyWindow()
+    window.showFullScreen()
+    app.exec_()
 
 
 fps = '/home/pi/Device_V0.0/Device_Firmware/GT521F52/fps.py'
@@ -38,13 +43,6 @@ arg2 = "arg2_value"
 
 class AddUserWindow(QMainWindow):
     def __init__(self):
-#keyboard function    
-#   if __name__ == '__main__':
-#           app = QApplication([])
-#           window = MyWindow()
-#           window.showFullScreen()
-#           app.exec_()
-
         super().__init__()
         self.initUI()
 
@@ -66,13 +64,11 @@ class AddUserWindow(QMainWindow):
         self.fn_textbox = QLineEdit(self)
         self.fn_textbox.move(150, 50)
         self.fn_textbox.resize(200, 30)
-#        self.setCentralWidget(keyboard_widget)
 
         # Add Last Name label and text box
         self.ln_label = QLabel('Last Name:', self)
         self.ln_label.move(50, 100)
         self.ln_textbox = QLineEdit(self)
-        self.setCentralWidget(keyboard_widget)
         self.ln_textbox.move(150, 100)
         self.ln_textbox.resize(200, 30)
 

@@ -12,7 +12,7 @@ class MenuWindow(QWidget):
 
         # set window title and size
         self.setWindowTitle("UI_Testing")
-        self.setGeometry(100, 100, 480, 800)
+        self.resize(480, 800)
 
         # Set window background and foreground colors
         palette = self.palette()

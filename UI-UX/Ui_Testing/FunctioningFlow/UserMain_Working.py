@@ -2,6 +2,7 @@ from PyQt5.QtWidgets import QApplication, QMainWindow, QPushButton, QLabel
 from AddUser_Working import AddUserWindow
 from ViewUser_Working import ViewUserWindow
 from EditUser import DeleteUserWindow
+#from theme import BACKGROUND_COLOR, FOREGROUND_COLOR, ACCENT_COLOR, BUTTON_STYLE, TABLE_STYLE, WINDOW_BACKGROUND_COLOR, WINDOW_FOREGROUND_COLOR
 
 class UserMainWindow(QMainWindow):
     def __init__(self):
@@ -11,11 +12,12 @@ class UserMainWindow(QMainWindow):
 
     def initUI(self):
         self.setWindowTitle("User Management System")
-        self.setGeometry(100, 100, 480, 800)
+        self.resize(480, 800)
 
         # Add 'Back' button
         self.back_btn = QPushButton('Back', self)
         self.back_btn.move(50, 50)
+#	self.back_btn.setStyleSheet(BUTTON_STYLE)
         self.back_btn.clicked.connect(self.close)
 
 

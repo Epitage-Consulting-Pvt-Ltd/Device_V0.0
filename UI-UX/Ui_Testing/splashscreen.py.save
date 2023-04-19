@@ -1,7 +1,7 @@
 from PyQt5.QtWidgets import QApplication, QMainWindow, QWidget, QGridLayout, QLabel, QPushButton
 from PyQt5.QtGui import QIcon, QPixmap
 from PyQt5.QtCore import Qt, QTimer, QDate, QTime
-
+from Me
 
 
 import sys
@@ -14,7 +14,7 @@ class MainWindow(QMainWindow):
         self.setWindowTitle("Splash Screen")
 
         # set window size
-        self.resize(480, 800)
+        self.setGeometry(100, 100, 480, 800)
 
         # create central widget
         central_widget = QWidget()
