@@ -7,7 +7,7 @@ from theme import yellow_state
 import sys
 sys.path.append('Device_Firmware/GT521F52-working/')
 
-import fps
+#import fps
 
 
 class AddUserWindow(QMainWindow):

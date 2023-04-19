@@ -5,7 +5,7 @@ import csv
 from PyQt5.QtGui import QColor, QPalette
 from PyQt5.QtCore import Qt
 from theme import BACKGROUND_COLOR, FOREGROUND_COLOR, ACCENT_COLOR, BUTTON_STYLE, TABLE_STYLE , WINDOW_BACKGROUND_COLOR, WINDOW_FOREGROUND_COLOR
-
+from topband import topband
 
 class DeleteUserWindow(QWidget):
     def __init__(self):
@@ -13,11 +13,15 @@ class DeleteUserWindow(QWidget):
 
         # Initialize UI
         self.initUI()
+        # Defining a Table Widget
+
 
     def initUI(self):
         # Set window title and size
         self.setWindowTitle("Delete User")
         self.setGeometry(100, 100, 480, 800)
+
+        topband(self)
 
         # Set window background and foreground colors
         palette = self.palette()
@@ -25,14 +29,13 @@ class DeleteUserWindow(QWidget):
         palette.setColor(QPalette.WindowText, WINDOW_FOREGROUND_COLOR)
         self.setPalette(palette)
 
-        # Add 'Back' button
-        self.back_btn = QPushButton('Back', self)
-        self.back_btn.move(25, 25)
-        self.back_btn.setStyleSheet(BUTTON_STYLE)
-        self.back_btn.clicked.connect(self.close)
-
         # Create vertical layout for the main window
         vbox = QVBoxLayout()
+
+        # Add 'Back' button
+        back_btn = QPushButton('Back', self)
+        back_btn.setStyleSheet(BUTTON_STYLE)
+        back_btn.clicked.connect(self.close)
 
         # Create horizontal layout for the delete button and add it to the vertical layout
         hbox = QHBoxLayout()
@@ -41,14 +44,22 @@ class DeleteUserWindow(QWidget):
         delete_btn.clicked.connect(self.deleteRows)
         hbox.addStretch(1)
         hbox.addWidget(delete_btn)
+        hbox.addWidget(back_btn)
         vbox.addLayout(hbox)
+        self.table = QTableWidget(self)
 
-        # Create table widget and add it to the vertical layout
-        self.table = QTableWidget()
-        vbox.addWidget(self.table)
+        # Create a container widget for the table widget and add it to the vertical layout
+        table_container = QWidget()
+        table_container.setLayout(QVBoxLayout())
+
+        table_container.layout().addWidget(self.table)
+        vbox.addWidget(table_container)
 
         # Read data from CSV file and populate table widget
         self.loadCSV()
+
+        # Set the position of the table container widget
+        table_container.move(200, 200)
 
         # Set the main layout for the window
         self.setLayout(vbox)
