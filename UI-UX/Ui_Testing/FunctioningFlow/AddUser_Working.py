@@ -1,6 +1,7 @@
 import csv
 from PyQt5.QtWidgets import QApplication, QMainWindow, QPushButton, QLabel, QLineEdit
 from FingerPrintAddition import AddNewFingerPrint
+from theme import BUTTON_STYLE
 from theme import yellow_state
 
 # Calling a file from a different folder
@@ -23,6 +24,7 @@ class AddUserWindow(QMainWindow):
         self.back_btn = QPushButton('Back', self)
         self.back_btn.move(10, 10)
         self.back_btn.clicked.connect(self.close)
+        self.back_btn.setStyleSheet(BUTTON_STYLE)
 
         # Add First Name label and text box
         self.fn_label = QLabel('First Name:', self)
@@ -60,6 +62,7 @@ class AddUserWindow(QMainWindow):
         self.save_btn.move(200, 250)
         self.save_btn.resize(100, 30)
         self.save_btn.clicked.connect(self.save_user)
+        self.save_btn.setStyleSheet(BUTTON_STYLE)
 
     def show_fingerprint_window(self):
         self.fingerprint = AddNewFingerPrint()
