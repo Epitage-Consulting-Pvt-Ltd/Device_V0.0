@@ -2,7 +2,7 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 from PyQt5.QtGui import QPixmap
 from PyQt5.QtCore import QResource, QFile, QIODevice
 from regMain import Ui_regMain
-
+from PyQt5 import *
 
 class Ui_Menu(object):
     QResource.registerResource('userRegIMG.qrc')
