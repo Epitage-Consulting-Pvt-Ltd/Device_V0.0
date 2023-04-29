@@ -1,5 +1,6 @@
 import csv
 from PyQt5.QtWidgets import QApplication, QMainWindow, QPushButton, QLabel, QTableWidget, QTableWidgetItem
+from theme import BUTTON_STYLE
 
 class ViewUserWindow(QMainWindow):
     def __init__(self):
@@ -14,6 +15,7 @@ class ViewUserWindow(QMainWindow):
         self.back_btn = QPushButton('Back', self)
         self.back_btn.move(50, 50)
         self.back_btn.clicked.connect(self.close)
+        self.back_btn.setStyleSheet(BUTTON_STYLE)
 
         # Add table to display user data
         self.table = QTableWidget(self)
