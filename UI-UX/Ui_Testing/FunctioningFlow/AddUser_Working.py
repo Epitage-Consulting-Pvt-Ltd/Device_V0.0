@@ -18,11 +18,12 @@ class AddUserWindow(QMainWindow):
 
     def initUI(self):
         self.setWindowTitle("Add User")
-        self.setGeometry(100, 100, 480, 800)
+        self.resize(480, 800)
 
         # Add 'Back' button
         self.back_btn = QPushButton('Back', self)
         self.back_btn.move(10, 10)
+        self.back_btn.clicked.connect(self.show_user_main_window)
         self.back_btn.clicked.connect(self.close)
         self.back_btn.setStyleSheet(BUTTON_STYLE)
 
@@ -67,6 +68,11 @@ class AddUserWindow(QMainWindow):
     def show_fingerprint_window(self):
         self.fingerprint = AddNewFingerPrint()
         self.fingerprint.show()
+
+    def show_user_main_window(self):
+        from UserMain_Working import UserMainWindow
+        self.user_main_window = UserMainWindow()
+        self.user_main_window.show()
 
     def save_user(self):
         # Get data from text boxes
