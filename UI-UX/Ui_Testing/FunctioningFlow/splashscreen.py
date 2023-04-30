@@ -14,7 +14,7 @@ class MainWindow(QMainWindow):
         self.setWindowTitle("Splash Screen")
 
         # set window size
-        self.setGeometry(100, 100, 480, 800)
+        self.resize(480, 800)
 
         # Set window background and foreground colors
         palette = self.palette()
@@ -65,6 +65,7 @@ class MainWindow(QMainWindow):
         layout_g.addWidget(menu_button, 3, 0, 1, 2, Qt.AlignCenter)
         menu_button.setStyleSheet(BUTTON_STYLE)
         menu_button.clicked.connect(self.show_menu_grid_window)
+        menu_button.clicked.connect(self.close)
 
         # update the time and date labels every second
         timer = QTimer(self)
