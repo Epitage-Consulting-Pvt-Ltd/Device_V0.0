@@ -38,7 +38,7 @@ while continue_reading:
         # If the UID matches the expected UID
         if status == MIFAREReader.MI_OK and uid == expected_uid:
             print ("Card read UID: "+str(uid[0])+","+str(uid[1])+","+str(uid[2])+","+str(uid[3])+","+str(uid[4])+","+str(uid[5]))
-            show_rfid_window(self)
+            show_rfid_window()
         else:
             print ("Card read UID: "+str(uid[0])+","+str(uid[1])+","+str(uid[2])+","+str(uid[3])+","+str(uid[4])+","+str(uid[5]))
             print ("Tag does not match expected UID")

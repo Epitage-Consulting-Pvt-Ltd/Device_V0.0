@@ -6,14 +6,15 @@ import RPi.GPIO as GPIO
 
 import mrfc522
 
+from RFIDDummyWindow import RFIDPromptDummy
+
 # Enter the RFID number that you want to match
 rfid_number = "1234567890"
 
 reader = SimpleMFRC522()
 
 app = QApplication(sys.argv)
-widget = QWidget()
-widget.setGeometry(100, 100, 200, 400)
+widget = RFIDPromptDummy()
 widget.show()
 
 try:
@@ -25,7 +26,7 @@ try:
         if str(id) == rfid_number:
             print("RFID number matched!")
             widget.show()
-            sleep(3)
+            sleep(6)
             widget.hide()
         sleep(5)
 except KeyboardInterrupt:
