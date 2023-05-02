@@ -4,12 +4,12 @@ from PyQt5.QtWidgets import QApplication, QWidget
 from mfrc522 import SimpleMFRC522
 import RPi.GPIO as GPIO
 
-import mrfc522
+import MFRC522
 
 from RFIDDummyWindow import RFIDPromptDummy
 
 # Enter the RFID number that you want to match
-rfid_number = "1234567890"
+#rfid_number = reader.read()
 
 reader = SimpleMFRC522()
 
@@ -21,13 +21,13 @@ try:
     while True:
         print("Hold a tag near the reader")
         #id, text = reader.read()
-        id,text = rfid_number # Just for bench testing
+        id,text = reader.read() # Just for bench testing
         print("ID: %s\nText: %s" % (id,text))
-        if str(id) == rfid_number:
-            print("RFID number matched!")
-            widget.show()
-            sleep(6)
-            widget.hide()
+#        if str(id) == id:
+        print("RFID number matched!")
+        widget.show()
+        sleep(6)
+        widget.hide()
         sleep(5)
 except KeyboardInterrupt:
     GPIO.cleanup()

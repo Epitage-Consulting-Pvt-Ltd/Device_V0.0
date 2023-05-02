@@ -4,14 +4,14 @@ from PyQt5.QtWidgets import QPushButton
 
 from AddUser_Working import AddUserWindow
 from EditUser import DeleteUserWindow
-<<<<<<< HEAD
+#<<<<<<< HEAD
 #from theme import BACKGROUND_COLOR, FOREGROUND_COLOR, ACCENT_COLOR, BUTTON_STYLE, TABLE_STYLE, WINDOW_BACKGROUND_COLOR, WINDOW_FOREGROUND_COLOR
-=======
+#=======
 from ViewUser_Working import ViewUserWindow
 from theme import BUTTON_STYLE
 from topband import topband
 
->>>>>>> 11378a4aab6e23c4f7c4b5dcb9a4f71da46b4997
+#>>>>>>> 11378a4aab6e23c4f7c4b5dcb9a4f71da46b4997
 
 class UserMainWindow(QMainWindow):
 
@@ -31,13 +31,13 @@ class UserMainWindow(QMainWindow):
 
         # Add 'Back' button
         self.back_btn = QPushButton('Back', self)
-<<<<<<< HEAD
+#<<<<<<< HEAD
         self.back_btn.move(50, 50)
 #	self.back_btn.setStyleSheet(BUTTON_STYLE)
-=======
+#=======
         self.back_btn.move(50, 150)
         self.back_btn.clicked.connect(self.show_menu_grid_window)
->>>>>>> 11378a4aab6e23c4f7c4b5dcb9a4f71da46b4997
+#>>>>>>> 11378a4aab6e23c4f7c4b5dcb9a4f71da46b4997
         self.back_btn.clicked.connect(self.close)
         self.back_btn.setStyleSheet(BUTTON_STYLE)
 

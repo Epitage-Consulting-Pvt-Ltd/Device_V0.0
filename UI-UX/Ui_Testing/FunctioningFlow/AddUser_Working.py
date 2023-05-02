@@ -4,7 +4,7 @@ from PyQt5.QtWidgets import QApplication, QMainWindow, QPushButton, QLabel, QLin
 from FingerPrintAddition import AddNewFingerPrint
 from theme import BUTTON_STYLE
 from theme import yellow_state
-<<<<<<< HEAD
+#<<<<<<< HEAD
 import subprocess
 #/*keyboard integration */
 #from PyQt5.QtCore import QUrl
@@ -37,7 +37,7 @@ fps = '/home/pi/Device_V0.0/Device_Firmware/GT521F52/fps.py'
 #from Device_Firmware.GT521F52 import fps
 arg1 = "arg1_value"
 arg2 = "arg2_value"
-=======
+#=======
 
 # Calling a file from a different folder
 import sys
@@ -45,7 +45,7 @@ sys.path.append('Device_Firmware/GT521F52-working/')
 
 #import fps
 
->>>>>>> 11378a4aab6e23c4f7c4b5dcb9a4f71da46b4997
+#>>>>>>> 11378a4aab6e23c4f7c4b5dcb9a4f71da46b4997
 
 class AddUserWindow(QMainWindow):
     def __init__(self):
