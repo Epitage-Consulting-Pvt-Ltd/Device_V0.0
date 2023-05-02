@@ -3,7 +3,7 @@ from PyQt5.QtGui import QIcon, QPixmap,QColor, QPalette
 from PyQt5.QtCore import Qt, QTimer, QDate, QTime
 from MenuGrid import MenuWindow
 from theme import BACKGROUND_COLOR, FOREGROUND_COLOR, ACCENT_COLOR, BUTTON_STYLE, TABLE_STYLE , WINDOW_BACKGROUND_COLOR, WINDOW_FOREGROUND_COLOR
-
+#ui_update
 import sys
 
 class MainWindow(QMainWindow):
