@@ -14,7 +14,7 @@ class MainWindow(QMainWindow):
         self.setWindowTitle("Splash Screen")
 
         # set window size
-        self.setGeometry(100, 100, 480, 800)
+        self.resize(480, 800)
 
         # Set window background and foreground colors
         palette = self.palette()

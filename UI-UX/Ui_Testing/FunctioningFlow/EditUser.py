@@ -19,7 +19,7 @@ class DeleteUserWindow(QWidget):
     def initUI(self):
         # Set window title and size
         self.setWindowTitle("Delete User")
-        self.setGeometry(100, 100, 480, 800)
+        self.resize(480, 800)
 
         topband(self)
 
@@ -35,6 +35,7 @@ class DeleteUserWindow(QWidget):
         # Add 'Back' button
         back_btn = QPushButton('Back', self)
         back_btn.setStyleSheet(BUTTON_STYLE)
+        back_btn.clicked.connect(self.show_user_main_window)
         back_btn.clicked.connect(self.close)
 
         # Create horizontal layout for the delete button and add it to the vertical layout
@@ -121,6 +122,11 @@ class DeleteUserWindow(QWidget):
         self.table.clearSelection()
         self.table.setRowCount(0)
         self.loadCSV()
+
+    def show_user_main_window(self):
+        from UserMain_Working import UserMainWindow
+        self.user_main_window = UserMainWindow()
+        self.user_main_window.show()
 
 
 if __name__ == '__main__':
