@@ -14,7 +14,7 @@ rfid_number = "1234567890"
 reader = SimpleMFRC522()
 
 app = QApplication(sys.argv)
-widget = RFIDPromptDummy()
+widget = RFIDPromptDummy("sudarshanlogo.png","Rajesh Peche", "Epitage.png")
 widget.show()
 
 try:
