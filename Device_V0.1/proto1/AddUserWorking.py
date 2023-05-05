@@ -1,19 +1,17 @@
 import csv
-from PyQt5.QtWidgets import QApplication, QMainWindow, QPushButton, QLabel, QLineEdit, QTextEdit
-from FingerPrintAddition import AddNewFingerPrint
-from theme import BUTTON_STYLE
-from theme import yellow_state
-#import
+# import
 # Calling a file from a different folder
 import sys
-#sys.path.append('Device_Firmware/GT521F52-working/')
 
-#import fps
-import os
-import time
-import signal
+# import fps
 import RPi.GPIO as GPIO
-from mfrc522 import SimpleMFRC522
+from PyQt5.QtWidgets import QApplication, QMainWindow, QPushButton, QLabel, QLineEdit, QTextEdit
+
+from theme import BUTTON_STYLE
+from theme import yellow_state
+
+
+# sys.path.append('Device_Firmware/GT521F52-working/')
 
 
 class AddUserWindow(QMainWindow):
@@ -52,19 +50,14 @@ class AddUserWindow(QMainWindow):
         self.eid_textbox = QLineEdit(self)
         self.eid_textbox.move(150, 150)
         self.eid_textbox.resize(200, 30)
-'''
-        # Add fingerprint label and text box
-        self.efingerprint_label = QLabel('Fingerprint ID:', self)
-        self.efingerprint_label.move(50, 200)
-'''
         # Add RFID Label and text box
-        #self.name_label = QLabel("Name:")
-        #self.name_label =QLineEdit()
-        self.rfid_label = QLabel("RFID:",self)
+        # self.name_label = QLabel("Name:")
+        # self.name_label =QLineEdit()
+        self.rfid_label = QLabel("RFID:", self)
         self.rfid_input = QLineEdit()
         self.rfid_textbox = QPushButton(self)
-        self.rfid_textbox.move(150,200)
-        self.rfid_textbox.resize(200,30)
+        self.rfid_textbox.move(150, 200)
+        self.rfid_textbox.resize(200, 30)
         self.rfid_textbox.setText("Click here to Register")
         self.rfid_textbox.clicked.connect(self.read_rfid)
         self.rfid_textbox.setStyleSheet(yellow_state)
@@ -85,53 +78,51 @@ class AddUserWindow(QMainWindow):
         self.keyboard.setHorizontalScrollBarPolicy(Qt.ScrollBarAlwaysOff)
         self.keyboard.setAlignment(Qt.AlignLeft | Qt.AlignTop)
 
-'''
-    def show_fingerprint_window(self):
-        self.fingerprint = AddNewFingerPrint()
-        self.fingerprint.show()
-'''
 
-    def read_rfid(self):
-        self.keyboard.setText("Tap your Card on the Reader")
-        try:
-            id, rfid = self.reader.read()
-            self.rfid_input.setText(str(id))
-            self.keyboard.setText("Card read successful. ")
-        except:
-            self.keyboard.setText(f"Error Reading card: {str(e)}")
+def read_rfid(self):
+    self.keyboard.setText("Tap your Card on the Reader")
+    try:
+        id, rfid = self.reader.read()
+        self.rfid_input.setText(str(id))
+        self.keyboard.setText("Card read successful. ")
+    except:
+        self.keyboard.setText(f"Error Reading card: {str(e)}")
 
-    def show_user_main_window(self):
-        from UserMain_Working import UserMainWindow
-        self.user_main_window = UserMainWindow()
-        self.user_main_window.show()
 
-    def save_user(self):
-        # Get data from text boxes
-        fn = self.fn_textbox.text()
-        ln = self.ln_textbox.text()
-        eid = self.eid_textbox.text()
-        #fp = self.efingerprint_textbox.text()
-        rfid = self.rfid_input.text()
+def show_user_main_window(self):
+    from UserMain_Working import UserMainWindow
+    self.user_main_window = UserMainWindow()
+    self.user_main_window.show()
 
-        # Write data to CSV file
-        with open('users.csv', 'a') as file:
-            writer = csv.writer(file)
-            writer.writerow([fn, ln, eid,rfid])
 
-        # Clear text boxes
-        self.fn_textbox.clear()
-        self.ln_textbox.clear()
-        self.eid_textbox.clear()
-        self.rfid_input.clear()
+def save_user(self):
+    # Get data from text boxes
+    fn = self.fn_textbox.text()
+    ln = self.ln_textbox.text()
+    eid = self.eid_textbox.text()
+    # fp = self.efingerprint_textbox.text()
+    rfid = self.rfid_input.text()
 
-    def cleanup(self, signal, frame):
-        # Release MFRC522 resources
-        GPIO.cleanup()
-        sys.exit(0)
+    # Write data to CSV file
+    with open('users.csv', 'a') as file:
+        writer = csv.writer(file)
+        writer.writerow([fn, ln, eid, rfid])
+
+    # Clear text boxes
+    self.fn_textbox.clear()
+    self.ln_textbox.clear()
+    self.eid_textbox.clear()
+    self.rfid_input.clear()
+
+
+def cleanup(self, signal, frame):
+    # Release MFRC522 resources
+    GPIO.cleanup()
+    sys.exit(0)
+
 
 if __name__ == '__main__':
     app = QApplication([])
     window = AddUserWindow()
     window.show()
     app.exec_()
-

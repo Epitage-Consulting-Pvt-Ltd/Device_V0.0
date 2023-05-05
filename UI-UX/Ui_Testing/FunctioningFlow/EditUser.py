@@ -23,26 +23,31 @@ class DeleteUserWindow(QWidget):
 
         topband(self)
 
+        back_btn = QPushButton('Back', self)
+        back_btn.setStyleSheet(BUTTON_STYLE)
+        back_btn.clicked.connect(self.show_user_main_window)
+        back_btn.clicked.connect(self.close)
+
+        delete_btn = QPushButton("Delete")
+        delete_btn.setStyleSheet(BUTTON_STYLE)
+        delete_btn.clicked.connect(self.deleteRows)
+
         # Set window background and foreground colors
         palette = self.palette()
         palette.setColor(QPalette.Window, WINDOW_BACKGROUND_COLOR)
         palette.setColor(QPalette.WindowText, WINDOW_FOREGROUND_COLOR)
         self.setPalette(palette)
 
+        # Add 'Back' button
+
         # Create vertical layout for the main window
         vbox = QVBoxLayout()
 
-        # Add 'Back' button
-        back_btn = QPushButton('Back', self)
-        back_btn.setStyleSheet(BUTTON_STYLE)
-        back_btn.clicked.connect(self.show_user_main_window)
-        back_btn.clicked.connect(self.close)
+
 
         # Create horizontal layout for the delete button and add it to the vertical layout
         hbox = QHBoxLayout()
-        delete_btn = QPushButton("Delete")
-        delete_btn.setStyleSheet(BUTTON_STYLE)
-        delete_btn.clicked.connect(self.deleteRows)
+
         hbox.addStretch(1)
         hbox.addWidget(delete_btn)
         hbox.addWidget(back_btn)
