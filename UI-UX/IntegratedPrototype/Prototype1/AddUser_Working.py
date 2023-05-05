@@ -5,9 +5,9 @@ from theme import yellow_state
 
 # Calling a file from a different folder
 import sys
-sys.path.append('Device_Firmware/GT521F52-working/')
+#sys.path.append('Device_Firmware/GT521F52-working/')
 
-import fps
+#import fps
 
 
 class AddUserWindow(QMainWindow):

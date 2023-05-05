@@ -44,9 +44,10 @@ class MainWindow(QMainWindow):
         '''
         # add system time to the second row
         time_label = QLabel()
+        time_label.setObjectName("timeLabel")
         time_label.setAlignment(Qt.AlignCenter)
+        time_label.setStyleSheet("fint-size: 32px;")
         layout_g.addWidget(time_label, 2, 1, 1, 2)
-
         '''
 
         # add today's date to the third row

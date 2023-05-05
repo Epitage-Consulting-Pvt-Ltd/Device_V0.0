@@ -2,17 +2,17 @@ import sys
 
 from PyQt5.QtCore import QDateTime ,Qt
 from PyQt5.QtGui import QPixmap, QPalette
-from PyQt5.QtWidgets import QApplication, QWidget, QLabel, QVBoxLayout
+from PyQt5.QtWidgets import QApplication, QWidget, QLabel, QVBoxLayout, QMainWindow
 
 from theme_test import WINDOW_BACKGROUND_COLOR,   RFID_WINDOW_FOREGROUND_COLOR
 
 
-class RFIDPromptDummy(QWidget):
+class RFIDPromptDummy(QMainWindow):
     def __init__(self, company_pic ,employee_name, employee_picture):
         super().__init__()
 
         # set window size
-        self.setFixedSize(200, 400)
+        self.setFixedSize(480, 800)
 
         # Set window background and foreground colors
         palette = self.palette()

@@ -5,7 +5,7 @@ from PyQt5.QtWidgets import QPushButton
 from AddUser_Working import AddUserWindow
 from EditUser import DeleteUserWindow
 #<<<<<<< HEAD
-#from theme import BACKGROUND_COLOR, FOREGROUND_COLOR, ACCENT_COLOR, BUTTON_STYLE, TABLE_STYLE, WINDOW_BACKGROUND_COLOR, WINDOW_FOREGROUND_COLOR
+from theme import BACKGROUND_COLOR, FOREGROUND_COLOR, ACCENT_COLOR, BUTTON_STYLE, TABLE_STYLE, WINDOW_BACKGROUND_COLOR, WINDOW_FOREGROUND_COLOR
 #=======
 from ViewUser_Working import ViewUserWindow
 from theme import BUTTON_STYLE
