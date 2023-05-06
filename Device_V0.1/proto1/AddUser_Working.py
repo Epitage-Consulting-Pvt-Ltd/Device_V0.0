@@ -123,6 +123,7 @@ class AddUserWindow(QMainWindow):
         self.rfid_entry.clear()
         self.eid_textbox.clear()
 '''
+    
     def save_user(self):
         try:
             # Get user information from user
@@ -132,7 +133,6 @@ class AddUserWindow(QMainWindow):
             fn = self.fn_textbox.text()
             ln = self.ln_textbox.text()
             eid = self.eid_textbox.text()
-
 
             # Prompt user to scan RFID card
             print("Place RFID card on reader or press Ctrl+C to c>
