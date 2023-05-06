@@ -58,7 +58,7 @@ class AddUserWindow(QMainWindow):
         self.rfid_input_textbox = QPushButton(self)
         self.rfid_input_textbox.move(150, 200)
         self.rfid_input_textbox.resize(200, 30)
-        self.rfid_input_textbox.setText("Click here to Register")  # TODO
+        #self.rfid_input_textbox.setText("Here")  # TODO adding the str of the card
         self.rfid_input_textbox.clicked.connect(self.read_rfid)
         self.rfid_input_textbox.setStyleSheet(yellow_state)
 
@@ -75,9 +75,11 @@ class AddUserWindow(QMainWindow):
     def read_rfid(self):
         try:
             id,rfid=self.reader.read()
-            self.rfid_input.setText("RFID read successful.")
+            #self.rfid_input.setText("RFID read successful.")
+            self.rfid_input_textbox.setText(str(rfid))
         except Exception as e:
-            self.rfid_input.setText(f"Error Reading RFID: {str(e)}")
+            self.rfid_input_textbox.setText(f"Error Reading RFID: {str(e)}")
+
 
 #self.fingerprint = AddNewFingerPrint()
  #       self.fingerprint.show()
@@ -93,7 +95,7 @@ class AddUserWindow(QMainWindow):
         ln = self.ln_textbox.text()
         eid = self.eid_textbox.text()
         rfid = self.rfid_input.text()
-#fp = self.efingerprint_textbox.text()
+        fp = self.efingerprint_textbox.text()
 
         # Write data to CSV file
         with open('users.csv', 'a') as file:
