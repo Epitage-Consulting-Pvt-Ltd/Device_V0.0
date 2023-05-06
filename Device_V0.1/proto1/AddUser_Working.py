@@ -18,6 +18,7 @@ import sys
 class AddUserWindow(QMainWindow):
     def __init__(self):
         super().__init__()
+        self.rfid_reader=SimpleMFRC522()
         self.initUI()
 
     def initUI(self):
@@ -53,14 +54,17 @@ class AddUserWindow(QMainWindow):
         self.eid_textbox.resize(200, 30)
 
         # Add fingerprint label and text box
-        self.rfid_input_label = QLabel('RFID:', self)
-        self.rfid_input_label.move(50, 200)
-        self.rfid_input_textbox = QPushButton(self)
-        self.rfid_input_textbox.move(150, 200)
-        self.rfid_input_textbox.resize(200, 30)
-        #self.rfid_input_textbox.setText("Here")  # TODO adding the str of the card
-        self.rfid_input_textbox.clicked.connect(self.read_rfid)
-        self.rfid_input_textbox.setStyleSheet(yellow_state)
+        self.rfid_label = QLabel('RFID:', self)
+        self.rfid_label.move(50, 200)
+        self.rfid_textbox = QPushButton(self)
+        self.rfid_textbox.move(150, 200)
+        self.rfid_textbox.resize(200, 30)
+        self.rfid_textbox.setText("Scan your card:")  # TODO adding the str of the card
+        self.rfid_textbox.clicked.connect(self.read_rfid)
+        #self.submit_textbox.setText("Submit")
+        #self.submit_textbox.clicked.connect(self.submit)
+#        self.delete_textbox.setText("delete")
+        self.rfid_textbox.setStyleSheet(yellow_state)
 
         # Add 'Save' button
         self.save_btn = QPushButton('Save', self)
@@ -69,16 +73,16 @@ class AddUserWindow(QMainWindow):
         self.save_btn.clicked.connect(self.save_user)
         self.save_btn.setStyleSheet(BUTTON_STYLE)
 
-        self.reader=SimpleMFRC522()
+        #self.rfid_reader=SimpleMFRC522()
 
 
     def read_rfid(self):
         try:
-            id,rfid=self.reader.read()
+            id,text=self.rfid_reader.read()
             #self.rfid_input.setText("RFID read successful.")
-            self.rfid_input_textbox.setText(str(rfid))
+            self.rfid.setText(str(id))
         except Exception as e:
-            self.rfid_input_textbox.setText(f"Error Reading RFID: {str(e)}")
+            self.rfid_textbox.setText(str(e))
 
 
 #self.fingerprint = AddNewFingerPrint()
@@ -88,24 +92,71 @@ class AddUserWindow(QMainWindow):
         from UserMain_Working import UserMainWindow
         self.user_main_window = UserMainWindow()
         self.user_main_window.show()
-
+'''
     def save_user(self):
         # Get data from text boxes
         fn = self.fn_textbox.text()
         ln = self.ln_textbox.text()
         eid = self.eid_textbox.text()
-        rfid = self.rfid_input.text()
-        fp = self.efingerprint_textbox.text()
+        rfid = self.rfid_textbox.text().strip()
+        #fp = self.efingerprint_textbox.text()
+        if not id or not first_name or not last_name or not rfid:
+            self.show_error("All fields are required")
+            return
+
+        # Check if the RFID value is already registered
+        with open("users.csv", "r") as file:
+            reader = csv.reader(file)
+            for row in reader:
+                if row[3] == rfid:
+                    self.show_error("RFID already registered")
+                    return
 
         # Write data to CSV file
         with open('users.csv', 'a') as file:
             writer = csv.writer(file)
-            writer.writerow([fn, ln, eid,fp])
+            writer.writerow([fn, ln, eid, rfid])
 
         # Clear text boxes
         self.fn_textbox.clear()
         self.ln_textbox.clear()
+        self.rfid_entry.clear()
         self.eid_textbox.clear()
+'''
+    def save_user(self):
+        try:
+            # Get user information from user
+            #employee_id = self.id_input.text()
+            #first_name = self.first_name_input.text()
+            #last_name = self.last_name_input.text()
+            fn = self.fn_textbox.text()
+            ln = self.ln_textbox.text()
+            eid = self.eid_textbox.text()
+
+
+            # Prompt user to scan RFID card
+            print("Place RFID card on reader or press Ctrl+C to c>
+            rfid_id = self.rfid_reader.read_id()
+
+            # Write user information to CSV file
+            with open("users1.csv", "a") as file:
+                writer = csv.writer(file)
+                writer.writerow([employee_id, first_name, last_na>
+
+            print("RFID card associated with user successfully.")
+
+        except KeyboardInterrupt:
+            # User cancelled operation
+            print("Operation cancelled.")
+
+        except Exception as e:
+            # Error occurred
+            print("Error:", e)
+
+        finally:
+            # Close the connection to the RFID reader
+            GPIO.cleanup()
+
 
 if __name__ == '__main__':
     app = QApplication([])

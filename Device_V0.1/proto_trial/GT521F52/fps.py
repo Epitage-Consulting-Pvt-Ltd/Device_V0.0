@@ -7,12 +7,6 @@ import time
 
 import settings
 
-#import os
-#import serial
-
-#PORT_FINGERPRINTSCANNER = '/dev/ttyUSB0' # 5v
-
-
 GPIO.setmode(GPIO.BOARD)
 GPIO.setwarnings(False)
 GPIO.setup(11,GPIO.OUT)
@@ -515,3 +509,4 @@ if __name__ == '__main__':
         #for i in range(10):
             #print("Identify: %s" % str(f.identify()))
            # time.sleep(1)
+

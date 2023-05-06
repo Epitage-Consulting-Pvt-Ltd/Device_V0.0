@@ -1,1 +1,2 @@
-test,test,100,Click here to Register
+a,b,1,Error Reading RFID: name 'rfid' is not defined
+abc,def,2,Error Reading RFID: name 'rfid' is not defined
