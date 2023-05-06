@@ -15,7 +15,7 @@ try:
         for row in reader:
             if row[3] == str(rfid_id):
                 # User found
-                print("Access granted for user with ID:", row[0])
+                print("Verified user with ID:", row[1])
                 break
         else:
             # User not found
