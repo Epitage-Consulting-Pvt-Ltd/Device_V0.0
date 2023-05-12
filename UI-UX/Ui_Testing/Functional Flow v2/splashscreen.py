@@ -2,13 +2,15 @@ from PyQt5.QtWidgets import QApplication, QMainWindow, QWidget, QGridLayout, QLa
 from PyQt5.QtGui import QIcon, QPixmap,QColor, QPalette
 from PyQt5.QtCore import Qt, QTimer, QDate, QTime
 from MenuGrid import MenuWindow
+from topband import topband
 from theme import BACKGROUND_COLOR, FOREGROUND_COLOR, ACCENT_COLOR, BUTTON_STYLE, TABLE_STYLE , WINDOW_BACKGROUND_COLOR, WINDOW_FOREGROUND_COLOR
-#ui_update
 import sys
 
 class MainWindow(QMainWindow):
     def __init__(self):
         super().__init__()
+
+        topband(self)
 
         # set window title
         self.setWindowTitle("Splash Screen")
@@ -32,19 +34,19 @@ class MainWindow(QMainWindow):
 
         # add logos to the first row
         logo1 = QLabel()
-        pixmap1 = QPixmap("ethos.jpg").scaled(350, 350, Qt.KeepAspectRatio, Qt.SmoothTransformation)
+        pixmap1 = QPixmap("ethos.jpg").scaled(370, 370, Qt.KeepAspectRatio, Qt.SmoothTransformation)
         logo1.setPixmap(pixmap1)
-        layout_g.addWidget(logo1, 1, 0, 1, 0, Qt.AlignCenter)
+        layout_g.addWidget(logo1, 1, 0, 3, 0, Qt.AlignCenter)
 
         logo2 = QLabel()
         pixmap2 = QPixmap("gsk.jpg").scaled(50, 50, Qt.KeepAspectRatio, Qt.SmoothTransformation)
         logo2.setPixmap(pixmap2)
-        layout_g.addWidget(logo2, 0, 0, Qt.AlignTop)
+        logo2.move(18, 10)
 
         logo3 = QLabel()
         pixmap3 = QPixmap("epitage.jpg").scaled(80, 80, Qt.KeepAspectRatio, Qt.SmoothTransformation)
         logo3.setPixmap(pixmap3)
-        layout_g.addWidget(logo3, 0, 3, Qt.AlignTop)
+        logo3.move(370, 10)
 
 
         '''
