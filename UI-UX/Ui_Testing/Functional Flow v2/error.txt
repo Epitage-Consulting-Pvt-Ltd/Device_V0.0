@@ -1,0 +1,1 @@
+TypeError: capture_finger() takes 0 positional arguments but 2 were given
