@@ -1,9 +1,10 @@
+from PyQt5.QtCore import *
 from PyQt5.QtWidgets import QApplication
 from PyQt5.QtWidgets import QMainWindow
 from PyQt5.QtWidgets import QPushButton
 from AddUser_Working import AddUserWindow
 from EditUser import DeleteUserWindow
-from PyQt5.QtWidgets import QApplication, QMainWindow, QPushButton, QLabel, QLineEdit
+from PyQt5.QtWidgets import QApplication, QMainWindow, QPushButton, QLabel, QLineEdit, QToolButton
 from PyQt5.QtGui import QIcon, QPixmap
 from ViewUser_Working import ViewUserWindow
 from theme import BUTTON_STYLE
@@ -101,11 +102,28 @@ class UserMainWindow(QMainWindow):
         self.dob_textbox.resize(280, 45)
 
         #Card Button
-        self.card_btn = QPushButton('CARD', self)
-        #pixmap = QPixmap('path_to_your_image.png')
-        self.card_btn.move(50, 650)
-        self.card_btn.setFixedSize(90, 40)
+        self.card_btn = QPushButton(self)
+        pixmap = QPixmap('userMainCrd.jpg')
+        self.card_btn.setIcon(QIcon(pixmap))
+        self.card_btn.move(30, 600)
+        self.card_btn.setFixedSize(120, 120)
         self.card_btn.clicked.connect(self.close)
+
+        #Face Button
+        self.face_btn = QPushButton(self)
+        pixmap = QPixmap('userMainFace.jpg')
+        self.face_btn.setIcon(QIcon(pixmap))
+        self.face_btn.move(180, 600)
+        self.face_btn.setFixedSize(120, 120)
+        self.face_btn.clicked.connect(self.close)
+
+        #Thumb Button
+        self.thumb_btn = QPushButton(self)
+        pixmap = QPixmap('userMainThumb.jpg')
+        self.thumb_btn.setIcon(QIcon(pixmap))
+        self.thumb_btn.move(330, 600)
+        self.thumb_btn.setFixedSize(120, 120)
+        self.thumb_btn.clicked.connect(self.close)
 
 
 
