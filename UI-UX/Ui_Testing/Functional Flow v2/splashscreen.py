@@ -1,5 +1,5 @@
 from PyQt5.QtWidgets import QApplication, QMainWindow, QWidget, QGridLayout, QLabel, QPushButton
-from PyQt5.QtGui import QIcon, QPixmap,QColor, QPalette
+from PyQt5.QtGui import QIcon, QPixmap, QColor, QPalette, QFont
 from PyQt5.QtCore import Qt, QTimer, QDate, QTime
 from MenuGrid import MenuWindow
 from topband import topband
@@ -63,14 +63,13 @@ class MainWindow(QMainWindow):
         date_label.setObjectName("dateLabel")
         date_label.setAlignment(Qt.AlignCenter)
         date_label.setStyleSheet("font-size: 32px;")
-        layout_g.addWidget(date_label, 3, 0, 1, 4)
+        layout_g.addWidget(date_label, 3, 0, 2, 4)
 
 
 
         # add menu button to the fourth row
         menu_button = QPushButton("Menu")
-        menu_button.setStyleSheet("font-size: 24px;")
-        menu_button.setFixedSize(200, 50)
+        menu_button.setFixedSize(120, 40)
         layout_g.addWidget(menu_button, 4, 0, 1, 4, Qt.AlignCenter)
         menu_button.setStyleSheet(BUTTON_STYLE)
         menu_button.clicked.connect(self.show_menu_grid_window)

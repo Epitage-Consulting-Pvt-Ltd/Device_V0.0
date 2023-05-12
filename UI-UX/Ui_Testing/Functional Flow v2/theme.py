@@ -4,18 +4,21 @@ from PyQt5.QtGui import QPalette, QColor
 # Define theme variables
 BACKGROUND_COLOR = '#F5F5F5'  # dark grey colour
 FOREGROUND_COLOR = '#ffffff'  # white
-ACCENT_COLOR = '#FF4A18'  # orange
+ACCENT_COLOR = '#F29916'  # orange
 
 BUTTON_STYLE = f"""
     QPushButton {{
         background-color: {ACCENT_COLOR};
         color: {FOREGROUND_COLOR};
+        font-size: 18px;
+        font-family: Calibri, Arial, sans-serif;
         border-radius: 5px;
     }}
     QPushButton:hover {{
         background-color: #ff8c00;
     }}
 """
+
 
 TABLE_STYLE = f"""
     QTableWidget {{

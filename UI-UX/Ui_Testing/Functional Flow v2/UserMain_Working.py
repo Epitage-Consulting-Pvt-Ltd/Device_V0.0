@@ -3,9 +3,8 @@ from PyQt5.QtWidgets import QMainWindow
 from PyQt5.QtWidgets import QPushButton
 from AddUser_Working import AddUserWindow
 from EditUser import DeleteUserWindow
-#<<<<<<< HEAD
-from theme import BACKGROUND_COLOR, FOREGROUND_COLOR, ACCENT_COLOR, BUTTON_STYLE, TABLE_STYLE, WINDOW_BACKGROUND_COLOR, WINDOW_FOREGROUND_COLOR
-#=======
+from PyQt5.QtWidgets import QApplication, QMainWindow, QPushButton, QLabel, QLineEdit
+from PyQt5.QtGui import QIcon, QPixmap
 from ViewUser_Working import ViewUserWindow
 from theme import BUTTON_STYLE
 from topband import topband
@@ -30,40 +29,84 @@ class UserMainWindow(QMainWindow):
 
         # Add 'Back' button
         self.back_btn = QPushButton('Back', self)
-#<<<<<<< HEAD
-        self.back_btn.move(50, 50)
-#	self.back_btn.setStyleSheet(BUTTON_STYLE)
-#=======
-        self.back_btn.move(50, 150)
+        self.back_btn.move(10, 60)
+        self.back_btn.setFixedSize(90, 40)
         self.back_btn.clicked.connect(self.show_menu_grid_window)
-#>>>>>>> 11378a4aab6e23c4f7c4b5dcb9a4f71da46b4997
         self.back_btn.clicked.connect(self.close)
         self.back_btn.setStyleSheet(BUTTON_STYLE)
 
 
         # Add 'Add Users' button
         self.add_btn = QPushButton('Add Users', self)
-        self.add_btn.move(130, 200)
-        self.add_btn.resize(200, 50)
+        self.add_btn.move(10, 115)
+        self.add_btn.setFixedSize(110, 40)
         self.add_btn.clicked.connect(self.show_add_user_window)
         self.add_btn.clicked.connect(self.close)
         self.add_btn.setStyleSheet(BUTTON_STYLE)
 
         # Add 'View Users' button
         self.view_btn = QPushButton('View Users', self)
-        self.view_btn.move(130, 300)
-        self.view_btn.resize(200, 50)
+        self.view_btn.move(130, 115)
+        self.view_btn.setFixedSize(110, 40)
         self.view_btn.clicked.connect(self.show_view_user_window)
         self.view_btn.clicked.connect(self.close)
         self.view_btn.setStyleSheet(BUTTON_STYLE)
 
         # Add 'Delete Users' button
         self.delete_btn = QPushButton('Edit Users', self)
-        self.delete_btn.move(130, 400)
-        self.delete_btn.resize(200, 50)
+        self.delete_btn.move(250, 115)
+        self.delete_btn.resize(110, 40)
         self.delete_btn.clicked.connect(self.show_delete_user_window)
         self.delete_btn.clicked.connect(self.close)
         self.delete_btn.setStyleSheet(BUTTON_STYLE)
+
+        self.datalog_btn = QPushButton('Data Log', self)
+        self.datalog_btn.move(10, 200)
+        self.datalog_btn.resize(130, 50)
+        self.datalog_btn.clicked.connect(self.close)
+        self.datalog_btn.setStyleSheet(BUTTON_STYLE)
+
+        self.userlog_btn = QPushButton('User Log', self)
+        self.userlog_btn.move(180, 200)
+        self.userlog_btn.resize(130, 50)
+        self.userlog_btn.clicked.connect(self.close)
+        self.userlog_btn.setStyleSheet(BUTTON_STYLE)
+
+        self.eid_label = QLabel('ID:', self)
+        self.eid_label.setStyleSheet("font-size: 20px; font-weight: light;")
+        self.eid_label.move(10, 300)
+        self.eid_textbox = QLineEdit(self)
+        self.eid_textbox.move(150, 300)
+        self.eid_textbox.setFixedSize(280, 45)
+
+        self.fn_label = QLabel('First Name:', self)
+        self.fn_label.setStyleSheet("font-size: 20px; font-weight: light;")
+        self.fn_label.move(10, 370)
+        self.fn_textbox = QLineEdit(self)
+        self.fn_textbox.move(150, 370)
+        self.fn_textbox.setFixedSize(280, 45)
+
+        self.ln_label = QLabel('Last Name:', self)
+        self.ln_label.setStyleSheet("font-size: 20px; font-weight: light;")
+        self.ln_label.move(10, 440)
+        self.ln_textbox = QLineEdit(self)
+        self.ln_textbox.move(150, 440)
+        self.ln_textbox.resize(280, 45)
+
+        self.dob_label = QLabel('DOB:', self)
+        self.dob_label.setStyleSheet("font-size: 20px; font-weight: light;")
+        self.dob_label.move(10, 520)
+        self.dob_textbox = QLineEdit(self)
+        self.dob_textbox.move(150, 520)
+        self.dob_textbox.resize(280, 45)
+
+        #Card Button
+        self.card_btn = QPushButton('CARD', self)
+        #pixmap = QPixmap('path_to_your_image.png')
+        self.card_btn.move(50, 650)
+        self.card_btn.setFixedSize(90, 40)
+        self.card_btn.clicked.connect(self.close)
+
 
 
         self.show()
