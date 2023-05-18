@@ -9,7 +9,7 @@ Original file is located at
 
 import sqlite3
 import datetime 
-conn = sqlite3.connect('localdb.db')
+conn = sqlite3.connect('/home/pi/local.db')
 curs = conn.cursor()
 print ("Opened database successfully");
 

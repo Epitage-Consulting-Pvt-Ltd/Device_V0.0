@@ -7,6 +7,11 @@ class ViewUserWindow(QMainWindow):
         super().__init__()
         self.initUI()
 
+    def show_user_main_window(self):
+        from UserMain_Working import UserMainWindow
+        self.user_main_window = UserMainWindow()
+        self.user_main_window.show()
+
     def initUI(self):
         self.setWindowTitle("View Users")
         self.resize(480, 800)
@@ -14,6 +19,7 @@ class ViewUserWindow(QMainWindow):
         # Add 'Back' button
         self.back_btn = QPushButton('Back', self)
         self.back_btn.move(50, 50)
+        self.back_btn.clicked.connect(self.show_user_main_window)
         self.back_btn.clicked.connect(self.close)
         self.back_btn.setStyleSheet(BUTTON_STYLE)
 
