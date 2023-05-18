@@ -33,9 +33,9 @@ class MenuWindow(QWidget):
         self.back_btn.clicked.connect(self.close)
 
         # create a reusable function to add buttons to the layout
-        def add_button(image_path, row, col):
+        def add_button(text, row, col):
             # create a QPixmap object from the image path and scale it
-            pixmap = QPixmap(image_path).scaled(149, 149)
+            #pixmap = QPixmap(image_path).scaled(149, 149)
 
             # create a QIcon object from the scaled pixmap
             icon = QIcon(pixmap)
@@ -45,6 +45,7 @@ class MenuWindow(QWidget):
             button.setIcon(icon)
             button.setIconSize(button.size())
             button.setFixedSize(169, 169)
+            button.setText(text)
 
             # add the button to the layout
             layout_g.addWidget(button, row, col)
@@ -57,7 +58,7 @@ class MenuWindow(QWidget):
         user_reg.clicked.connect(self.close)
         user_reg.setStyleSheet(BUTTON_STYLE)
 
-        user_mang = add_button("Diagnostic_test.png", 0, 1)
+        user_mang = add_button(, 0, 1)
 
 
 
