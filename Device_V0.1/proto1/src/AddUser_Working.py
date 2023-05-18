@@ -49,9 +49,9 @@ class AddUserWindow(QMainWindow):
 
         # Initialize button
         self.button = QPushButton('Scan your Card', self)
-        self.button.move(150,200)
+        #self.button_label.move(50,200)
         self.button.clicked.connect(self.register_rfid)
-        #self.rfid.setStyleSheet(yellow_state)
+        #self.rfid_textbox.setStyleSheet(yellow_state)
 
         # Set window size and title
         #self.setGeometry(0, 0, 480, 800)
@@ -88,7 +88,7 @@ class AddUserWindow(QMainWindow):
             #        print("RFID Card is already registered.")
             #        return
             
-            with open("epitage.csv", "a") as file:
+            with open("users.csv", "a") as file:
                 writer = csv.writer(file)
                 writer.writerow([fn, ln, eid, rfid_id])
 

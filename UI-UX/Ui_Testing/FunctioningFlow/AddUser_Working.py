@@ -1,4 +1,5 @@
 import csv
+import subprocess
 from PyQt5.QtWidgets import QApplication, QMainWindow, QPushButton, QLabel, QLineEdit
 from FingerPrintAddition import AddNewFingerPrint
 from theme import BUTTON_STYLE
@@ -90,6 +91,7 @@ class AddUserWindow(QMainWindow):
         self.fn_textbox.clear()
         self.ln_textbox.clear()
         self.eid_textbox.clear()
+        subprocess.run(['python','/home/pi/Desktop/DB/insert.py'])
 
 if __name__ == '__main__':
     app = QApplication([])

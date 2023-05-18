@@ -4,6 +4,7 @@ from mfrc522 import SimpleMFRC522
 import csv
 import RPi.GPIO as GPIO
 
+
 class RFIDWindow(QWidget):
     def __init__(self):
         super().__init__()
@@ -12,20 +13,20 @@ class RFIDWindow(QWidget):
         self.rfid_reader = SimpleMFRC522()
 
         # Initialize user input fields
-        self.id_label = QLabel('Employee ID:', self)
+        self.id_label = QLabel("Verify card", self)
         self.id_input = QLineEdit(self)
-        self.first_name_label = QLabel('First Name:', self)
-        self.first_name_input = QLineEdit(self)
-        self.last_name_label = QLabel('Last Name:', self)
-        self.last_name_input = QLineEdit(self)
+        #self.first_name_label = QLabel("First Name:", self)
+        #self.first_name_input = QLineEdit(self)
+        #self.last_name_label = QLabel("Last Name:", self)
+        #self.last_name_input = QLineEdit(self)
 
         # Initialize button
-        self.button = QPushButton('Register RFID Card', self)
+        self.button = QPushButton("Scan RFID Card", self)
         self.button.clicked.connect(self.register_rfid)
 
         # Set window size and title
         self.setGeometry(0, 0, 480, 800)
-        self.setWindowTitle('RFID Registration')
+        self.setWindowTitle("RFID Verification")
 
         # Set widget positions
         self.id_label.move(50, 50)
@@ -51,7 +52,7 @@ class RFIDWindow(QWidget):
             rfid_id = self.rfid_reader.read_id()
 
             # Write user information to CSV file
-            with open("user1.csv", "a") as file:
+            with open("users.csv", "a") as file:
                 writer = csv.writer(file)
                 writer.writerow([employee_id, first_name, last_name, rfid_id])
 
@@ -65,11 +66,22 @@ class RFIDWindow(QWidget):
             # Error occurred
             print("Error:", e)
 
-        finally:
-            # Close the connection to the RFID reader
-            GPIO.cleanup()
+    def verify_user(self):
+        # Check if RFID card is associated with a user in the CSV file
+        with open("users.csv", "r") as file:
+            reader = csv.reader(file)
+            for row in reader:
+                if row[3] == str(self.rfid_id):
+                    # User found
+                    self.result_label.setText("Verified user with ID: " + row[1])
+                    break
+            else:
+                # User not found
+                self.result_label.setText("Access denied.")
 
-if __name__ == '__main__':
+
+if __name__ == "__main__":
     app = QApplication(sys.argv)
     rfid_window = RFIDWindow()
     sys.exit(app.exec_())
+    GPIO.cleanup()

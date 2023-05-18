@@ -15,7 +15,7 @@ try:
     rfid_id = rfid_reader.read_id()
 
     # Write user information to CSV file
-    with open("users.csv", "a") as file:
+    with open("users1.csv", "a") as file:
         writer = csv.writer(file)
         writer.writerow([employee_id, first_name, last_name, rfid_id])
 

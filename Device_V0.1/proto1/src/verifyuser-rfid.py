@@ -10,12 +10,12 @@ try:
     rfid_id = rfid_reader.read_id()
 
     # Check if RFID card is associated with a user in the CSV file
-    with open("users.csv", "r") as file:
+    with open("users1.csv", "r") as file:
         reader = csv.reader(file)
         for row in reader:
             if row[3] == str(rfid_id):
                 # User found
-                print("Verified user with ID:", row[1])
+                print("Verified user with ID:", row[1], row[2])
                 break
         else:
             # User not found
