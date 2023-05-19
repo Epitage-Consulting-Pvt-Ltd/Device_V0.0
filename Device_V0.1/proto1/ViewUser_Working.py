@@ -24,7 +24,7 @@ class ViewUserWindow(QMainWindow):
         self.table.setHorizontalHeaderLabels(['First Name', 'Last Name', 'Employee ID', 'RFID_ID'])
 
         # Populate the table with data from the CSV file
-        with open("epitage.csv") as file:
+        with open("users.csv") as file:
             reader = csv.reader(file)
             data = list(reader)
             row_count = len(data)

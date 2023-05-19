@@ -1,6 +1,6 @@
 import sys
 import csv
-from PyQt5.QtCore import Qt
+from PyQt5.QtCore import Qt, QTimer
 from PyQt5.QtWidgets import QApplication, QMainWindow, QLabel, QPushButton
 from PyQt5.QtGui import QFont
 from mfrc522 import SimpleMFRC522
@@ -32,6 +32,10 @@ class CardVerificationApp(QMainWindow):
         self.verify_button.setGeometry(100, 200, 280, 60)
         self.verify_button.clicked.connect(self.verify_card)
 
+        # Create timer for resetting the verify button
+        self.reset_timer = QTimer()
+        self.reset_timer.timeout.connect(self.reset_button)
+
     def verify_card(self):
         try:
             # Prompt user to scan RFID card
@@ -49,14 +53,22 @@ class CardVerificationApp(QMainWindow):
                 else:
                     # User not found
                     self.user_label.setText("Access denied.")
-        
+
+            # Start the timer for button reset
+            self.reset_timer.start(5000)  # 30 seconds
+
         except KeyboardInterrupt:
             # User cancelled operation
             self.user_label.setText("Operation cancelled.")
-        
+
         except Exception as e:
             # Error occurred
             self.user_label.setText("Error: " + str(e))
+
+    def reset_button(self):
+        # Reset the verify button and label
+        self.user_label.setText("Scan an RFID card")
+        self.verify_button.setEnabled(True)
 
     def closeEvent(self, event):
         # Close the connection to the RFID reader

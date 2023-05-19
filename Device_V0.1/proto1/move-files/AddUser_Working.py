@@ -49,9 +49,9 @@ class AddUserWindow(QMainWindow):
 
         # Initialize button
         self.button = QPushButton('Scan your Card', self)
-        #self.button_label.move(50,200)
+        self.button.move(150,200)
         self.button.clicked.connect(self.register_rfid)
-        #self.rfid_textbox.setStyleSheet(yellow_state)
+        #self.rfid.setStyleSheet(yellow_state)
 
         # Set window size and title
         #self.setGeometry(0, 0, 480, 800)

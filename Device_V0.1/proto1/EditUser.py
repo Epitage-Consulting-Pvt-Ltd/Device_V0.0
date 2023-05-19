@@ -70,7 +70,7 @@ class DeleteUserWindow(QWidget):
 
     def loadCSV(self):
         # Open CSV file
-        with open('epitage.csv') as csvfile:
+        with open('users.csv') as csvfile:
             reader = csv.reader(csvfile)
             data = list(reader)
 
