@@ -58,7 +58,7 @@ class MenuWindow(QWidget):
         user_reg.clicked.connect(self.close)
         user_reg.setStyleSheet(BUTTON_STYLE)
 
-        user_mang = add_button(, 0, 1)
+        user_mang = add_button( 0, 1)
 
 
 

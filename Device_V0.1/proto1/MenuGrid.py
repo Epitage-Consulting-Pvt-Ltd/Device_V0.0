@@ -2,7 +2,6 @@ from PyQt5.QtWidgets import QApplication, QWidget, QGridLayout, QPushButton
 from PyQt5.QtGui import QIcon, QImage, QPixmap, QPainter, QPalette
 from PyQt5 import QtWidgets
 import sys
-sys.path.append('src')
 from theme import BACKGROUND_COLOR, FOREGROUND_COLOR, ACCENT_COLOR, BUTTON_STYLE, TABLE_STYLE , WINDOW_BACKGROUND_COLOR, WINDOW_FOREGROUND_COLOR
 from PyQt5.QtSvg import QSvgWidget
 from UserMain_Working import UserMainWindow

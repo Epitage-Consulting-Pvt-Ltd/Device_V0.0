@@ -1,14 +1,16 @@
 from PyQt5.QtWidgets import QApplication, QMainWindow, QWidget, QGridLayout, QLabel, QPushButton
-from PyQt5.QtGui import QIcon, QPixmap,QColor, QPalette
+from PyQt5.QtGui import QIcon, QPixmap, QColor, QPalette, QFont
 from PyQt5.QtCore import Qt, QTimer, QDate, QTime
 from MenuGrid import MenuWindow
+from topband import topband
 from theme import BACKGROUND_COLOR, FOREGROUND_COLOR, ACCENT_COLOR, BUTTON_STYLE, TABLE_STYLE , WINDOW_BACKGROUND_COLOR, WINDOW_FOREGROUND_COLOR
-#ui_update
 import sys
 
 class MainWindow(QMainWindow):
     def __init__(self):
         super().__init__()
+
+        topband(self)
 
         # set window title
         self.setWindowTitle("Splash Screen")
@@ -32,14 +34,20 @@ class MainWindow(QMainWindow):
 
         # add logos to the first row
         logo1 = QLabel()
-        pixmap1 = QPixmap("Epitage.png").scaled(200, 200, Qt.KeepAspectRatio, Qt.SmoothTransformation)
+        pixmap1 = QPixmap("image/ethos.jpg").scaled(370, 370, Qt.KeepAspectRatio, Qt.SmoothTransformation)
         logo1.setPixmap(pixmap1)
-        layout_g.addWidget(logo1, 0, 0)
+        layout_g.addWidget(logo1, 1, 0, 3, 0, Qt.AlignCenter)
 
         logo2 = QLabel()
-        pixmap2 = QPixmap("sudarshanlogo.png").scaled(200, 200, Qt.KeepAspectRatio, Qt.SmoothTransformation)
+        pixmap2 = QPixmap("images/gsk.jpg").scaled(50, 50, Qt.KeepAspectRatio, Qt.SmoothTransformation)
         logo2.setPixmap(pixmap2)
-        layout_g.addWidget(logo2, 0, 1)
+        logo2.move(18, 10)
+
+        logo3 = QLabel()
+        pixmap3 = QPixmap("images/epitage.jpg").scaled(80, 80, Qt.KeepAspectRatio, Qt.SmoothTransformation)
+        logo3.setPixmap(pixmap3)
+        logo3.move(370, 10)
+
 
         '''
         # add system time to the second row
@@ -55,15 +63,14 @@ class MainWindow(QMainWindow):
         date_label.setObjectName("dateLabel")
         date_label.setAlignment(Qt.AlignCenter)
         date_label.setStyleSheet("font-size: 32px;")
-        layout_g.addWidget(date_label, 2, 0, 1, 2)
+        layout_g.addWidget(date_label, 3, 0, 2, 4)
 
 
 
         # add menu button to the fourth row
         menu_button = QPushButton("Menu")
-        menu_button.setStyleSheet("font-size: 24px;")
-        menu_button.setFixedSize(200, 50)
-        layout_g.addWidget(menu_button, 3, 0, 1, 2, Qt.AlignCenter)
+        menu_button.setFixedSize(120, 40)
+        layout_g.addWidget(menu_button, 4, 0, 1, 4, Qt.AlignCenter)
         menu_button.setStyleSheet(BUTTON_STYLE)
         menu_button.clicked.connect(self.show_menu_grid_window)
         menu_button.clicked.connect(self.close)

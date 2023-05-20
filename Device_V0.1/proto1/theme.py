@@ -51,3 +51,14 @@ FP_BUTTON_STYLE = f"""
         background-color: #ff8c00;
     }}
 """
+
+
+EpitageLabel = f"""
+    Qlabel {{
+    font-size: 20px; 
+    font-weight: light;   
+            }}
+    QPushButton:hover {{
+        background-color: #ff8c00;
+    }}
+"""
