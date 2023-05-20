@@ -2,17 +2,18 @@ from PyQt5.QtWidgets import QApplication, QWidget, QGridLayout, QPushButton
 from PyQt5.QtGui import QIcon, QImage, QPixmap, QPainter, QPalette
 from PyQt5 import QtWidgets
 import sys
+sys.path.append('src')
 from theme import BACKGROUND_COLOR, FOREGROUND_COLOR, ACCENT_COLOR, BUTTON_STYLE, TABLE_STYLE , WINDOW_BACKGROUND_COLOR, WINDOW_FOREGROUND_COLOR
-
+from PyQt5.QtSvg import QSvgWidget
 from UserMain_Working import UserMainWindow
-
+from cardverification import CardVerificationApp
 class MenuWindow(QWidget):
     def __init__(self):
 
         super().__init__()
 
         # set window title and size
-        self.setWindowTitle("UI_Testing")
+        self.setWindowTitle("Device Menu")
         self.resize(480, 800)
 
         # Set window background and foreground colors
@@ -34,11 +35,12 @@ class MenuWindow(QWidget):
 
         # create a reusable function to add buttons to the layout
         def add_button(image_path, row, col):
-            # create a QPixmap object from the image path and scale it
-            pixmap = QPixmap(image_path).scaled(149, 149)
+            # create a QSvgWidget object from the image path
+            svg_widget = QSvgWidget(image_path)
+            svg_widget.setFixedSize(100,100)
 
-            # create a QIcon object from the scaled pixmap
-            icon = QIcon(pixmap)
+            # create a QIcon object from the svg_widget
+            icon = QIcon(svg_widget.renderer())
 
             # create a button and set its icon and size
             button = QPushButton()
@@ -50,18 +52,16 @@ class MenuWindow(QWidget):
             layout_g.addWidget(button, row, col)
 
             return button
-
         # add buttons to the layout using the reusable function
-        user_reg = add_button("UserReg.png", 0, 0)
+        user_reg = add_button("svgfiles/adduser.svg", 0, 0)
         user_reg.clicked.connect(self.show_user_main_window)
         user_reg.clicked.connect(self.close)
         user_reg.setStyleSheet(BUTTON_STYLE)
-        add_button("Diagnostic_test.png", 0, 1)
-        add_button("Diagnostic_test.png", 1, 0)
-        add_button("Diagnostic_test.png", 1, 1)
-        add_button("Diagnostic_test.png", 2, 0)
-        add_button("Diagnostic_test.png", 2, 1)
 
+        card_verify = add_button("svgfiles/cardverify.svg", 0, 1)
+        card_verify.clicked.connect(self.show_verify_card_window)
+        card_verify.clicked.connect(self.close)
+        card_verify.setStyleSheet(BUTTON_STYLE)
     def show_user_main_window(self):
         self.user_main_window = UserMainWindow()
         self.user_main_window.show()
@@ -70,6 +70,11 @@ class MenuWindow(QWidget):
         from splashscreen import MainWindow
         self.splashS = MainWindow()
         self.splashS.show()
+
+    def show_verify_card_window(self):
+
+        self.show_verify_card_window = CardVerificationApp()
+        self.show_verify_card_window.show()
 
 
 if __name__ == '__main__':

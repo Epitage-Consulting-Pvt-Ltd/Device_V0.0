@@ -5,8 +5,9 @@ import csv
 import RPi.GPIO as GPIO
 from PyQt5.QtWidgets import QApplication, QMainWindow, QPushButton, QLabel, QLineEdit
 #from FingerPrintAddition import AddNewFingerPrint
+
+from keyboard import MatchBoxLineEdit
 from theme import BUTTON_STYLE
-from theme import yellow_state
 
 class AddUserWindow(QMainWindow):
     def __init__(self):
@@ -30,20 +31,20 @@ class AddUserWindow(QMainWindow):
         # Initialize user input fields
         self.fn_label = QLabel('First Name:', self)
         self.fn_label.move(50,50)
-        self.fn_textbox = QLineEdit(self)
+        self.fn_textbox = MatchBoxLineEdit()
         self.fn_textbox.move(150, 50)
         self.fn_textbox.resize(200, 30)
         # Add Last Name
         self.ln_label = QLabel('Last Name:', self)
         self.ln_label.move(50,100)
-        self.ln_textbox = QLineEdit(self)
+        self.ln_textbox = MatchBoxLineEdit()
         self.ln_textbox.move(150, 100)
         self.ln_textbox.resize(200, 30)
         #Add Employee ID
         self.eid_label = QLabel('Employee ID:', self)
         self.eid_label.move(50, 150)
-        self.eid_input = QLineEdit(self)
-        self.eid_textbox = QLineEdit(self)
+        self.eid_input = MatchBoxLineEdit()
+        self.eid_textbox = MatchBoxLineEdit()
         self.eid_textbox.move(150, 150)
         self.eid_textbox.resize(200, 30)
 
