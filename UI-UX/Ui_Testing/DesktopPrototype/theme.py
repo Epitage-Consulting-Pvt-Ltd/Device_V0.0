@@ -16,8 +16,7 @@ BUTTON_STYLE = f"""
         background-color: #ff8c00;
     }}
 """
-
-Transparent_BUTTON_STYLE = f"""
+TRANSPARENT_BUTTON = f"""
     QPushButton {{
         background-color: transparent;
         border-radius: 5px;
@@ -26,7 +25,6 @@ Transparent_BUTTON_STYLE = f"""
         background-color: #ff8c00;
     }}
 """
-
 TABLE_STYLE = f"""
     QTableWidget {{
         background-color: {BACKGROUND_COLOR};

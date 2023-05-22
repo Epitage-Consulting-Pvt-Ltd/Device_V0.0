@@ -1,3 +1,0 @@
-  File "/home/pi/.local/lib/python3.9/site-packages/mfrc522/MFRC522.py", line 317, in MFRC522_SelectTag
-    buf.append(serNum[i])
-TypeError: 'int' object is not subscriptable
