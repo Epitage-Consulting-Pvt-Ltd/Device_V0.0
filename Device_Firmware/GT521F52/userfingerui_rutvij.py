@@ -451,7 +451,7 @@ class MainWindow(QMainWindow):
 
         # Create buttons for enrollment and verification
         self.enroll_button = QPushButton("Enroll Fingerprint", self)
-        self.enroll_button.setGeometry(40, 200, 200, 40)
+        self.enroll_button.setGeometry(40, 220, 200, 40)
 
         #self.verify_button = QPushButton("Verify Fingerprint", self)
         #self.verify_button.setGeometry(240, 200, 180, 40)
