@@ -1,0 +1,9 @@
+[Fingerprint][2023-05-24 13:11:30,781] The baud rate is changed to 115200.
+[Fingerprint][2023-05-24 13:11:31,054] Serial connected.
+Open: True
+QStandardPaths: XDG_RUNTIME_DIR not set, defaulting to '/tmp/runtime-root'
+Traceback (most recent call last):
+  File "/home/pi/Device_V0.0/Device_Firmware/GT521F52/fingerui.py", line 388, in enrollid
+    while f.get_enrolled_cnt() != count + 1:
+UnboundLocalError: local variable 'count' referenced before assignment
+Aborted

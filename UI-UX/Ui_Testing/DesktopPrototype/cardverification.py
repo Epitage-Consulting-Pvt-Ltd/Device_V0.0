@@ -3,8 +3,8 @@ import csv
 from PyQt5.QtCore import Qt, QTimer
 from PyQt5.QtWidgets import QApplication, QMainWindow, QLabel, QPushButton
 from PyQt5.QtGui import QFont
-#from mfrc522 import SimpleMFRC522
-#import RPi.GPIO as GPIO
+from mfrc522 import SimpleMFRC522
+import RPi.GPIO as GPIO
 
 class CardVerificationApp(QMainWindow):
     def __init__(self):
@@ -43,7 +43,7 @@ class CardVerificationApp(QMainWindow):
             rfid_id = self.rfid_reader.read_id()
 
             # Check if RFID card is associated with a user in the CSV file
-            with open("users1.csv", "r") as file:
+            with open("users.csv", "r") as file:
                 reader = csv.reader(file)
                 for row in reader:
                     if row[3] == str(rfid_id):
