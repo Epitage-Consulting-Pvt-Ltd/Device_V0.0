@@ -481,35 +481,24 @@ class MainWindow(QMainWindow):
             QMessageBox.critical(self, "Error", "Please enter all user details.")
             return
 
-        fingerprint = input("Scan your fingerprint: ")
-        self.fingerprint_data[idtemp] = (first_name, last_name, employee_id)
+        # Assuming you have a fingerprint scanner object named `f` for capturing fingerprints
 
-        # Save fingerprint data to CSV file
-        with open("fingerprint_data.csv", "a", newline="") as file:
-            writer = csv.writer(file)
-            writer.writerow([idtemp, first_name, last_name, employee_id])
+        # Capture fingerprint
+        fingerprint = f.capture_fingerprint()  # Replace `capture_fingerprint` with the appropriate method for your fingerprint scanner
 
-        print("Fingerprint enrolled successfully.")
+        # Enroll fingerprint
+        enrolled = f.enroll(fingerprint)  # Replace `enroll` with the appropriate method for enrolling fingerprints
 
-        count = 0
-        f1 = 0
-        while f.get_enrolled_cnt() != count + 1:
-            time.sleep(0.5)
-            idtemp = str(f.identify())
-            if idtemp > "-1" and idtemp != "None":
-                print("You are an already existing User with ID: %s" % str(int(idtemp) + 1))
-                break
-            else:
-                if f.capture_finger():  # capture_finger function
-                    f.enroll1()
-                    time.sleep(0.5)
-                    count += 1
-                    print("Successfully Enrolled!")
-                    break
-                else:
-                    if f1 == 0:
-                        print("Place your finger")
-                        f1 = 1
+        if enrolled:
+            # Save fingerprint data to CSV file
+            with open("fingerprint_data.csv", "a", newline="") as file:
+                writer = csv.writer(file)
+                writer.writerow([employee_id, first_name, last_name])
+
+            print("Fingerprint enrolled successfully.")
+        else:
+            print("Failed to enroll fingerprint.")
+
 
     def verify(self):
         fingerprint = input("Scan your fingerprint: ")
