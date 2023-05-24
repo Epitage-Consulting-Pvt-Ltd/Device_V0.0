@@ -453,8 +453,8 @@ class MainWindow(QMainWindow):
         self.enroll_button = QPushButton("Enroll Fingerprint", self)
         self.enroll_button.setGeometry(40, 200, 200, 40)
 
-        self.verify_button = QPushButton("Verify Fingerprint", self)
-        self.verify_button.setGeometry(240, 200, 180, 40)
+        #self.verify_button = QPushButton("Verify Fingerprint", self)
+        #self.verify_button.setGeometry(240, 200, 180, 40)
 
         # Set font for labels and buttons
         font = QFont()
@@ -463,11 +463,11 @@ class MainWindow(QMainWindow):
         self.last_name_label.setFont(font)
         self.employee_id_label.setFont(font)
         self.enroll_button.setFont(font)
-        self.verify_button.setFont(font)
+        #self.verify_button.setFont(font)
 
         # Connect button signals to slots
         self.enroll_button.clicked.connect(self.enrollid)
-        self.verify_button.clicked.connect(self.verify)
+        #self.verify_button.clicked.connect(self.verify)
 
         # Initialize fingerprint data
         self.fingerprint_data = {}
@@ -484,7 +484,7 @@ class MainWindow(QMainWindow):
         # Assuming you have a fingerprint scanner object named `f` for capturing fingerprints
 
         # Capture fingerprint
-        fingerprint = f.capture_fingerprint()  # Replace `capture_fingerprint` with the appropriate method for your fingerprint scanner
+        fingerprint = f.capture_finger()  # Replace `capture_fingerprint` with the appropriate method for your fingerprint scanner
 
         # Enroll fingerprint
         enrolled = f.enroll(fingerprint)  # Replace `enroll` with the appropriate method for enrolling fingerprints
@@ -493,13 +493,13 @@ class MainWindow(QMainWindow):
             # Save fingerprint data to CSV file
             with open("fingerprint_data.csv", "a", newline="") as file:
                 writer = csv.writer(file)
-                writer.writerow([employee_id, first_name, last_name])
+                writer.writerow([employee_id, first_name, last_name, enrolled])
 
             print("Fingerprint enrolled successfully.")
         else:
             print("Failed to enroll fingerprint.")
 
-
+'''
     def verify(self):
         fingerprint = input("Scan your fingerprint: ")
 
@@ -510,8 +510,9 @@ class MainWindow(QMainWindow):
             )
         else:
             print("Fingerprint not found.")
-
-        idtemp = f.identify()
+        
+        fingerprint = f.capture_fingerprint()
+        verified = f.identiy()
         if f.capture_finger():  # capture_finger function
             if idtemp == -1:
                 GPIO.output(11, GPIO.HIGH)
@@ -525,7 +526,7 @@ class MainWindow(QMainWindow):
         time.sleep(2)
         GPIO.output(11, GPIO.LOW)
         GPIO.output(12, GPIO.LOW)
-
+'''
 
 if __name__ == "__main__":
     # Initialize the fingerprint sensor

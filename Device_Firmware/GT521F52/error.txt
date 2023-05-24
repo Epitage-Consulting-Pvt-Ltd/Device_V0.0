@@ -1,0 +1,4 @@
+[Fingerprint][2023-05-24 16:04:02,989] Serial connected.
+Fingerprint sensor initialized.
+QStandardPaths: XDG_RUNTIME_DIR not set, defaulting to '/tmp/runtime-root'
+Scan your fingerprint: QCoreApplication::exec: The event loop is already running
