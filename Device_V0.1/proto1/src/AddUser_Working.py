@@ -26,9 +26,6 @@ logging.basicConfig(format="[%(name)s][%(asctime)s] %(message)s")
 logger = logging.getLogger("Fingerprint")
 logger.setLevel(logging.INFO)
 
-class Register_user:
-    def __init__(self):
-        self.user_data = []
 
 class Fingerprint:
     COMMENDS = {
@@ -476,11 +473,11 @@ class AddUserWindow(QMainWindow):
         self.button = QPushButton('Scan Card', self)
         self.button.move(200,200)
         self.button.clicked.connect(self.register_rfid)
-        #self.button.clicked.connect(self.register_user)
 
         self.enroll_button = QPushButton("Enroll Fingerprint", self)
-        self.enroll_button.setGeometry(40, 300, 350, 40)
-        #self.rfid_textbox.setStyleSheet(yellow_state)
+        self.enroll_button.setGeometry(20, 300, 350, 20)
+        #self.button.move(300,300)
+#self.rfid_textbox.setStyleSheet(yellow_state)
 
         # Set window size and title
         #self.setGeometry(0, 0, 480, 800)
@@ -492,10 +489,9 @@ class AddUserWindow(QMainWindow):
         #self.save_btn.resize(100, 30)
         #self.save_btn.clicked.connect(self.register_rfid)
         #self.save_btn.setStyleSheet(BUTTON_STYLE)
-        #self.enroll_button.setFont(font)
+        #oself.enroll_button.setFont(font)
 
         self.enroll_button.clicked.connect(self.enrollid)
-        #self.enroll_button.clicked.connect(self.register_user)
 
         self.fingerprint_data = {}
 
@@ -519,12 +515,11 @@ class AddUserWindow(QMainWindow):
 
         # Capture fingerprint
         fingerprint = f.capture_finger()  # Replace `capture_fingerprint` with the appropriate method for your fingerprint scanner
-        self.user_data = [fn, ln, eid]
 
         # Enroll fingerprint
         enrolled = f.enroll(fingerprint)  # Replace `enroll` with the appropriate method for enrolling fingerprints
-        
-        '''if enrolled:
+
+        if enrolled:
             # Save fingerprint data to CSV file
             with open("users.csv", "a", newline="") as file:
                 writer = csv.writer(file)
@@ -533,7 +528,7 @@ class AddUserWindow(QMainWindow):
 
             print("Fingerprint enrolled successfully.")
         else:
-            print("Failed to enroll fingerprint.")'''
+            print("Failed to enroll fingerprint.")
 
     def show_user_main_window(self):
         from UserMain_Working import UserMainWindow
@@ -549,23 +544,6 @@ class AddUserWindow(QMainWindow):
             print("Place Card on reader.")
             rfid_id = self.rfid_reader.read_id()
 
-            if not rfid_id:
-                QMessageBox.critical(self, "Error", "RFID card not detected.")
-                return
-
-            self.user_data.append(rfid_id)
-
-            fingerprint = f.capture_finger()
-            enrolled = f.enroll(fingerprint)
-
-            self.user_data.append(enrolled)
-
-            with open("users.csv", "a", newline="") as file:
-                writer = csv.writer(file)
-                writer.writerow(self.user_data)
-
-            print("User data saved to CSV file.")
-
             #with open("users.csv", "r") as file:
             #reader = csv.reader(file)
             #for row in reader:
@@ -573,11 +551,11 @@ class AddUserWindow(QMainWindow):
             #        print("RFID Card is already registered.")
             #        return
             
-            #with open("users.csv", "a") as file:
-                #writer = csv.writer(file)
-                #writer.writerow([fn, ln, eid, rfid_id, enrolled])
+            with open("users.csv", "a") as file:
+                writer = csv.writer(file)
+                writer.writerow([fn, ln, eid, rfid_id])
 
-            #print("RFID Assignment Success.")
+            print("RFID Assignment Success.")
 
             self.fn_textbox.clear()
             self.ln_textbox.clear()

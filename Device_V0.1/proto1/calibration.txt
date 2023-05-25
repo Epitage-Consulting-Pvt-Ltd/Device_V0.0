@@ -1,0 +1,16 @@
+Calibrating standard Xorg driver "raspberrypi-ts"
+	current calibration values: min_x=0, max_x=65535 and min_y=0, max_y=65535
+	If these values are estimated wrong, either supply it manually with the --precalib option, or run the 'get_precalib.sh' script to automatically get it (through HAL).
+	--> Making the calibration permanent <--
+  copy the snippet below into '/etc/X11/xorg.conf.d/99-calibration.conf' (/usr/share/X11/xorg.conf.d/ in some distro's)
+Section "InputClass"
+	Identifier	"calibration"
+	MatchProduct	"raspberrypi-ts"
+	Option	"MinX"	"56126"
+	Option	"MaxX"	"55489"
+	Option	"MinY"	"19169"
+	Option	"MaxY"	"19824"
+	Option	"SwapXY"	"1" # unless it was already set to 1
+	Option	"InvertX"	"0"  # unless it was already set
+	Option	"InvertY"	"0"  # unless it was already set
+EndSection
