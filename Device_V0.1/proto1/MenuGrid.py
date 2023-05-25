@@ -48,7 +48,7 @@ class MenuWindow(QWidget):
             svg_widget.setFixedSize(100, 100)
 
             # set the background color of the QSvgWidget to transparent
-            svg_widget.setStyleSheet(TRANSPARENT_BUTTON)
+            svg_widget.setStyleSheet(Transparent_BUTTON_STYLE)
 
             # create a QPixmap from the QSvgWidget with a white background
             pixmap = QPixmap(svg_widget.size())
