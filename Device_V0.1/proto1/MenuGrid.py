@@ -1,22 +1,24 @@
-from PyQt5.QtWidgets import QApplication, QMainWindow, QWidget, QGridLayout, QLabel, QPushButton
-from PyQt5.QtGui import QIcon, QPixmap, QColor, QPalette, QFont
-from PyQt5.QtCore import Qt, QTimer, QDate, QTime
-from MenuGrid import MenuWindow
-from topband import topband
-from theme import BACKGROUND_COLOR, FOREGROUND_COLOR, ACCENT_COLOR, BUTTON_STYLE, TABLE_STYLE , WINDOW_BACKGROUND_COLOR, WINDOW_FOREGROUND_COLOR
-import sys
+from PyQt5.QtWidgets import QApplication, QWidget, QGridLayout, QPushButton
+from PyQt5.QtGui import QIcon, QImage, QPixmap, QPainter, QPalette
+from PyQt5 import QtWidgets
+from PyQt5.QtWidgets import QVBoxLayout, QLabel
+from PyQt5.QtCore import Qt
 
-class MainWindow(QMainWindow):
+import sys
+from theme import BACKGROUND_COLOR, FOREGROUND_COLOR, ACCENT_COLOR, BUTTON_STYLE, TABLE_STYLE , WINDOW_BACKGROUND_COLOR, WINDOW_FOREGROUND_COLOR , Transparent_BUTTON_STYLE
+from PyQt5.QtSvg import QSvgWidget
+from UserMain_Final import UserMainWindow
+from topband import topband
+from cardverification import CardVerificationApp
+class MenuWindow(QWidget):
     def __init__(self):
+
         super().__init__()
 
-        topband(self)
-
-        # set window title
-        self.setWindowTitle("Splash Screen")
-
-        # set window size
+        # set window title and size
+        self.setWindowTitle("Device Menu")
         self.resize(480, 800)
+        topband(self)
 
         # Set window background and foreground colors
         palette = self.palette()
@@ -24,90 +26,109 @@ class MainWindow(QMainWindow):
         palette.setColor(QPalette.WindowText, WINDOW_FOREGROUND_COLOR)
         self.setPalette(palette)
 
-        # create central widget
-        central_widget = QWidget()
-        self.setCentralWidget(central_widget)
+        # create a grid layout with 3 rows and 2 columns
+        layout_g = QGridLayout(self)
+        self.setLayout(layout_g)
 
-        # create a grid layout with 4 rows and 2 columns
-        layout_g = QGridLayout()
-        central_widget.setLayout(layout_g)
+        # Add 'Back' button
+        self.back_btn = QPushButton('Back', self)
+        self.back_btn.move(20, 25)
+        self.back_btn.setStyleSheet(BUTTON_STYLE)
+        self.back_btn.clicked.connect(self.show_splashS)
+        self.back_btn.clicked.connect(self.close)
 
-        # add logos to the first row
-        logo1 = QLabel()
-        pixmap1 = QPixmap("image/ethos.jpg").scaled(370, 370, Qt.KeepAspectRatio, Qt.SmoothTransformation)
-        logo1.setPixmap(pixmap1)
-        layout_g.addWidget(logo1, 1, 0, 3, 0, Qt.AlignCenter)
+        # create a reusable function to add buttons to the layout
 
-        logo2 = QLabel()
-        pixmap2 = QPixmap("images/gsk.jpg").scaled(50, 50, Qt.KeepAspectRatio, Qt.SmoothTransformation)
-        logo2.setPixmap(pixmap2)
-        logo2.move(18, 10)
+        def add_button(image_path, text, row, col):
+            # create a QVBoxLayout to stack the QSvgWidget and QLabel
+            layout = QVBoxLayout()
 
-        logo3 = QLabel()
-        pixmap3 = QPixmap("images/epitage.jpg").scaled(80, 80, Qt.KeepAspectRatio, Qt.SmoothTransformation)
-        logo3.setPixmap(pixmap3)
-        logo3.move(370, 10)
+            # create a QSvgWidget object from the image path
+            svg_widget = QSvgWidget(image_path)
+            svg_widget.setFixedSize(100, 100)
+
+            # set the background color of the QSvgWidget to transparent
+            svg_widget.setStyleSheet(TRANSPARENT_BUTTON)
+
+            # create a QPixmap from the QSvgWidget with a white background
+            pixmap = QPixmap(svg_widget.size())
+            pixmap.fill(Qt.white)
+            painter = QPainter(pixmap)
+            svg_widget.render(painter)
+            painter.end()
+
+            # create a QIcon object from the pixmap
+            icon = QIcon(pixmap)
+
+            # create a button and set its icon and size
+            button = QPushButton()
+            button.setIcon(icon)
+            button.setIconSize(button.size())
+            button.setFixedSize(169, 169)
+
+            # set the button's style sheet to have a transparent background
+            button.setStyleSheet(TRANSPARENT_BUTTON)
+
+            # create a QLabel for the text
+            label = QLabel(text)
+            label.setAlignment(Qt.AlignCenter)
+
+            # add the QSvgWidget and QLabel to the layout
+            layout.addWidget(svg_widget)
+            layout.addWidget(label)
+
+            # create a QWidget to hold the layout
+            widget = QWidget()
+            widget.setLayout(layout)
+
+            # create a QIcon object from the QWidget
+            icon = QIcon(widget.grab())
+
+            # create a button and set its icon and size
+            button = QPushButton()
+            button.setIcon(icon)
+            button.setIconSize(button.size())
+            button.setFixedSize(169, 169)
+
+            # set the button's style sheet to have a transparent background
+            button.setStyleSheet(TRANSPARENT_BUTTON)
+
+            # add the button to the layout
+            layout_g.addWidget(button, row, col)
+
+            return button
+
+        # add buttons to the layout using the reusable function
+        user_reg = add_button("svgfiles/user.svg", "User Registeration", 0, 0)
+        user_reg.clicked.connect(self.show_user_main_window)
+        user_reg.clicked.connect(self.close)
+        user_reg.setStyleSheet(TRANSPARENT_BUTTON)
+
+        card_verify = add_button("svgfiles/cardverify.svg","Card Verification", 0, 1)
+        card_verify.clicked.connect(self.show_verify_card_window)
+        card_verify.clicked.connect(self.close)
+        card_verify.setStyleSheet(TRANSPARENT_BUTTON)
 
 
-        '''
-        # add system time to the second row
-        time_label = QLabel()
-        time_label.setObjectName("timeLabel")
-        time_label.setAlignment(Qt.AlignCenter)
-        time_label.setStyleSheet("fint-size: 32px;")
-        layout_g.addWidget(time_label, 2, 1, 1, 2)
-        '''
+    def show_user_main_window(self):
+        self.user_main_window = UserMainWindow()
+        self.user_main_window.show()
 
-        # add today's date to the third row
-        date_label = QLabel()
-        date_label.setObjectName("dateLabel")
-        date_label.setAlignment(Qt.AlignCenter)
-        date_label.setStyleSheet("font-size: 32px;")
-        layout_g.addWidget(date_label, 3, 0, 2, 4)
+    def show_splashS(self):
+        from splashscreen import MainWindow
+        self.splashS = MainWindow()
+        self.splashS.show()
 
+    def show_verify_card_window(self):
 
-
-        # add menu button to the fourth row
-        menu_button = QPushButton("Menu")
-        menu_button.setFixedSize(120, 40)
-        layout_g.addWidget(menu_button, 4, 0, 1, 4, Qt.AlignCenter)
-        menu_button.setStyleSheet(BUTTON_STYLE)
-        menu_button.clicked.connect(self.show_menu_grid_window)
-        menu_button.clicked.connect(self.close)
-
-
-        # update the time and date labels every second
-        timer = QTimer(self)
-        timer.timeout.connect(self.update_labels)
-        timer.start(1000)
-
-    def update_labels(self):
-
-        '''
-        # update the time label with the current system time
-        time_label = self.centralWidget().findChild(QLabel)
-        current_time = QTime.currentTime().toString("hh:mm:ss")
-        time_label.setText(current_time)
-        '''
-
-        # update the date label with today's date
-        date_label = self.centralWidget().findChild(QLabel, "dateLabel")
-        #date_label = self.centralWidget().findChild(QLabel, "dateLabel")
-        current_date = QDate.currentDate().toString(Qt.DefaultLocaleLongDate)
-        date_label.setText(current_date)
-
-    def show_menu_grid_window(self):
-        self.menu_grid_window = MenuWindow()
-        self.menu_grid_window.show()
-
+        self.show_verify_card_window = CardVerificationApp()
+        self.show_verify_card_window.show()
 
 
 if __name__ == '__main__':
-    # create the application
+    # create the application and main window
     app = QApplication(sys.argv)
-    # create the main window
-    window = MainWindow()
-    # show the window
+    window = MenuWindow()
+    # show the window and run the event loop
     window.show()
-    # run the event loop
     sys.exit(app.exec_())

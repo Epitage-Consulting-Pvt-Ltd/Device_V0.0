@@ -9,7 +9,7 @@ from theme import BACKGROUND_COLOR, FOREGROUND_COLOR, ACCENT_COLOR, BUTTON_STYLE
 from PyQt5.QtSvg import QSvgWidget
 from UserMain_Working import UserMainWindow
 from topband import topband
-from cardverification import CardVerificationApp
+#from cardverification import CardVerificationApp
 class MenuWindow(QWidget):
     def __init__(self):
 
