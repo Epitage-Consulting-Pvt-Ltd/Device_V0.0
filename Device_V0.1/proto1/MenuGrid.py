@@ -67,7 +67,7 @@ class MenuWindow(QWidget):
             button.setFixedSize(169, 169)
 
             # set the button's style sheet to have a transparent background
-            button.setStyleSheet(TRANSPARENT_BUTTON)
+            button.setStyleSheet(Transparent_BUTTON_STYLE)
 
             # create a QLabel for the text
             label = QLabel(text)
@@ -91,7 +91,7 @@ class MenuWindow(QWidget):
             button.setFixedSize(169, 169)
 
             # set the button's style sheet to have a transparent background
-            button.setStyleSheet(TRANSPARENT_BUTTON)
+            button.setStyleSheet(Transparent_BUTTON_STYLE)
 
             # add the button to the layout
             layout_g.addWidget(button, row, col)
@@ -99,15 +99,15 @@ class MenuWindow(QWidget):
             return button
 
         # add buttons to the layout using the reusable function
-        user_reg = add_button("svgfiles/user.svg", "User Registeration", 0, 0)
+        user_reg = add_button("svgfiles/adduser.svg", "User Registeration", 0, 0)
         user_reg.clicked.connect(self.show_user_main_window)
         user_reg.clicked.connect(self.close)
-        user_reg.setStyleSheet(TRANSPARENT_BUTTON)
+        user_reg.setStyleSheet(Transparent_BUTTON_STYLE)
 
         card_verify = add_button("svgfiles/cardverify.svg","Card Verification", 0, 1)
         card_verify.clicked.connect(self.show_verify_card_window)
         card_verify.clicked.connect(self.close)
-        card_verify.setStyleSheet(TRANSPARENT_BUTTON)
+        card_verify.setStyleSheet(Transparent_BUTTON_STYLE)
 
 
     def show_user_main_window(self):
