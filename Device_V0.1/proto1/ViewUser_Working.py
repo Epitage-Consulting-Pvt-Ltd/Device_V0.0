@@ -14,7 +14,7 @@ class ViewUserWindow(QMainWindow):
         # Add 'Back' button
         self.back_btn = QPushButton('Back', self)
         self.back_btn.move(50, 50)
-        self.back_btn.clicked.connect(self.close)
+        self.back_btn.clicked.connect(self.show_user_main)
         self.back_btn.setStyleSheet(BUTTON_STYLE)
 
         # Add table to display user data
@@ -34,6 +34,10 @@ class ViewUserWindow(QMainWindow):
                     self.table.setItem(i, j, QTableWidgetItem(data[i][j]))
 
         self.show()
+    def show_user_main_window(self):
+        from UserMain_Final import UserMainWindow
+        self.show_user_main_window = UserMainWindow()
+        self.show_user_main_window.show()
 
 if __name__ == '__main__':
     app = QApplication([])

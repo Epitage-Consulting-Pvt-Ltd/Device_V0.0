@@ -99,7 +99,7 @@ class MenuWindow(QWidget):
             return button
 
         # add buttons to the layout using the reusable function
-        user_reg = add_button("svgfiles/adduser.svg", "User Registeration", 0, 0)
+        user_reg = add_button("svgfiles/user.svg", "User Registeration", 0, 0)
         user_reg.clicked.connect(self.show_user_main_window)
         user_reg.clicked.connect(self.close)
         user_reg.setStyleSheet(Transparent_BUTTON_STYLE)
