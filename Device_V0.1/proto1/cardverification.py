@@ -5,6 +5,7 @@ from PyQt5.QtWidgets import QApplication, QMainWindow, QLabel, QPushButton
 from PyQt5.QtGui import QFont
 from mfrc522 import SimpleMFRC522
 import RPi.GPIO as GPIO
+from theme import BUTTON_STYLE
 
 class CardVerificationApp(QMainWindow):
     def __init__(self):
@@ -20,6 +21,13 @@ class CardVerificationApp(QMainWindow):
 
         # Set window title
         self.setWindowTitle("Card Verification")
+
+        # Add 'Back' button
+        self.back_btn = QPushButton('Back', self)
+        self.back_btn.move(10, 10)
+        self.back_btn.clicked.connect(self.show_menu_grid_window)
+        self.back_btn.clicked.connect(self.close)
+        self.back_btn.setStyleSheet(BUTTON_STYLE)
 
         # Create label to display user details
         self.user_label = QLabel("Scan an RFID card", self)
@@ -75,7 +83,10 @@ class CardVerificationApp(QMainWindow):
         GPIO.cleanup()
         event.accept()
 
-
+    def show_menu_grid_window(self):
+        from MenuGrid import MenuWindow
+        self.menu_grid_window = MenuWindow()
+        self.menu_grid_window.show()
 if __name__ == "__main__":
     # Initialize the PyQt application
     app = QApplication(sys.argv)
