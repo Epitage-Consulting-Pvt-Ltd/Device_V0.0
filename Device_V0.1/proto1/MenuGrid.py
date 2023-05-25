@@ -7,7 +7,12 @@ from PyQt5.QtCore import Qt
 import sys
 from theme import BACKGROUND_COLOR, FOREGROUND_COLOR, ACCENT_COLOR, BUTTON_STYLE, TABLE_STYLE , WINDOW_BACKGROUND_COLOR, WINDOW_FOREGROUND_COLOR , Transparent_BUTTON_STYLE
 from PyQt5.QtSvg import QSvgWidget
-from UserMain_Final import UserMainWindow
+
+#Layout New
+#from UserMain_Final import UserMainWindow
+#Layout Old
+from AddUser_Working import AddUserWindow
+
 from topband import topband
 from cardverification import CardVerificationApp
 class MenuWindow(QWidget):
@@ -100,7 +105,7 @@ class MenuWindow(QWidget):
 
         # add buttons to the layout using the reusable function
         user_reg = add_button("svgfiles/user.svg", "User Registeration", 0, 0)
-        user_reg.clicked.connect(self.show_user_main_window)
+        user_reg.clicked.connect(self.show_user_main_windowB)
         user_reg.clicked.connect(self.close)
         user_reg.setStyleSheet(Transparent_BUTTON_STYLE)
 
@@ -110,9 +115,14 @@ class MenuWindow(QWidget):
         card_verify.setStyleSheet(Transparent_BUTTON_STYLE)
 
 
-    def show_user_main_window(self):
-        self.user_main_window = UserMainWindow()
-        self.user_main_window.show()
+    def show_user_main_windowA(self):
+        self.user_main_windowA = UserMainWindow()
+        self.user_main_windowA.show()
+        
+    def show_user_main_windowB(self):
+        self.user_main_windowB = AddUserWindow()
+        self.user_main_windowB.show()
+
 
     def show_splashS(self):
         from splashscreen import MainWindow
