@@ -132,4 +132,3 @@ if __name__ == '__main__':
     # show the window and run the event loop
     window.show()
     sys.exit(app.exec_())
-

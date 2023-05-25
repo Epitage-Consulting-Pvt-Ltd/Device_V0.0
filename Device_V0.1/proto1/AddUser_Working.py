@@ -440,6 +440,7 @@ class AddUserWindow(QMainWindow):
         # Initialize RFID reader
         self.rfid_reader = SimpleMFRC522()
         self.initUI()
+        self.user_data = []
 
     def initUI(self):
         self.setWindowTitle("Add User")
@@ -547,6 +548,7 @@ class AddUserWindow(QMainWindow):
             eid = self.eid_textbox.text()
 
             print("Place Card on reader.")
+            self.user_data = [fn, ln, eid]
             rfid_id = self.rfid_reader.read_id()
 
             if not rfid_id:

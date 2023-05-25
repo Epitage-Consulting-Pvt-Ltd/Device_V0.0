@@ -7,58 +7,58 @@ import time
 
 import settings
 
-#import os
-#import serial
+# import os
+# import serial
 
-#PORT_FINGERPRINTSCANNER = '/dev/ttyUSB0' # 5v
+# PORT_FINGERPRINTSCANNER = '/dev/ttyUSB0' # 5v
 
 
 GPIO.setmode(GPIO.BOARD)
 GPIO.setwarnings(False)
-GPIO.setup(11,GPIO.OUT)
-GPIO.setup(12,GPIO.OUT)
+GPIO.setup(11, GPIO.OUT)
+GPIO.setup(12, GPIO.OUT)
 
 logging.basicConfig(format="[%(name)s][%(asctime)s] %(message)s")
 logger = logging.getLogger("Fingerprint")
 logger.setLevel(logging.INFO)
 
 
-class Fingerprint():
+class Fingerprint:
 
     COMMENDS = {
-        'None': 0x00,  # Default value for enum. Scanner will return error if sent this.
-        'Open': 0x01,  # Open Initialization
-        'Close': 0x02,  # Close Termination
-        'UsbInternalCheck': 0x03,  # UsbInternalCheck Check if the connected USB device is valid
-        'ChangeBaudrate': 0x04,  # ChangeBaudrate Change UART baud rate
-        'SetIAPMode': 0x05,  # SetIAPMode Enter IAP Mode In this mode, FW Upgrade is available
-        'CmosLed': 0x12,  # CmosLed Control CMOS LED
-        'GetEnrollCount': 0x20,  # Get enrolled fingerprint count
-        'CheckEnrolled': 0x21,  # Check whether the specified ID is already enrolled
-        'EnrollStart': 0x22,  # Start an enrollment
-        'Enroll1': 0x23,  # Make 1st template for an enrollment
-        'Enroll2': 0x24,  # Make 2nd template for an enrollment
-        'Enroll3': 0x25,
+        "None": 0x00,  # Default value for enum. Scanner will return error if sent this.
+        "Open": 0x01,  # Open Initialization
+        "Close": 0x02,  # Close Termination
+        "UsbInternalCheck": 0x03,  # UsbInternalCheck Check if the connected USB device is valid
+        "ChangeBaudrate": 0x04,  # ChangeBaudrate Change UART baud rate
+        "SetIAPMode": 0x05,  # SetIAPMode Enter IAP Mode In this mode, FW Upgrade is available
+        "CmosLed": 0x12,  # CmosLed Control CMOS LED
+        "GetEnrollCount": 0x20,  # Get enrolled fingerprint count
+        "CheckEnrolled": 0x21,  # Check whether the specified ID is already enrolled
+        "EnrollStart": 0x22,  # Start an enrollment
+        "Enroll1": 0x23,  # Make 1st template for an enrollment
+        "Enroll2": 0x24,  # Make 2nd template for an enrollment
+        "Enroll3": 0x25,
         # Make 3rd template for an enrollment, merge three templates into one template, save merged template to the database
-        'IsPressFinger': 0x26,  # Check if a finger is placed on the sensor
-        'DeleteID': 0x40,  # Delete the fingerprint with the specified ID
-        'DeleteAll': 0x41,  # Delete all fingerprints from the database
-        'Verify1_1': 0x50,  # Verification of the capture fingerprint image with the specified ID
-        'Identify1_N': 0x51,  # Identification of the capture fingerprint image with the database
-        'VerifyTemplate1_1': 0x52,  # Verification of a fingerprint template with the specified ID
-        'IdentifyTemplate1_N': 0x53,  # Identification of a fingerprint template with the database
-        'CaptureFinger': 0x60,  # Capture a fingerprint image(256x256) from the sensor
-        'MakeTemplate': 0x61,  # Make template for transmission
-        'GetImage': 0x62,  # Download the captured fingerprint image(256x256)
-        'GetRawImage': 0x63,  # Capture & Download raw fingerprint image(320x240)
-        'GetTemplate': 0x70,  # Download the template of the specified ID
-        'SetTemplate': 0x71,  # Upload the template of the specified ID
-        'GetDatabaseStart': 0x72,  # Start database download, obsolete
-        'GetDatabaseEnd': 0x73,  # End database download, obsolete
-        'UpgradeFirmware': 0x80,  # Not supported
-        'UpgradeISOCDImage': 0x81,  # Not supported
-        'Ack': 0x30,  # Acknowledge.
-        'Nack': 0x31  # Non-acknowledge
+        "IsPressFinger": 0x26,  # Check if a finger is placed on the sensor
+        "DeleteID": 0x40,  # Delete the fingerprint with the specified ID
+        "DeleteAll": 0x41,  # Delete all fingerprints from the database
+        "Verify1_1": 0x50,  # Verification of the capture fingerprint image with the specified ID
+        "Identify1_N": 0x51,  # Identification of the capture fingerprint image with the database
+        "VerifyTemplate1_1": 0x52,  # Verification of a fingerprint template with the specified ID
+        "IdentifyTemplate1_N": 0x53,  # Identification of a fingerprint template with the database
+        "CaptureFinger": 0x60,  # Capture a fingerprint image(256x256) from the sensor
+        "MakeTemplate": 0x61,  # Make template for transmission
+        "GetImage": 0x62,  # Download the captured fingerprint image(256x256)
+        "GetRawImage": 0x63,  # Capture & Download raw fingerprint image(320x240)
+        "GetTemplate": 0x70,  # Download the template of the specified ID
+        "SetTemplate": 0x71,  # Upload the template of the specified ID
+        "GetDatabaseStart": 0x72,  # Start database download, obsolete
+        "GetDatabaseEnd": 0x73,  # End database download, obsolete
+        "UpgradeFirmware": 0x80,  # Not supported
+        "UpgradeISOCDImage": 0x81,  # Not supported
+        "Ack": 0x30,  # Acknowledge.
+        "Nack": 0x31,  # Non-acknowledge
     }
 
     PACKET_RES_0 = 0x55
@@ -68,7 +68,6 @@ class Fingerprint():
 
     ACK = 0x30
     NACK = 0x31
-
 
     def __init__(self, port, baud, timeout=1):
         self.port = port
@@ -81,20 +80,26 @@ class Fingerprint():
 
     def init(self):
         try:
-            self.ser = serial.Serial(self.port, baudrate=self.baud, timeout=self.timeout)
+            self.ser = serial.Serial(
+                self.port, baudrate=self.baud, timeout=self.timeout
+            )
             time.sleep(1)
             connected = self.open_serial()
             if not connected:
                 self.ser.close()
                 baud_prev = 9600 if self.baud == 115200 else 115200
-                self.ser = serial.Serial(self.port, baudrate=baud_prev, timeout=self.timeout)
+                self.ser = serial.Serial(
+                    self.port, baudrate=baud_prev, timeout=self.timeout
+                )
                 if not self.open_serial():
                     raise Exception()
                 if self.open():
                     self.change_baud(self.baud)
                     logger.info("The baud rate is changed to %s." % self.baud)
                 self.ser.close()
-                self.ser = serial.Serial(self.port, baudrate=self.baud, timeout=self.timeout)
+                self.ser = serial.Serial(
+                    self.port, baudrate=self.baud, timeout=self.timeout
+                )
                 if not self.open_serial():
                     raise Exception()
             logger.info("Serial connected.")
@@ -132,9 +137,18 @@ class Fingerprint():
             return True
         return False
 
-    def _send_packet(self, cmd, param=0):
+    def _send_packet(self, command, param=0):
+        # ... existing code ...
+        # Split param into bytes
+        # ... rest of the code ...
+
+        # def _send_packet(self, cmd, param=0):
         cmd = Fingerprint.COMMENDS[cmd]
         param = [int(hex(param >> i & 0xFF), 16) for i in (0, 8, 16, 24)]
+
+        if param is not None:
+            param = int(param)  # Convert param to an integer
+            param = [int(hex(param >> i & 0xFF), 16) for i in (0, 8, 16, 24)]
 
         packet = bytearray(12)
         packet[0] = 0x55
@@ -159,16 +173,16 @@ class Fingerprint():
     def _flush(self):
         while self.ser.readable() and self.ser.inWaiting() > 0:
             p = self.ser.read(self.ser.inWaiting())
-            if p == b'':
+            if p == b"":
                 break
 
     def _read(self):
         if self.ser and self.ser.readable():
             try:
                 p = self.ser.read()
-                if p == b'':
+                if p == b"":
                     return None
-                return int(codecs.encode(p, 'hex_codec'), 16)
+                return int(codecs.encode(p, "hex_codec"), 16)
             except:
                 return None
         else:
@@ -196,7 +210,10 @@ class Fingerprint():
                     continue
                 else:
                     return None, None, None, None
-            elif firstbyte == Fingerprint.PACKET_RES_0 and secondbyte == Fingerprint.PACKET_RES_1:
+            elif (
+                firstbyte == Fingerprint.PACKET_RES_0
+                and secondbyte == Fingerprint.PACKET_RES_1
+            ):
                 break
         packet[0] = firstbyte
         packet[1] = secondbyte
@@ -210,13 +227,13 @@ class Fingerprint():
         param = bytearray(4)
         param[:] = packet[4:8]
         if param is not None:
-            param = int(codecs.encode(param[::-1], 'hex_codec'), 16)
+            param = int(codecs.encode(param[::-1], "hex_codec"), 16)
 
         # Parse response
         res = bytearray(2)
         res[:] = packet[8:10]
         if res is not None:
-            res = int(codecs.encode(res[::-1], 'hex_codec'), 16)
+            res = int(codecs.encode(res[::-1], "hex_codec"), 16)
 
         # Read data packet
         data = None
@@ -224,7 +241,10 @@ class Fingerprint():
             firstbyte, secondbyte = self._read_header()
             if firstbyte and secondbyte:
                 # Data exists.
-                if firstbyte == Fingerprint.PACKET_DATA_0 and secondbyte == Fingerprint.PACKET_DATA_1:
+                if (
+                    firstbyte == Fingerprint.PACKET_DATA_0
+                    and secondbyte == Fingerprint.PACKET_DATA_1
+                ):
                     data = bytearray()
                     data.append(firstbyte)
                     data.append(secondbyte)
@@ -235,7 +255,7 @@ class Fingerprint():
                 if len(p) == 0:
                     break
                 data.append(p)
-            data = int(codecs.encode(data[::-1], 'hex_codec'), 16)
+            data = int(codecs.encode(data[::-1], "hex_codec"), 16)
 
         return ack, param, res, data
 
@@ -360,7 +380,7 @@ class Fingerprint():
             """
 
             cnt = 0
-            while not self.capture_finger():             #capture_finger function
+            while not self.capture_finger():  # capture_finger function
                 cnt += 1
                 if cnt >= try_cnt:
                     return -1
@@ -377,7 +397,7 @@ class Fingerprint():
         # Enroll process finished
         return idx
 
-    def delete(self, idx=None):
+    """def delete(self, idx=None):
         res = None
         if not idx:
             # Delete all fingerprints
@@ -394,10 +414,10 @@ class Fingerprint():
         res = self._send_packet("DeleteID", did)
         if res:
             ack, _, _, _ = self._read_packet()
-            return ack
+            return ack"""
 
     def identify(self):
-        while not self.capture_finger():                     #capture_finger function
+        while not self.capture_finger():  # capture_finger function
             time.sleep(0.1)
         if self._send_packet("Identify1_N"):
             ack, param, _, _ = self._read_packet()
@@ -407,22 +427,41 @@ class Fingerprint():
                 return -1
         return None
 
+    def delete_all(self):
+        if self._send_packet("DeleteAll"):
+            ack, _, _, _ = self._read_packet()
+            return ack
+        return None
 
-if __name__ == '__main__':
+    def delete(self, idx=None):
+        if idx is None:
+            return self.delete_all()
+        else:
+            return self.delete_id(idx)
+
+    def delete_id(self, idx):
+        if self._send_packet("DeleteID", idx):
+            ack, _, _, _ = self._read_packet()
+            return ack
+        return None
+
+
+if __name__ == "__main__":
 
     f = Fingerprint(settings.PORT_FINGERPRINTSCANNER, 115200)
-   # f = Fingerprint(settings.ser, 9600)
+    # f = Fingerprint(settings.ser, 9600)
 
     def signal_handler(signum, frame):
         f.close_serial()
+
     signal.signal(signal.SIGINT, signal_handler)
 
     if f.init():
         print("Open: %s" % str(f.open()))
-        
-        #f.delete()
+
+        # f.delete()
         count = f.get_enrolled_cnt()
-        
+
         ch = 0
         while ch != 4:
             print("no : of enrolled : %s" % str(count))
@@ -432,16 +471,19 @@ if __name__ == '__main__':
             print("4.Exit")
             f1 = 0
             ch = input("Your Choice:  ")
-            if ch == '1':
+            if ch == "1":
                 while f.get_enrolled_cnt() != count + 1:
                     time.sleep(0.5)
                     idtemp = str(f.identify())
-                    #idtemp = -1
+                    # idtemp = -1
                     if idtemp > "-1" and idtemp != "None":
-                        print("You are an already existing User with ID : %s" %str(idtemp+1))
+                        print(
+                            "You are an already existing User with ID : %s"
+                            % str(idtemp + 1)
+                        )
                         break
                     else:
-                        if f.capture_finger():                      #capture_finger function             
+                        if f.capture_finger():  # capture_finger function
                             f.enroll()
                             time.sleep(0.5)
                             count = count + 1
@@ -451,67 +493,69 @@ if __name__ == '__main__':
                             if f1 == 0:
                                 print("e Place your finger")
                                 f1 = 1
-#				break
+            # 				break
 
-            if ch == '2':
-                did = input("Enter ID number to delete : ")
-                print("Delete : %s" % str(did))
-                count = 0
-            
-            if ch == '3':
+            if ch == "2":
+                id_to_delete = input("Enter ID number to delete : ")
+                # print("Delete : %s" % str(did))
+                # count = 0
+                if f.delete(id_to_delete):
+                    print(f"Successfully deleted ID: {id_to_delete}")
+                else:
+                    print(f"Failed to delete ID: {id_to_delete}")
+
+            if ch == "3":
                 print("Place your Finger")
-                #print(f.capture_finger())                      #capture_finger function
-              
-                #time.sleep(2)
+                # print(f.capture_finger())                      #capture_finger function
+
+                # time.sleep(2)
 
                 idtemp = f.identify()
-                if f.capture_finger():                      #capture_finger function
+                if f.capture_finger():  # capture_finger function
                     if idtemp == -1:
-                        GPIO.output(11,GPIO.HIGH)
+                        GPIO.output(11, GPIO.HIGH)
                         print("You are not a valid user ")
                         time.sleep(1)
-                        GPIO.output(11,GPIO.LOW)
+                        GPIO.output(11, GPIO.LOW)
                     elif idtemp >= 0:
-                        GPIO.output(12,GPIO.HIGH)
-                        print("You are an already existing User with ID : %s" %str(idtemp+1))
+                        GPIO.output(12, GPIO.HIGH)
+                        print(
+                            "You are an already existing User with ID : %s"
+                            % str(idtemp + 1)
+                        )
                         time.sleep(1)
-                        GPIO.output(12,GPIO.LOW)
+                        GPIO.output(12, GPIO.LOW)
                 else:
                     print("did not place finger")
-            
-            if ch == '4':
+
+            if ch == "4":
                 print("Close: %s" % str(f.close()))
                 f.ser.close()
                 break
             #    exit()
-            
-       # exit()       
-                
-            
-        
-                
 
-        # print("LED On: %s" % str(f.set_led(True)))
-        # time.sleep(1)
-        # print("LED Off: %s" % str(f.set_led(False)))
+    # exit()
 
-        # for i in range(10):
-        #     print("Finger Pressed: %s" % str(f.is_finger_pressed()))
-        #     time.sleep(0.5)
+    # print("LED On: %s" % str(f.set_led(True)))
+    # time.sleep(1)
+    # print("LED Off: %s" % str(f.set_led(False)))
 
-        #print("Get Enrolled Cnt: %s" % str(f.get_enrolled_cnt()))
+    # for i in range(10):
+    #     print("Finger Pressed: %s" % str(f.is_finger_pressed()))
+    #     time.sleep(0.5)
 
-        #print("Delete: %s" % str(f.delete()))
+    # print("Get Enrolled Cnt: %s" % str(f.get_enrolled_cnt()))
 
-        #print("Get Enrolled Cnt: %s" % str(f.get_enrolled_cnt()))
+    # print("Delete: %s" % str(f.delete()))
 
-        #for i in range(10):
-           # print(i)
-            #print("Enroll: %s" % str(f.enroll()))
-           # print("Get Enrolled Cnt: %s" % str(f.get_enrolled_cnt()))
-            #time.sleep(1)
-        
+    # print("Get Enrolled Cnt: %s" % str(f.get_enrolled_cnt()))
 
-        #for i in range(10):
-            #print("Identify: %s" % str(f.identify()))
-           # time.sleep(1)
+    # for i in range(10):
+    # print(i)
+    # print("Enroll: %s" % str(f.enroll()))
+    # print("Get Enrolled Cnt: %s" % str(f.get_enrolled_cnt()))
+    # time.sleep(1)
+
+    # for i in range(10):
+    # print("Identify: %s" % str(f.identify()))
+    # time.sleep(1)

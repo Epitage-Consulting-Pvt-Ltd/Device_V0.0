@@ -1,14 +1,23 @@
 import sys
 import csv
 from PyQt5.QtCore import Qt, QTimer
-from PyQt5.QtWidgets import QApplication, QMainWindow, QLabel, QPushButton
+#from PyQt5.QtWidgets import QApplication, QMainWindow, QLabel, QPushButton
+from PyQt5.QtWidgets import QApplication, QMainWindow, QPushButton, QLabel, QLineEdit, QToolButton
+from PyQt5.QtGui import QIcon, QPixmap
 from PyQt5.QtGui import QFont
 from mfrc522 import SimpleMFRC522
 import RPi.GPIO as GPIO
+from theme import BUTTON_STYLE , EpitageLabel
+from topband import topband
+#from MenuGrid import MenuWindow
 
 class CardVerificationApp(QMainWindow):
     def __init__(self):
         super().__init__()
+        self.initUI()
+
+    def initUI(self):
+        topband(self)
 
         # Initialize RFID reader
         self.rfid_reader = SimpleMFRC522()
@@ -18,11 +27,20 @@ class CardVerificationApp(QMainWindow):
         self.window_height = 800
         self.setGeometry(0, 0, self.window_width, self.window_height)
 
+        # Add 'Back' button
+        self.back_btn = QPushButton('Back', self)
+        self.back_btn.move(10, 60)
+        self.back_btn.setFixedSize(90, 40)
+        self.back_btn.clicked.connect(self.show_menu_grid_window)
+        self.back_btn.clicked.connect(self.close)
+        self.back_btn.setStyleSheet(BUTTON_STYLE)
+
+
         # Set window title
-        self.setWindowTitle("Card Verification")
+        self.setWindowTitle("Verification")
 
         # Create label to display user details
-        self.user_label = QLabel("Scan an RFID card", self)
+        self.user_label = QLabel("Scan your card", self)
         self.user_label.setGeometry(0, 0, self.window_width, self.window_height)
         self.user_label.setAlignment(Qt.AlignCenter)
         self.user_label.setFont(QFont("Arial", 24))
@@ -74,6 +92,11 @@ class CardVerificationApp(QMainWindow):
         # Close the connection to the RFID reader
         GPIO.cleanup()
         event.accept()
+
+    def show_menu_grid_window(self):
+        from MenuGrid import MenuWindow
+        self.menu_grid_window = MenuWindow()
+        self.menu_grid_window.show()
 
 
 if __name__ == "__main__":

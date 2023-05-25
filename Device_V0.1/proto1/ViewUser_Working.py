@@ -20,8 +20,8 @@ class ViewUserWindow(QMainWindow):
         # Add table to display user data
         self.table = QTableWidget(self)
         self.table.setGeometry(50, 100, 400, 500)
-        self.table.setColumnCount(4)
-        self.table.setHorizontalHeaderLabels(['First Name', 'Last Name', 'Employee ID', 'RFID_ID'])
+        self.table.setColumnCount(5)
+        self.table.setHorizontalHeaderLabels(['First Name', 'Last Name', 'Employee ID', 'RFID_ID', 'FPS_ID'])
 
         # Populate the table with data from the CSV file
         with open("users.csv") as file:
@@ -30,7 +30,7 @@ class ViewUserWindow(QMainWindow):
             row_count = len(data)
             self.table.setRowCount(row_count)
             for i in range(row_count):
-                for j in range(4):
+                for j in range(5):
                     self.table.setItem(i, j, QTableWidgetItem(data[i][j]))
 
         self.show()
