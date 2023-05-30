@@ -74,7 +74,7 @@ class MainWindow(QMainWindow):
 
     def update_labels(self):
         # update the time label with the current system time
-        time_label = self.centralWidget().findChild(QLabel)
+        time_label = self.centralWidget().findChild(QLabel, "timeLabel")
         current_time = QTime.currentTime().toString("hh:mm:ss")
         time_label.setText(current_time)
 

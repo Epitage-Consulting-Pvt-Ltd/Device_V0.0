@@ -21,10 +21,10 @@ class UserMainWindow(QMainWindow):
 
     def initUI(self):
         # Create top band using a function call.
-        topband(self)
+        topband(self, windowtitle )
 
 
-        self.setWindowTitle("User Management System")
+        windowtitle = self.setWindowTitle("User Management System")
         self.resize(480, 800)
 
         # Add 'Back' button

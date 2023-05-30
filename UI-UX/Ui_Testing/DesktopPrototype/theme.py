@@ -2,7 +2,7 @@ from PyQt5.QtCore import Qt
 from PyQt5.QtGui import QPalette, QColor
 
 # Define theme variables
-BACKGROUND_COLOR = '#F5F5F5'  # dark grey colour
+BACKGROUND_COLOR = '#ffffff'  # dark grey colour
 FOREGROUND_COLOR = '#ffffff'  # white
 ACCENT_COLOR = '#FF4A18'  # orange
 
@@ -42,7 +42,7 @@ TABLE_STYLE = f"""
     }}
 """
 # Set window background and foreground colors
-WINDOW_BACKGROUND_COLOR = QColor(245, 245, 245)  # gray
+WINDOW_BACKGROUND_COLOR = Qt.white  # gray
 WINDOW_FOREGROUND_COLOR = Qt.white
 RFID_WINDOW_FOREGROUND_COLOR = Qt.black
 
