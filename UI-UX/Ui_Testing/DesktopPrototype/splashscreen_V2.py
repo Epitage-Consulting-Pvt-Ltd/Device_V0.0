@@ -4,7 +4,7 @@ from PyQt5.QtCore import Qt, QTimer, QDate, QTime
 from PyQt5.QtGui import QPixmap, QPalette
 from PyQt5.QtWidgets import QApplication, QMainWindow, QWidget, QGridLayout, QLabel, QPushButton
 
-from MenuGrid import MenuWindow
+from MenuGrid_V2 import MenuWindow
 from theme import BUTTON_STYLE, WINDOW_BACKGROUND_COLOR, \
     WINDOW_FOREGROUND_COLOR
 from topband import topband

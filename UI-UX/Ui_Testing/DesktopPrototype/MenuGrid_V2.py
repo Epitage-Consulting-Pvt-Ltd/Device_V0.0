@@ -8,7 +8,7 @@ import sys
 from theme import BACKGROUND_COLOR, FOREGROUND_COLOR, ACCENT_COLOR, BUTTON_STYLE, TABLE_STYLE , WINDOW_BACKGROUND_COLOR, WINDOW_FOREGROUND_COLOR , TRANSPARENT_BUTTON
 from PyQt5.QtSvg import QSvgWidget
 from UserMain_Working import UserMainWindow
-from topband import topband
+from topband_V2 import topband
 #from cardverification import CardVerificationApp
 class MenuWindow(QWidget):
     def __init__(self):
@@ -20,7 +20,7 @@ class MenuWindow(QWidget):
         # set window title and size
         self.setWindowTitle(windowtitle)
         self.resize(480, 800)
-        topband(self)
+        topband(self ,windowtitle)
 
         # Set window background and foreground colors
         palette = self.palette()
@@ -42,7 +42,7 @@ class MenuWindow(QWidget):
 
         # Create the label
         label = QLabel("Enter Password", self)
-        label.setStyleSheet("colour:orange")
+        label.setStyleSheet("color: #808080")
         label.move(60, 160)
 
         # Create the password field

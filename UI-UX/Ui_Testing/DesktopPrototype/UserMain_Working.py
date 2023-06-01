@@ -7,7 +7,7 @@ from PyQt5.QtWidgets import QApplication, QMainWindow, QPushButton, QLabel, QLin
 from PyQt5.QtGui import QIcon, QPixmap
 from ViewUser_Working import ViewUserWindow
 from theme import BUTTON_STYLE , EpitageLabel
-from topband import topband
+from topband_V2 import topband
 from keyboard import MatchBoxLineEdit
 
 #>>>>>>> 11378a4aab6e23c4f7c4b5dcb9a4f71da46b4997
@@ -21,10 +21,11 @@ class UserMainWindow(QMainWindow):
 
     def initUI(self):
         # Create top band using a function call.
+        windowtitle = "User Management System"
         topband(self, windowtitle )
 
 
-        windowtitle = self.setWindowTitle("User Management System")
+        self.setWindowTitle(windowtitle)
         self.resize(480, 800)
 
         # Add 'Back' button

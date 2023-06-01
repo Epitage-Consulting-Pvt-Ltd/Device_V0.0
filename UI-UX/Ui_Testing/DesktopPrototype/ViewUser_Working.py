@@ -1,7 +1,7 @@
 import csv
 from PyQt5.QtWidgets import QApplication, QMainWindow, QPushButton, QLabel, QTableWidget, QTableWidgetItem
 from theme import BUTTON_STYLE
-from topband import topband
+from topband_V2 import topband
 
 
 class ViewUserWindow(QMainWindow):
@@ -10,9 +10,10 @@ class ViewUserWindow(QMainWindow):
         self.initUI()
 
     def initUI(self):
-        self.setWindowTitle("View Users")
+        windowtitle = "View Users"
+        self.setWindowTitle(windowtitle)
         self.resize(480, 800)
-        topband(self)
+        topband(self , windowtitle)
 
         #self.showMaximized()
         # Add 'Back' button
