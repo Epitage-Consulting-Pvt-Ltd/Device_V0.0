@@ -38,6 +38,7 @@ class CardVerificationApp(QMainWindow):
         # Create verify button
         self.verify_button = QPushButton("Verify Card", self)
         self.verify_button.setGeometry(100, 200, 280, 60)
+        self.verify_button.setStyleSheet(BUTTON_STYLE)
         self.verify_button.clicked.connect(self.verify_card)
 
         # Create timer for resetting the verify button
