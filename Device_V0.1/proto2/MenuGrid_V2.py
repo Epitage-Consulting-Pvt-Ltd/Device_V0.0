@@ -7,12 +7,11 @@ from PyQt5.QtSvg import QSvgWidget
 import sys
 from mfrc522 import SimpleMFRC522
 import csv
-
-from theme import BACKGROUND_COLOR, FOREGROUND_COLOR, ACCENT_COLOR, BUTTON_STYLE, TABLE_STYLE, \
-    WINDOW_BACKGROUND_COLOR, WINDOW_FOREGROUND_COLOR, TRANSPARENT_BUTTON
+import RPi.GPIO as GPIO
+from theme import BACKGROUND_COLOR, FOREGROUND_COLOR, ACCENT_COLOR, BUTTON_STYLE, WINDOW_BACKGROUND_COLOR, WINDOW_FOREGROUND_COLOR, TRANSPARENT_BUTTON
 from UserMain_Final import UserMainWindow
 from topband_V2 import topband
-#from splashscreen_V2 import MainWindow
+#from splashscreen import MainWindow
 
 class MenuWindow(QWidget):
     def __init__(self):
@@ -160,37 +159,55 @@ class MenuWindow(QWidget):
         print("Password Matched:", is_password_matched)
 
         # Enable or disable buttons based on password verification result
-        self.user_reg.setEnabled(is_password_matched)
-        self.card_verify.setEnabled(is_password_matched)
+        #self.user_reg.setEnabled(is_password_matched)
+        #self.card_verify.setEnabled(is_password_matched)
 
     def verify_admin(self):
         try:
             reader = SimpleMFRC522()
 
             # Read the RFID card
-            id, card_text = reader.read()
+            rfid_id = reader.read_id()
+            password = self.password_field.text()
+
+            if password == "admin":
+                with open('users.csv', 'r') as csvfile:
+                    reader = csv.reader(csvfile)
+                    for row in reader:
+                        if row[3] == str(rfid_id) and row[0] == "Chetan":
+                            self.user_reg.setEnabled(True)
+                            self.card_verify.setEnabled(True)
+                            QMessageBox.information(self, "Admin Verification", "Admin verified successfully!")
+                            return
+                        else:
+                            QMessageBox.warning(self, "Admin Verification", "Invalid admin card!")
+                            return
+            else:
+                QMessageBox.warning(self, "Admin Verification", "Invalid admin password!")
+                self.user_reg.setEnabled(False)
+                self.card_verify.setEnabled(False)
 
             # Verify the admin using the card data
-            if self.verify_admin_card(card_text):
+            '''if self.verify_admin_card(card_text):
                 self.user_reg.setEnabled(True)
                 self.card_verify.setEnabled(True)
                 QMessageBox.information(self, "Admin Verification", "Admin verified successfully!")
             else:
-                QMessageBox.warning(self, "Admin Verification", "Invalid admin card!")
+                QMessageBox.warning(self, "Admin Verification", "Invalid admin card!")'''
 
         finally:
             # Clean up the reader
             GPIO.cleanup()
             self.password_field.clear()
 
-    def verify_admin_card(self, card_text):
+    '''def verify_admin_card(self, card_text):
         # Read the user data from a CSV file (users.csv)
         with open('users.csv', 'r') as csvfile:
             reader = csv.reader(csvfile)
             for row in reader:
-                if len(row) > 0 and row[0] == card_text:
+                if len(row) > 0 and row[3] == card_text and row[0] == "Chetan":
                     return True
-        return False
+        return False'''
 
 
 if __name__ == '__main__':

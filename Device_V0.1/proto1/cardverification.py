@@ -57,7 +57,7 @@ class CardVerificationApp(QMainWindow):
                 for row in reader:
                     if row[3] == str(rfid_id):
                         # User found
-                        self.user_label.setText("Verified user with ID: " + row[1] + row[2])
+                        self.user_label.setText("Verified user with ID: " + row[0] + row[3])
                         break
                 else:
                     # User not found
