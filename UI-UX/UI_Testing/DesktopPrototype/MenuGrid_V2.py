@@ -127,6 +127,11 @@ class MenuWindow(QWidget):
         self.card_verify.setEnabled(False)
         self.card_verify.setStyleSheet(TRANSPARENT_BUTTON)
 
+        self.printerbutton = add_button("svgfiles/printer.svg","Printer Demo" ,2,0)
+        self.printerbutton.clicked.connect(self.show_printerdemo)
+        self.printerbutton.clicked.connect(self.close)
+        self.printerbutton.setEnabled(False)
+
 
     def show_user_main_window(self):
         self.user_main_window = UserMainWindow()
