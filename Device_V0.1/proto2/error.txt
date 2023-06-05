@@ -1,0 +1,13 @@
+Traceback (most recent call last):
+  File "/home/pi/Device_V0.0/Device_V0.1/proto2/MenuGrid_V2.py", line 191, in verify_password
+    user_data = read_user_data()
+NameError: name 'read_user_data' is not defined
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/pi/Device_V0.0/Device_V0.1/proto2/MenuGrid_V2.py", line 205, in verify_password
+    reader.cleanup()
+AttributeError: 'SimpleMFRC522' object has no attribute 'cleanup'
+Aborted
+

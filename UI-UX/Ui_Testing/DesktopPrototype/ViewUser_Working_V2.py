@@ -50,7 +50,7 @@ class ViewUserWindow(QMainWindow):
         self.table.setAlternatingRowColors(True)
 
         # Populate the table with data from the CSV file
-        with open("data/EmpMaster-Epitage.csv") as file:
+        with open("users.csv") as file:
             reader = csv.reader(file)
             data = list(reader)
             row_count = len(data)

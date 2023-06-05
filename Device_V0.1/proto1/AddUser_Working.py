@@ -12,7 +12,7 @@ import logging
 import sys
 import time
 
-import RPi.GPIO as GPIO
+#import RPi.GPIO as GPIO
 import serial
 from PyQt5.QtGui import QFont
 from PyQt5.QtWidgets import (

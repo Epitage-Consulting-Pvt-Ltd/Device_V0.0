@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" width="1080" height="1080" viewBox="0 0 1080 1080" xml:space="preserve">
+<desc>Created with Fabric.js 5.2.4</desc>
+<defs>
+</defs>
+<g transform="matrix(1 0 0 1 540 540)" id="f8a7632c-3615-47b1-9c4d-5b1cfbd71c73"  >
+<rect style="stroke: none; stroke-width: 1; stroke-dasharray: none; stroke-linecap: butt; stroke-dashoffset: 0; stroke-linejoin: miter; stroke-miterlimit: 4; fill: rgb(255,255,255); fill-rule: nonzero; opacity: 1; visibility: hidden;" vector-effect="non-scaling-stroke"  x="-540" y="-540" rx="0" ry="0" width="1080" height="1080" />
+</g>
+<g transform="matrix(1 0 0 1 540 540)" id="12c5ca24-c999-4264-9f01-6528cbc38bad"  >
+</g>
+<g transform="matrix(1.33 0 0 1.33 560.21 363.65)"  >
+<path style="stroke: none; stroke-width: 1; stroke-dasharray: none; stroke-linecap: butt; stroke-dashoffset: 0; stroke-linejoin: miter; stroke-miterlimit: 4; fill: rgb(0,0,0); fill-rule: evenodd; opacity: 1;" vector-effect="non-scaling-stroke"  transform=" translate(-350, -163.33)" d="M 455 163.33 C 455 221.322 407.988 268.33000000000004 350 268.33000000000004 C 292.012 268.33000000000004 245 221.32200000000003 245 163.33000000000004 C 245 105.34200000000004 292.012 58.33000000000004 350 58.33000000000004 C 407.988 58.33000000000004 455 105.34200000000004 455 163.33000000000004" stroke-linecap="round" />
+</g>
+<g transform="matrix(1.33 0 0 1.33 559.9 674.77)"  >
+<path style="stroke: none; stroke-width: 1; stroke-dasharray: none; stroke-linecap: butt; stroke-dashoffset: 0; stroke-linejoin: miter; stroke-miterlimit: 4; fill: rgb(0,0,0); fill-rule: evenodd; opacity: 1;" vector-effect="non-scaling-stroke"  transform=" translate(-350, -396.67)" d="M 525 501.67 C 531.1836 501.67 537.121 499.2052 541.496 494.8302 C 545.871 490.4552 548.3319 484.5182 548.3319 478.3342 L 548.3319 466.6702 C 548.3319 420.26020000000005 529.8979 375.7402 497.0819 342.9202 C 464.2619 310.1042 419.7419 291.6702 373.3319 291.6702 L 326.66790000000003 291.6702 C 280.25790000000006 291.6702 235.73790000000002 310.10420000000005 202.91790000000003 342.9202 C 170.10190000000003 375.7402 151.66790000000003 420.26020000000005 151.66790000000003 466.6702 L 151.66790000000003 478.3342 C 151.66790000000003 484.5178 154.12880000000004 490.4552 158.50380000000004 494.8302 C 162.87880000000004 499.2052 168.81580000000005 501.67 174.99980000000005 501.67 L 524.9998 501.67 z" stroke-linecap="round" />
+</g>
+</svg>

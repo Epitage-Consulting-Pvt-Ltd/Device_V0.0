@@ -10,7 +10,7 @@ class MainWindow(QMainWindow):
     def __init__(self):
         super().__init__()
 
-        topband(self ,"test")
+        #topband(self ,"test")
 
         # set window title
         self.setWindowTitle("Splash Screen")

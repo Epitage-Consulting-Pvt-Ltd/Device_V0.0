@@ -9,9 +9,9 @@ from theme import BACKGROUND_COLOR, FOREGROUND_COLOR, ACCENT_COLOR, BUTTON_STYLE
 from PyQt5.QtSvg import QSvgWidget
 
 #Layout New
-#from UserMain_Final import UserMainWindow
+from UserMain_Final import UserMainWindow
 #Layout Old
-from AddUser_Working import AddUserWindow
+#from AddUser_Working import AddUserWindow
 
 from topband import topband
 from cardverification import CardVerificationApp
@@ -105,7 +105,7 @@ class MenuWindow(QWidget):
 
         # add buttons to the layout using the reusable function
         user_reg = add_button("svgfiles/user.svg", "User Registeration", 0, 0)
-        user_reg.clicked.connect(self.show_user_main_windowB)
+        user_reg.clicked.connect(self.show_user_main_windowA)
         user_reg.clicked.connect(self.close)
         user_reg.setStyleSheet(Transparent_BUTTON_STYLE)
 
@@ -119,9 +119,9 @@ class MenuWindow(QWidget):
         self.user_main_windowA = UserMainWindow()
         self.user_main_windowA.show()
         
-    def show_user_main_windowB(self):
-        self.user_main_windowB = AddUserWindow()
-        self.user_main_windowB.show()
+    #def show_user_main_windowB(self):
+        #self.user_main_windowB = AddUserWindow()
+        #self.user_main_windowB.show()
 
 
     def show_splashS(self):

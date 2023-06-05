@@ -9,8 +9,8 @@ from ViewUser_Working import ViewUserWindow
 from theme import BUTTON_STYLE , EpitageLabel
 from topband import topband
 from keyboard import MatchBoxLineEdit
+from AddUser_Working import AddUserWindow
 
-#>>>>>>> 11378a4aab6e23c4f7c4b5dcb9a4f71da46b4997
 
 class UserMainWindow(QMainWindow):
 
