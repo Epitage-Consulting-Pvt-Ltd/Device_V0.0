@@ -126,12 +126,12 @@ class UserMainWindow(QMainWindow):
         self.face_btn.setFixedSize(120, 120)
         self.face_btn.clicked.connect(self.close)
 
-        # Thumb Button
         self.thumb_btn = QPushButton(self)
         pixmap = QPixmap('images/userMainThumb.jpg')
-        icon = QIcon(pixmap)
+        scaled_pixmap = pixmap.scaled(120, 120, Qt.AspectRatioMode.KeepAspectRatio)
+        icon = QIcon(scaled_pixmap)
         self.thumb_btn.setIcon(icon)
-        self.thumb_btn.setIconSize(self.thumb_btn.size())  # Set the icon size to match the button size
+        self.thumb_btn.setIconSize(scaled_pixmap.size())
         self.thumb_btn.move(330, 600)
         self.thumb_btn.setFixedSize(120, 120)
         self.thumb_btn.clicked.connect(self.close)
