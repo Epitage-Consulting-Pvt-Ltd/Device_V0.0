@@ -47,7 +47,7 @@ class DisplayWindow(QMainWindow):
         self.time_label.setGeometry(207, 547, 300, 30)
         self.time_label.setFont(font_big)
 
-        self.thumb_btn = create_img_button(self, 'images/MenuIcon.png',75,100, (190, 623), self.close,"Menu","#D9D9D9")
+        self.menu_btn = create_img_button(self, 'images/icons/MenuIcon.png', 75, 100, (190, 623), self.openMenuScreen, "Menu", "#D9D9D9")
 
         # Update date and time every second
         self.timer = QTimer()
@@ -78,6 +78,12 @@ class DisplayWindow(QMainWindow):
         self.date_time_label.setText(current_datetime_str)
         self.additional_date_label.setText(f"{current_day} , {formatted_date}")
         self.time_label.setText(formatted_time)
+
+    def openMenuScreen(self):
+        from MenuScreenV4 import MenuWindow
+        self.openMenuScreen = MenuWindow()
+        self.openMenuScreen.show()
+        self.close()
 
 
 if __name__ == "__main__":

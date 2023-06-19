@@ -10,21 +10,16 @@ from PyQt5.QtSvg import QSvgWidget
 #from UserMain_Working import UserMainWindow
 from topband_V3 import TopBandLayout
 #from cardverification import CardVerificationApp
-from PyQt5.QtSvg import QSvgRenderer
 
-class MenuWindow(QMa):
+class MenuWindow(TopBandLayout):
     def __init__(self, windowtitle, parent=None):
-            super(MenuWindow, self).__init__(windowtitle, parent)
-            self.initUI()
+        super(MenuWindow, self).__init__(windowtitle, parent)
+        self.initUI()
 
     def initUI(self):
-
-
-
-        # set window title and size
-        self.setWindowTitle("Menu")
-        self.resize(480, 800)
-
+        self.setWindowTitle("User Management")
+        self.setGeometry(100, 100, 480, 800)
+        #(self ,windowtitle)
 
         # Set window background and foreground colors
         palette = self.palette()
@@ -60,61 +55,66 @@ class MenuWindow(QMa):
         # create a reusable function to add buttons to the layout
 
         def add_button(image_path, text, row, col):
-            # Create a QVBoxLayout to stack the QLabel and button
+            # create a QVBoxLayout to stack the QSvgWidget and QLabel
             layout = QVBoxLayout()
 
-            # Create a QLabel for the text
-            label = QLabel(text)
-            label.setAlignment(Qt.AlignCenter)
+            # create a QSvgWidget object from the image path
+            svg_widget = QSvgWidget(image_path)
+            svg_widget.setFixedSize(100, 100)
 
-            # Create a QSvgRenderer object from the image path
-            renderer = QSvgRenderer(image_path)
+            # set the background color of the QSvgWidget to transparent
+            svg_widget.setStyleSheet(TRANSPARENT_BUTTON)
 
-            # Create a QPixmap to hold the rendered SVG
-            pixmap = QPixmap(100, 100)
+            # create a QPixmap from the QSvgWidget with a white background
+            pixmap = QPixmap(svg_widget.size())
             pixmap.fill(Qt.white)
             painter = QPainter(pixmap)
-            renderer.render(painter)
+            svg_widget.render(painter)
             painter.end()
 
-            # Create a QIcon object from the pixmap
+            # create a QIcon object from the pixmap
             icon = QIcon(pixmap)
 
-            # Create a button and set its icon and size
+            # create a button and set its icon and size
             button = QPushButton()
             button.setIcon(icon)
             button.setIconSize(button.size())
             button.setFixedSize(169, 169)
 
-            # Set the button's style sheet to have a transparent background
+            # set the button's style sheet to have a transparent background
             button.setStyleSheet(TRANSPARENT_BUTTON)
 
-            # Add the QLabel and button to the layout
+            # create a QLabel for the text
+            label = QLabel(text)
+            label.setAlignment(Qt.AlignCenter)
+
+            # add the QSvgWidget and QLabel to the layout
+            layout.addWidget(svg_widget)
             layout.addWidget(label)
-            layout.addWidget(button)
 
-            # Check if the widget already has a layout
-            if isinstance(layout_g, QLayout):
-                # Retrieve the existing layout from the widget
-                existing_layout = layout_g
-                # Create a QWidget to hold the layout
-                widget = QWidget()
-                widget.setLayout(existing_layout)
+            # create a QWidget to hold the layout
+            widget = QWidget()
+            widget.setLayout(layout)
 
-                # Add the new widget to the existing layout
-                existing_layout.addWidget(widget)
-            else:
-                # Create a QWidget to hold the layout
-                widget = QWidget()
-                widget.setLayout(layout)
+            # create a QIcon object from the QWidget
+            icon = QIcon(widget.grab())
 
-                # Add the widget to the layout_g
-                layout_g.addWidget(widget, row, col)
+            # create a button and set its icon and size
+            button = QPushButton()
+            button.setIcon(icon)
+            button.setIconSize(button.size())
+            button.setFixedSize(169, 169)
+
+            # set the button's style sheet to have a transparent background
+            button.setStyleSheet(TRANSPARENT_BUTTON)
+
+            # add the button to the layout
+            layout_g.addWidget(button, row, col)
 
             return button
 
         # add buttons to the layout using the reusable function
-        self.user_reg = add_button("adduserv3.svg", "User Registeration", 1, 0)
+        self.user_reg = add_button("svgfiles/user.svg", "User Registeration", 1, 0)
         self.user_reg.clicked.connect(self.show_user_main_window)
         self.user_reg.clicked.connect(self.close)
         self.user_reg.setEnabled(False)
@@ -166,7 +166,7 @@ class MenuWindow(QMa):
 if __name__ == '__main__':
     # create the application and main window
     app = QApplication(sys.argv)
-    window = MenuWindow("Menu")
+    window = MenuWindow("Device Menu")
     # show the window and run the event loop
     window.show()
     sys.exit(app.exec_())

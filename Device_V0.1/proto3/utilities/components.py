@@ -19,7 +19,7 @@ def create_button(text, parent, position, size, clicked_slot):
     return button
 
 
-def create_labeled_textbox(label_text, parent, label_position, textbox_position, textbox_size):
+def create_labeled_textbox(label_text, parent, label_position, textbox_position, textbox_size,placeholdertext):
     label = QLabel(label_text, parent)
     label.move(*label_position)
     label.setParent(parent)
@@ -29,6 +29,7 @@ def create_labeled_textbox(label_text, parent, label_position, textbox_position,
     textbox.resize(*textbox_size)
     textbox.setEnabled(True)
     textbox.setParent(parent)
+    textbox.setPlaceholderText(placeholdertext)
 
     label.show()
     textbox.show()
@@ -38,7 +39,6 @@ def create_labeled_textbox(label_text, parent, label_position, textbox_position,
 from PyQt5.QtWidgets import QWidget, QLabel, QVBoxLayout
 from PyQt5.QtGui import QPixmap, QFont
 from PyQt5.QtCore import Qt
-
 def create_img_button(parent, image_path, png_size, button_size, position, on_click, text, bg_color):
     # Create a container widget
     container = QWidget(parent)
@@ -57,7 +57,7 @@ def create_img_button(parent, image_path, png_size, button_size, position, on_cl
     scaled_pixmap = pixmap.scaled(png_size, png_size, Qt.AspectRatioMode.KeepAspectRatio)
     label = QLabel(container)
     label.setPixmap(scaled_pixmap)
-    label.setAlignment(Qt.AlignCenter)
+    label.setAlignment(Qt.AlignCenter | Qt.AlignHCenter)
 
     # Create a QLabel for the text
     text_label = QLabel(container)
@@ -73,11 +73,15 @@ def create_img_button(parent, image_path, png_size, button_size, position, on_cl
     # Set the layout for the container
     container.setLayout(layout)
 
-    # Set the container as the clickable widget
-    container.mousePressEvent = on_click
+    # Set up custom event handling for mouse clicks
+    def mousePressEvent(event):
+        if callable(on_click):
+            on_click()
+        event.accept()
+
+    container.mousePressEvent = mousePressEvent
 
     return container
-
 
 
 # self.thumb_btn = create_thumb_button(self, 'images/userMainThumb.jpg', 120, (330, 600), self.close)
@@ -131,3 +135,33 @@ def get_row_from_csv(filepath, search_column, search_value):
             if row[search_column] == search_value:
                 return row
     return None
+
+
+def imgbutton(parent, image_path, png_size, button_size, position, on_clicked):
+    # Create a container widget
+    container = QWidget(parent)
+    container.setGeometry(*position, button_size, button_size)
+
+    # Create a vertical layout for the container
+    layout = QVBoxLayout(container)
+    layout.setContentsMargins(0, 0, 0, 0)
+    layout.setSpacing(0)
+
+    # Create a QLabel for the PNG image
+    label = QLabel(container)
+    pixmap = QPixmap(image_path)
+    scaled_pixmap = pixmap.scaled(png_size, png_size, Qt.AspectRatioMode.KeepAspectRatio)
+    label.setPixmap(scaled_pixmap)
+    label.setAlignment(Qt.AlignCenter)
+
+    # Add the label to the layout
+    layout.addWidget(label)
+
+    # Set the layout for the container
+    container.setLayout(layout)
+
+    # Set the container as the clickable widget
+    container.mousePressEvent = on_clicked
+
+    return container
+
