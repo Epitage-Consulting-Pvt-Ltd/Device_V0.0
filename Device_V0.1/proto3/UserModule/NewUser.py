@@ -14,7 +14,7 @@ from PyQt5.QtGui import QIcon, QPixmap
 from PyQt5.QtGui import QPixmap
 from PyQt5.QtWidgets import QApplication, QLabel, QMainWindow
 
-from utilities.components import imgbutton
+from utilities.components import imgbutton ,create_img_button_H
 
 import sys
 import os
@@ -132,18 +132,18 @@ class NewUserWindow(QMainWindow):
         label_fing.move(128, 372)
         label_fing.resize(355, 30)
 
-        self.facebtn = imgbutton(self, "images/icons/fingerbtn.png", 100, 100, (17, 372), self.openUserMenu)
+        self.facebtn = imgbutton(self, "images/icons/facebtn.png", 100, 100, (17, 498), self.openUserMenu)
         label_face = QLineEdit(self)
         label_face.setReadOnly(False)
-        label_face.move(128, 372)
-        label_face.resize(355, 30)
+        label_face.move(128, 498)
+        label_face.resize(355,200)
 
         progress_bar = QProgressBar(self)
         progress_bar.setGeometry(10, 720, 460, 20)
         progress_bar.setValue(0)
 
-        save_label = QLabel('', self)
-        save_label.move(10, 750)
+        self.cancelbtn = imgbutton(self, "images/icons/facebtn.png", 100, 100, (17, 498), self.openUserMenu)
+        self.okbtn = imgbutton(self, "images/icons/facebtn.png", 100, 100, (17, 498), self.openUserMenu)
 
         def update_progress_bar():
             progress_bar.setValue(progress_bar.value() + 33)
