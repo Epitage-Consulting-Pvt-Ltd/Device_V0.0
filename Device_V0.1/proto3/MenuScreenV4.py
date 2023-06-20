@@ -1,16 +1,10 @@
-import sys
-from PyQt5.QtWidgets import QApplication, QLabel, QMainWindow
-from PyQt5.QtGui import QPixmap, QFont
-from PyQt5.QtCore import Qt, QTimer, QDateTime
-from datetime import datetime
-from utilities.components import create_img_button
+
 import sys
 from PyQt5.QtWidgets import QApplication, QLabel, QMainWindow ,QPushButton , QLineEdit
 from PyQt5.QtGui import QPixmap, QFont
-from PyQt5.QtCore import Qt, QTimer, QDateTime
 from datetime import datetime
 from utilities.components import create_img_button , create_labeled_textbox , imgbutton
-from utilities.themeV3 import BUTTON_STYLE
+from splashscreenv4 import SplashWindow
 
 
 class MenuWindow(QMainWindow):
@@ -58,7 +52,7 @@ class MenuWindow(QMainWindow):
         current_datetime_str = f"{formatted_date} - {formatted_time}"
         self.date_time_label.setText(current_datetime_str)
 
-        self.backbtnv2 = imgbutton(self, "images/icons/BackIcon.png", 30,30, (5, 44), self.close)
+        self.backbtn = imgbutton(self, "images/icons/BackIcon.png", 30,30, (5, 44), self.openSplash)
 
         # Create the label
         label = QLabel("Password", self)
@@ -109,10 +103,14 @@ class MenuWindow(QMainWindow):
         self.LogMenu.setEnabled(is_password_matched)
 
     def openUserScreen(self):
-        from UserMenu import UserWindow
+        from UserMenu import UserWindowadmin
         self.openUserScreen = UserWindow()
         self.openUserScreen.show()
         self.close()
+
+    def openSplash(self):
+        splash_window = SplashWindow()
+        splash_window.show()
 
 
 if __name__ == "__main__":

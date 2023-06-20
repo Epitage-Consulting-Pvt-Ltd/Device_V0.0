@@ -5,7 +5,7 @@ from PyQt5.QtCore import Qt, QTimer, QDateTime
 from datetime import datetime
 from utilities.components import create_img_button
 
-class DisplayWindow(QMainWindow):
+class SplashWindow(QMainWindow):
     def __init__(self):
         super().__init__()
 
@@ -83,11 +83,11 @@ class DisplayWindow(QMainWindow):
         from MenuScreenV4 import MenuWindow
         self.openMenuScreen = MenuWindow()
         self.openMenuScreen.show()
-        self.close()
+
 
 
 if __name__ == "__main__":
     app = QApplication(sys.argv)
-    window = DisplayWindow()
-    window.show()
+    window = SplashWindow()
+    window.openSplash()
     sys.exit(app.exec_())
