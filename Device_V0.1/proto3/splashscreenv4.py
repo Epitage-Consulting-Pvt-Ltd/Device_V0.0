@@ -89,5 +89,6 @@ class SplashWindow(QMainWindow):
 if __name__ == "__main__":
     app = QApplication(sys.argv)
     window = SplashWindow()
-    #window.openSplash()
+    window.openSplash()
+    window.show()
     sys.exit(app.exec_())
