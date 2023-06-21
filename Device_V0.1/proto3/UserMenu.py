@@ -9,7 +9,6 @@ from utilities.components import create_img_button, imgbutton
 class UserWindow(QMainWindow):
     def __init__(self):
         super().__init__()
-
         # Set window dimensions
         self.width = 480
         self.height = 800
