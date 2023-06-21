@@ -1,4 +1,4 @@
-EmpId,EmployeeName,DOB
+EmpId,EmployeeName,DOB,rfid,finger
 4005,Mr. Rohit Rajesh Shinde,06/03/1998
 701000005,Mr. Ganesh Krushna Utekar,01/11/1967
 701000006,Mr. Balaram Kashiram Sutar,01/01/1968
@@ -1035,3 +1035,7 @@ EmpId,EmployeeName,DOB
 715000040,Mr. Sourabh suresh Narkar,25/10/1999
 715000041,Mr. Vasant Tukaram Ghanekar,20/08/1972
 715000042,Mr. Sukhvendra Pratap Singh,27/09/1999
+715000043,Mr. Rajesh Peche,27/09/1999
+
+715000043,Mr. Rajesh Peche,27/09/1999,test,test
+715000043,Mr. Rajesh Peche,27/09/1999,ggg,ggg
