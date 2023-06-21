@@ -52,7 +52,7 @@ class MenuWindow(QMainWindow):
         current_datetime_str = f"{formatted_date} - {formatted_time}"
         self.date_time_label.setText(current_datetime_str)
 
-        self.backbtn = imgbutton(self, "images/icons/BackIcon.png", 30,30, (5, 44), self.openSplash)
+        self.backbtn = imgbutton(self, "images/icons/BackIcon.png", 30,30, (5, 44), self.close)
 
         # Create the label
         label = QLabel("Password", self)
@@ -103,14 +103,12 @@ class MenuWindow(QMainWindow):
         self.LogMenu.setEnabled(is_password_matched)
 
     def openUserScreen(self):
-        from UserMenu import UserWindowadmin
+        from UserMenu import UserWindow
         self.openUserScreen = UserWindow()
         self.openUserScreen.show()
         self.close()
 
-    def openSplash(self):
-        splash_window = SplashWindow()
-        splash_window.show()
+
 
 
 if __name__ == "__main__":
