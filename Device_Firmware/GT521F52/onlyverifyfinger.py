@@ -1,13 +1,21 @@
-import codecs
-import csv
 import logging
-import sys
 import time
-
+import sys
 import RPi.GPIO as GPIO
 import serial
-from PyQt5.QtGui import QFont
-from PyQt5.QtWidgets import (QApplication, QLineEdit,QMainWindow,QLabel,QPushButton, QMessageBox,)
+import codecs
+import signal
+from PyQt5.QtWidgets import (
+    QApplication,
+    QMainWindow,
+    QWidget,
+    QVBoxLayout,
+    QLabel,
+    QPushButton,
+)
+from PyQt5.QtCore import Qt
+import settings
+import csv
 
 logging.basicConfig(format="[%(name)s][%(asctime)s] %(message)s")
 logger = logging.getLogger("Fingerprint")
@@ -59,7 +67,8 @@ class Fingerprint:
     ACK = 0x30
     NACK = 0x31
 
-    def __init__(self, port, baud, timeout=1):
+    def __init__(self, port, baud,  fingerprint_data, timeout=1):
+        self.fingerprint_data = fingerprint_data
         self.port = port
         self.baud = baud
         self.timeout = timeout
@@ -67,6 +76,10 @@ class Fingerprint:
 
     def __del__(self):
         self.close_serial()
+
+    def verify(self, fingerprint):
+        # Add your fingerprint verification logic here
+        return self.fingerprint_data == fingerprint
 
     def init(self):
         try:
@@ -121,6 +134,9 @@ class Fingerprint:
     def close_serial(self):
         if self.ser:
             self.ser.close()
+
+    def __del__(self):
+        self.close_serial()
 
     def is_connected(self):
         if self.ser and self.ser.isOpen():
@@ -192,8 +208,8 @@ class Fingerprint:
                 else:
                     return None, None, None, None
             elif (
-                    firstbyte == Fingerprint.PACKET_RES_0
-                    and secondbyte == Fingerprint.PACKET_RES_1
+                firstbyte == Fingerprint.PACKET_RES_0
+                and secondbyte == Fingerprint.PACKET_RES_1
             ):
                 break
         packet[0] = firstbyte
@@ -223,8 +239,8 @@ class Fingerprint:
             if firstbyte and secondbyte:
                 # Data exists.
                 if (
-                        firstbyte == Fingerprint.PACKET_DATA_0
-                        and secondbyte == Fingerprint.PACKET_DATA_1
+                    firstbyte == Fingerprint.PACKET_DATA_0
+                    and secondbyte == Fingerprint.PACKET_DATA_1
                 ):
                     data = bytearray()
                     data.append(firstbyte)
@@ -406,7 +422,9 @@ class Fingerprint:
                 return param
             else:
                 return -1
-        return None
+        #return None
+        return self.fingerprint_data == fingerprint
+    
 
 
 # Initialize GPIO
@@ -423,102 +441,77 @@ class MainWindow(QMainWindow):
     def __init__(self):
         super().__init__()
 
-        self.setWindowTitle("Fingerprint Enrollment and Verification")
-        self.setFixedSize(480, 800)  # Set the window size to match the Raspberry Pi touchscreen
+        self.setWindowTitle("Fingerprint Sensor UI")
+        self.setGeometry(100, 100, 480, 800)  # Adjust the window size as needed
 
-        '''# Create labels and text fields for user details
-        self.first_name_label = QLabel("First Name:", self)
-        self.first_name_label.move(40, 40)
-        self.first_name_field = QLineEdit(self)
-        self.first_name_field.setGeometry(180, 40, 240, 30)
+        central_widget = QWidget(self)
+        layout = QVBoxLayout(central_widget)
 
-        self.last_name_label = QLabel("Last Name:", self)
-        self.last_name_label.move(40, 90)
-        self.last_name_field = QLineEdit(self)
-        self.last_name_field.setGeometry(180, 90, 240, 30)
+        self.setCentralWidget(central_widget)
+        enroll_button = QPushButton("Enroll", self)
+        enroll_button.clicked.connect(self.enrollid)
 
-        self.employee_id_label = QLabel("Employee ID:", self)
-        self.employee_id_label.move(40, 140)
-        self.employee_id_field = QLineEdit(self)
-        self.employee_id_field.setGeometry(180, 140, 240, 30)'''
+        verify_button = QPushButton("Verify", self)
+        verify_button.clicked.connect(self.verify_fingerprint)
 
-        # Create buttons for enrollment and verification
-        #self.enroll_button = QPushButton("Enroll Fingerprint", self)
-        #self.enroll_button.setGeometry(40, 220, 200, 40)
+        layout.addWidget(enroll_button)
+        layout.addWidget(verify_button)
 
-        self.verify_button = QPushButton("Verify Fingerprint", self)
-        self.verify_button.setGeometry(240, 200, 180, 40)
-
-        # Set font for labels and buttons
-        font = QFont()
-        font.setPointSize(14)
-        #self.first_name_label.setFont(font)
-        #self.last_name_label.setFont(font)
-        #self.employee_id_label.setFont(font)
-        #self.enroll_button.setFont(font)
-        self.verify_button.setFont(font)
-
-        # Connect button signals to slots
-        #self.enroll_button.clicked.connect(self.enrollid)
-        self.verify_button.clicked.connect(self.verify)
-
-        # Initialize fingerprint data
-        self.fingerprint_data = {}
-
-#    def enrollid(self):
-        #first_name = self.first_name_field.text()
-        #last_name = self.last_name_field.text()
-        #employee_id = self.employee_id_field.text()
-
-        '''if not first_name or not last_name or not employee_id:
-            QMessageBox.critical(self, "Error", "Please enter all user details.")
-            return'''
-
-        # Assuming you have a fingerprint scanner object named `f` for capturing fingerprints
-
-        # Capture fingerprint
-#        fingerprint = f.capture_finger()  # Replace `capture_fingerprint` with the appropriate method for your fingerprint scanner
-
-        # Enroll fingerprint
-#        enrolled = f.enroll(fingerprint)  # Replace `enroll` with the appropriate method for enrolling fingerprints
-
-#        if enrolled:
-            # Save fingerprint data to CSV file
-#            with open("fingerprint_data.csv", "a", newline="") as file:
-#                writer = csv.writer(file)
-#                writer.writerow([employee_id, first_name, last_name, enrolled])
-
-#            print("Fingerprint enrolled successfully.")
-#        else:
-#            print("Failed to enroll fingerprint.")
-
-
-    def verify(self):
-        fingerprint = input("Scan your fingerprint: ")
-
-        if fingerprint in self.fingerprint_data:
-            first_name, last_name, employee_id = self.fingerprint_data[idtemp]
-            print(
-                f"User Details:\nFirst Name: {first_name}\nLast Name: {last_name}\nEmployee ID: {employee_id}"
-            )
-        else:
-            print("Fingerprint not found.")
-        
-        fingerprint = f.capture_fingerprint()
-        verified = f.identiy()
-        if f.capture_finger():  # capture_finger function
-            if idtemp == -1:
-                GPIO.output(11, GPIO.HIGH)
-                print("You are not recognized!")
+    def enrollid(self):
+        count = 0
+        f1 = 0
+        while f.get_enrolled_cnt() != count + 1:
+            time.sleep(0.5)
+            idtemp = str(f.identify())
+            if idtemp > "-1" and idtemp != "None":
+                print(
+                    "You are an already existing User with ID: %s"
+                    % str(int(idtemp) + 1)
+                )
+                break
             else:
-                GPIO.output(12, GPIO.HIGH)
-                print("Verified! User ID: %d" % idtemp)
-        else:
-            print("Failed to capture finger.")
+                if f.capture_finger():  # capture_finger function
+                    f.enroll1()
+                    time.sleep(0.5)
+                    count += 1
+                    print("Successfully Enrolled!")
+                    break
+                else:
+                    if f1 == 0:
+                        print("Place your finger")
+                        f1 = 1
 
-        time.sleep(2)
-        GPIO.output(11, GPIO.LOW)
-        GPIO.output(12, GPIO.LOW)
+   # def verify(self):
+       # idtemp = f.identify()
+      #  if f.capture_finger():  # capture_finger function
+           # if idtemp == -1:
+             #   GPIO.output(11, GPIO.HIGH)
+            #    print("You are not recognized!")
+           # else:
+          #      GPIO.output(12, GPIO.HIGH)
+         #       print("Verified! User ID: %d" % idtemp)
+        #else:
+         #   print("Failed to capture finger.")
+
+        #time.sleep(2)
+        #GPIO.output(11, GPIO.LOW)
+        #GPIO.output(12, GPIO.LOW)
+
+    def verify_fingerprint(fingerprint):
+        with open('users.csv', 'r') as file:
+            reader = csv.reader(file)
+            next(reader)  # Skip the header row
+            for row in reader:
+                fingerprint_data = int(row[4])
+                fingerprint_obj = Fingerprint(fingerprint_data)
+                if fingerprint_obj.verify(fingerprint):
+                    return f"Name: {row[0]} {row[1]}"
+        return "Fingerprint not found"
+
+# Example usage
+    fingerprint = input("Enter fingerprint to verify: ")
+    result = verify_fingerprint(fingerprint)
+    print(result)    
 
 
 if __name__ == "__main__":

@@ -453,8 +453,8 @@ class MainWindow(QMainWindow):
         self.enroll_button = QPushButton("Enroll Fingerprint", self)
         self.enroll_button.setGeometry(40, 220, 200, 40)
 
-        #self.verify_button = QPushButton("Verify Fingerprint", self)
-        #self.verify_button.setGeometry(240, 200, 180, 40)
+        self.verify_button = QPushButton("Verify Fingerprint", self)
+        self.verify_button.setGeometry(240, 200, 180, 40)
 
         # Set font for labels and buttons
         font = QFont()
@@ -463,11 +463,11 @@ class MainWindow(QMainWindow):
         self.last_name_label.setFont(font)
         self.employee_id_label.setFont(font)
         self.enroll_button.setFont(font)
-        #self.verify_button.setFont(font)
+        self.verify_button.setFont(font)
 
         # Connect button signals to slots
         self.enroll_button.clicked.connect(self.enrollid)
-        #self.verify_button.clicked.connect(self.verify)
+        self.verify_button.clicked.connect(self.verify)
 
         # Initialize fingerprint data
         self.fingerprint_data = {}
@@ -496,25 +496,25 @@ class MainWindow(QMainWindow):
                 writer.writerow([employee_id, first_name, last_name, enrolled])
 
             print("Fingerprint enrolled successfully.")
+            #return enrolled
         else:
             print("Failed to enroll fingerprint.")
+            sys.exit(1)
 
-'''
+
     def verify(self):
         fingerprint = input("Scan your fingerprint: ")
 
         if fingerprint in self.fingerprint_data:
             first_name, last_name, employee_id = self.fingerprint_data[idtemp]
-            print(
-                f"User Details:\nFirst Name: {first_name}\nLast Name: {last_name}\nEmployee ID: {employee_id}"
-            )
+            print(f"User Details:\nFirst Name: {first_name}\nLast Name: {last_name}\nEmployee ID: {employee_id}")
         else:
             print("Fingerprint not found.")
         
         fingerprint = f.capture_fingerprint()
-        verified = f.identiy()
+        verified = f.identify()
         if f.capture_finger():  # capture_finger function
-            if idtemp == -1:
+            if verified == -1:
                 GPIO.output(11, GPIO.HIGH)
                 print("You are not recognized!")
             else:
@@ -526,7 +526,7 @@ class MainWindow(QMainWindow):
         time.sleep(2)
         GPIO.output(11, GPIO.LOW)
         GPIO.output(12, GPIO.LOW)
-'''
+
 
 if __name__ == "__main__":
     # Initialize the fingerprint sensor

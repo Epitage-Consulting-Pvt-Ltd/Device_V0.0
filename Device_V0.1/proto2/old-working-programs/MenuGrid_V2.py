@@ -12,7 +12,6 @@ from theme import BACKGROUND_COLOR, FOREGROUND_COLOR, ACCENT_COLOR, BUTTON_STYLE
 from UserMain_Final import UserMainWindow
 from topband_V2 import topband
 #from splashscreen import MainWindow
-from cardverification import CardVerificationApp
 
 class MenuWindow(QWidget):
     def __init__(self):

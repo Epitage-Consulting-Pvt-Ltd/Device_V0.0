@@ -38,7 +38,6 @@ class CardVerificationApp(QMainWindow):
         # Create verify button
         self.verify_button = QPushButton("Verify Card", self)
         self.verify_button.setGeometry(100, 200, 280, 60)
-        self.verify_button.setStyleSheet(BUTTON_STYLE)
         self.verify_button.clicked.connect(self.verify_card)
 
         # Create timer for resetting the verify button
@@ -57,14 +56,14 @@ class CardVerificationApp(QMainWindow):
                 for row in reader:
                     if row[3] == str(rfid_id):
                         # User found
-                        self.user_label.setText("Verified user with ID: " + row[0] + row[3])
+                        self.user_label.setText("Verified user with ID: " + row[1] + row[2])
                         break
                 else:
                     # User not found
                     self.user_label.setText("Access denied.")
 
             # Start the timer for button reset
-            self.reset_timer.start(500)  # 30 seconds
+            self.reset_timer.start(5000)  # 30 seconds
 
         except KeyboardInterrupt:
             # User cancelled operation
@@ -85,7 +84,7 @@ class CardVerificationApp(QMainWindow):
         event.accept()
 
     def show_menu_grid_window(self):
-        from MenuGrid_V2 import MenuWindow
+        from MenuGrid import MenuWindow
         self.menu_grid_window = MenuWindow()
         self.menu_grid_window.show()
 if __name__ == "__main__":
