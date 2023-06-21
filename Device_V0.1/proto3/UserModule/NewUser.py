@@ -145,14 +145,6 @@ class NewUserWindow(QMainWindow):
         self.cancelbtn = imgbutton(self, "images/icons/facebtn.png", 100, 100, (17, 498), self.openUserMenu)
         self.okbtn = imgbutton(self, "images/icons/facebtn.png", 100, 100, (17, 498), self.openUserMenu)
 
-        def update_progress_bar():
-            progress_bar.setValue(progress_bar.value() + 33)
-            if progress_bar.value() == 99:
-                save_label.setText('User Successfully Saved')
-
-        combo.currentTextChanged.connect(update_progress_bar)
-        text_id.textChanged.connect(update_progress_bar)
-        text_dob.textChanged.connect(update_progress_bar)
 
         self.show()
 
