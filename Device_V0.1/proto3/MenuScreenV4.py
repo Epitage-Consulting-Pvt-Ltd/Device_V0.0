@@ -105,6 +105,7 @@ class MenuWindow(QMainWindow):
         self.UserMenu.setEnabled(is_password_matched)
         self.CommMenu.setEnabled(is_password_matched)
         self.LogMenu.setEnabled(is_password_matched)
+        self.VerifyButton.setEnabled(is_password_matched)
 
     def openUserScreen(self):
         from UserMenu import UserWindow

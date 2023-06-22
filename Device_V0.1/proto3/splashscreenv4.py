@@ -21,7 +21,7 @@ class SplashWindow(QMainWindow):
 
         # Create label for date and time
         self.date_time_label = QLabel(self)
-        self.date_time_label.setGeometry(3, 3, 160, 20)
+        self.date_time_label.setGeometry(5, 4, 200, 20)
 
         # Set font for date and time label
         font_small = QFont("inika", 15, QFont.Bold)
@@ -38,14 +38,14 @@ class SplashWindow(QMainWindow):
 
         # Create label for additional date
         self.additional_date_label = QLabel(self)
-        self.additional_date_label.setGeometry(137, 509, 300,26)
-        self.additional_date_label.setFont(font_big)
-        self.additional_date_label.setAlignment(Qt.AlignVCenter)
+        self.additional_date_label.setGeometry(125, 509, 350,26)
+        self.additional_date_label.setFont(font_small)
+        #self.additional_date_label.setAlignment(Qt.AlignVCenter)
 
         # Create label for time
         self.time_label = QLabel(self)
-        self.time_label.setGeometry(207, 547, 300, 30)
-        self.time_label.setFont(font_big)
+        self.time_label.setGeometry(195, 547, 300, 30)
+        self.time_label.setFont(font_small)
 
         self.menu_btn = create_img_button(self, 'images/icons/MenuIcon.png', 75, 100, (190, 623), self.openMenuScreen, "Menu", "#D9D9D9")
 
