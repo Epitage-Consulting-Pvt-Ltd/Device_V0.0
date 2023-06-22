@@ -5,7 +5,7 @@ from PyQt5.QtWidgets import QApplication, QMainWindow, QLabel, QPushButton
 from PyQt5.QtGui import QFont
 from mfrc522 import SimpleMFRC522
 import RPi.GPIO as GPIO
-from theme import BUTTON_STYLE
+from utilities.themeV3 import BUTTON_STYLE
 import logging
 import time
 import codecs
