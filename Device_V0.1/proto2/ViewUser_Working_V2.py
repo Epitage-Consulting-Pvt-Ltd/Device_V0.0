@@ -66,7 +66,7 @@ class ViewUserWindow(QMainWindow):
         self.show()
 
     def show_user_main_window(self):
-        from UserMain_Working import UserMainWindow
+        from UserMain_Final import UserMainWindow
         self.user_main_window = UserMainWindow()
         self.user_main_window.show()
 

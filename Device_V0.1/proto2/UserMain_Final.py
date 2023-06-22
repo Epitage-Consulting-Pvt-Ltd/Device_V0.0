@@ -21,7 +21,7 @@ class UserMainWindow(QMainWindow):
 
     def initUI(self):
         # Create top band using a function call.
-        topband(self)
+        #topband(self, windowtitle)
 
 
         self.setWindowTitle("User Management System")
@@ -150,7 +150,7 @@ class UserMainWindow(QMainWindow):
         self.delete_user_window.show()
 
     def show_menu_grid_window(self):
-        from MenuGrid import MenuWindow
+        from MenuGrid_V2 import MenuWindow
         self.menu_grid_window = MenuWindow()
         self.menu_grid_window.show()
 

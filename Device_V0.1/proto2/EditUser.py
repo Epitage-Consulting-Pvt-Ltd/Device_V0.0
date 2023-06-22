@@ -21,7 +21,7 @@ class DeleteUserWindow(QWidget):
         self.setWindowTitle("Delete User")
         self.resize(480, 800)
 
-        topband(self)
+        #topband(self)
 
         # Set window background and foreground colors
         palette = self.palette()
@@ -32,11 +32,18 @@ class DeleteUserWindow(QWidget):
         # Create vertical layout for the main window
         vbox = QVBoxLayout()
 
+        #self.back_btn = QPushButton('Back', self)
+        #self.back_btn.move(10, 10)
+        #self.back_btn.clicked.connect(self.show_user_main_window)
+        #self.back_btn.clicked.connect(self.close)
+        #self.back_btn.setStyleSheet(BUTTON_STYLE)
         # Add 'Back' button
         back_btn = QPushButton('Back', self)
+        back_btn.move(10,10)
         back_btn.setStyleSheet(BUTTON_STYLE)
         back_btn.clicked.connect(self.show_user_main_window)
         back_btn.clicked.connect(self.close)
+        back_btn.setStyleSheet(BUTTON_STYLE)
 
         # Create horizontal layout for the delete button and add it to the vertical layout
         hbox = QHBoxLayout()
@@ -60,7 +67,7 @@ class DeleteUserWindow(QWidget):
         self.loadCSV()
 
         # Set the position of the table container widget
-        table_container.move(200, 200)
+        table_container.move(500, 500)
 
         # Set the main layout for the window
         self.setLayout(vbox)
