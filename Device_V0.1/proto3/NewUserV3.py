@@ -6,7 +6,7 @@ from PyQt5.QtGui import QPixmap
 from PyQt5.QtWidgets import QApplication, QLabel, QMainWindow
 from PyQt5.QtWidgets import QPushButton, QLineEdit, QComboBox
 import utilities
-from utilities.components import imgbutton
+from utilities.components import imgbutton , imgbutton2
 import data
 
 
@@ -24,7 +24,8 @@ class NewUserWindow(QMainWindow):
         self.background_image.setPixmap(QPixmap("images/background.png"))
         self.background_image.setGeometry(0, 0, self.width, self.height)
 
-        self.backbtn = imgbutton(self, "images/icons/BackIcon.png", 30, 30, (5, 44), self.openUserMenu)
+        self.backbtn = imgbutton2(self, "images/icons/BackIcon.png", 30, 30, (5, 44), self.openUserMenu)
+        self.backbtn.clicked.connect(self.close)
 
         def get_employee_info(employee_id):
             with open('data/EmpMaster-Epitage.csv', 'r') as file:
@@ -213,14 +214,15 @@ class NewUserWindow(QMainWindow):
 
         self.cancelbtn = imgbutton(self, "images/icons/facebtn.png", 100, 100, (17, 498), self.openUserMenu)
         self.okbtn = imgbutton(self, "images/icons/facebtn.png", 100, 100, (17, 498), self.openUserMenu)
-
         self.show()
 
     def openUserMenu(self):
-        from ..UserMenu import UserWindow
+        from UserMenu import UserWindow
         self.openUserMenu = UserWindow()
         self.openUserMenu.show()
-        self.close()
+
+
+
 
 
 if __name__ == "__main__":

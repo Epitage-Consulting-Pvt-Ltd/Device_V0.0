@@ -5,6 +5,7 @@ from PyQt5.QtCore import Qt
 from PyQt5.QtWidgets import QPushButton, QLabel
 from PyQt5.QtGui import QPixmap, QIcon, QFont
 from PyQt5.QtCore import Qt
+from PyQt5.QtCore import QSize
 
 
 # Declarations
@@ -206,4 +207,15 @@ def imgbutton(parent, image_path, png_size, button_size, position, on_clicked):
     container.mousePressEvent = on_clicked
 
     return container
+
+
+def imgbutton2(parent, image_path, png_size, button_size, position, on_clicked):
+    # Create a QPushButton
+    button = QPushButton(parent)
+    button.setGeometry(*position, button_size, button_size)
+    button.setIcon(QIcon(image_path))
+    button.setIconSize(QSize(png_size, png_size))
+    button.clicked.connect(on_clicked)
+
+    return button
 

@@ -3,7 +3,7 @@ import sys
 from PyQt5.QtGui import QPixmap
 from PyQt5.QtWidgets import QApplication, QLabel, QMainWindow
 
-from utilities.components import create_img_button, imgbutton
+from utilities.components import create_img_button, imgbutton ,imgbutton2
 
 
 class UserWindow(QMainWindow):
@@ -19,7 +19,7 @@ class UserWindow(QMainWindow):
         self.background_image.setPixmap(QPixmap("images/background.png"))
         self.background_image.setGeometry(0, 0, self.width, self.height)
 
-        self.backbtnv2 = imgbutton(self, "images/icons/BackIcon.png", 30, 30, (5, 44), self.close)
+        self.backbtnv2 = imgbutton2(self, "images/icons/BackIcon.png", 30, 30, (5, 44), self.openMenuScreen)
 
         self.NewUser = create_img_button(self, "images/icons/NewUserIcon.png", 55, 100, (18, 142),
                                          self.openNewUserScreen, "New", "#D9D9D9")
@@ -38,10 +38,17 @@ class UserWindow(QMainWindow):
         self.DeleteUser.setEnabled(True)
 
     def openNewUserScreen(self):
-        from UserModule.NewUser1 import NewUserWindow
+        from NewUserV3 import NewUserWindow
         self.openNewUserScreen = NewUserWindow()
         self.openNewUserScreen.show()
         self.close()
+
+    def openMenuScreen(self):
+        from MenuScreenV4 import MenuWindow
+        self.openMenuScreen = MenuWindow()
+        self.openMenuScreen.show()
+        self.close()
+
 
 
 if __name__ == "__main__":
