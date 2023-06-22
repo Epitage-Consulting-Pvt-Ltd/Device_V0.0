@@ -52,7 +52,7 @@ class MenuWindow(QMainWindow):
         current_datetime_str = f"{formatted_date} - {formatted_time}"
         self.date_time_label.setText(current_datetime_str)
 
-        self.backbtn = imgbutton(self, "images/icons/BackIcon.png", 30,30, (5, 44), self.close)
+        self.backbtn = imgbutton(self, "images/icons/BackIcon.png", 30,30, (5, 44), self.openSplashScreen)
 
         # Create the label
         label = QLabel("Password", self)
@@ -86,6 +86,10 @@ class MenuWindow(QMainWindow):
         self.PrinterMenu = create_img_button(self, "images/icons/printerIcon.png", 55, 100, (18, 264), self.close,"Printer","#D9D9D9")
         self.PrinterMenu.setEnabled(False)
 
+        self.VerifyButton = create_img_button(self, "images/icons/UserVerifyIcon.png", 55, 100, (133, 264), self.UserVerification,"Verify User","#D9D9D9")
+        self.VerifyButton.setEnabled(False)
+
+
     def verify_password(self):
         password = self.password_field.text()
         print("Entered Password:", password)
@@ -106,6 +110,18 @@ class MenuWindow(QMainWindow):
         from UserMenu import UserWindow
         self.openUserScreen = UserWindow()
         self.openUserScreen.show()
+        self.close()
+
+    def openSplashScreen(self):
+        from splashscreenv4 import SplashWindow
+        self.openSplashScreen = SplashWindow()
+        self.openSplashScreen.show()
+        self.close()
+
+    def UserVerification(self):
+        from userverification import CardVerificationApp
+        self.UserVerification = CardVerificationApp()
+        self.UserVerification.show()
         self.close()
 
 
