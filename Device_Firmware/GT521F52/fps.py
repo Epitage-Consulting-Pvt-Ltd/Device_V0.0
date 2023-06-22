@@ -173,16 +173,16 @@ class Fingerprint:
     def _flush(self):
         while self.ser.readable() and self.ser.inWaiting() > 0:
             p = self.ser.read(self.ser.inWaiting())
-            if p == b"":
+            if p == b'':
                 break
 
     def _read(self):
         if self.ser and self.ser.readable():
             try:
                 p = self.ser.read()
-                if p == b"":
+                if p == b'':
                     return None
-                return int(codecs.encode(p, "hex_codec"), 16)
+                return int(codecs.encode(p, 'hex_codec'), 16)
             except:
                 return None
         else:
@@ -210,10 +210,7 @@ class Fingerprint:
                     continue
                 else:
                     return None, None, None, None
-            elif (
-                firstbyte == Fingerprint.PACKET_RES_0
-                and secondbyte == Fingerprint.PACKET_RES_1
-            ):
+            elif (firstbyte == Fingerprint.PACKET_RES_0 and secondbyte == Fingerprint.PACKET_RES_1):
                 break
         packet[0] = firstbyte
         packet[1] = secondbyte
@@ -227,13 +224,13 @@ class Fingerprint:
         param = bytearray(4)
         param[:] = packet[4:8]
         if param is not None:
-            param = int(codecs.encode(param[::-1], "hex_codec"), 16)
+            param = int(codecs.encode(param[::-1], 'hex_codec'), 16)
 
         # Parse response
         res = bytearray(2)
         res[:] = packet[8:10]
         if res is not None:
-            res = int(codecs.encode(res[::-1], "hex_codec"), 16)
+            res = int(codecs.encode(res[::-1], 'hex_codec'), 16)
 
         # Read data packet
         data = None

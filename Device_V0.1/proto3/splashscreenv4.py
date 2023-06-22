@@ -21,7 +21,7 @@ class SplashWindow(QMainWindow):
 
         # Create label for date and time
         self.date_time_label = QLabel(self)
-        self.date_time_label.setGeometry(5, 4, 200, 20)
+        self.date_time_label.setGeometry(5, 4, 190, 20)
 
         # Set font for date and time label
         font_small = QFont("inika", 15, QFont.Bold)

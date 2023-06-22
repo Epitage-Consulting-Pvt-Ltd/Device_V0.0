@@ -38,7 +38,7 @@ class UserWindow(QMainWindow):
         self.DeleteUser.setEnabled(True)
 
     def openNewUserScreen(self):
-        from NewUserV3 import NewUserWindow
+        from NewUserV4 import NewUserWindow
         self.openNewUserScreen = NewUserWindow()
         self.openNewUserScreen.show()
         self.close()

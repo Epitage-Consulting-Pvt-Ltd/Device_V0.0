@@ -1,21 +1,29 @@
-import sys
 import csv
-from PyQt5.QtCore import Qt, QTimer
-from PyQt5.QtWidgets import QApplication, QMainWindow, QLabel, QPushButton
-from PyQt5.QtGui import QFont
+import sys
+
+from PyQt5 import QtWidgets
+from PyQt5.QtGui import QPixmap
+from PyQt5.QtWidgets import QApplication, QLabel, QMainWindow
+from PyQt5.QtWidgets import QPushButton, QLineEdit, QComboBox
+import utilities
+from utilities.components import imgbutton , imgbutton2
+import data
 from mfrc522 import SimpleMFRC522
 import RPi.GPIO as GPIO
-from utilities.themeV3 import BUTTON_STYLE
-import logging
-import time
 import codecs
-import signal
+import logging
+import sys
+import time
 import serial
+
 
 logging.basicConfig(format="[%(name)s][%(asctime)s] %(message)s")
 logger = logging.getLogger("Fingerprint")
 logger.setLevel(logging.INFO)
 
+class Register_user:
+    def __init__(self):
+        self.user_data = []
 
 class Fingerprint:
     COMMENDS = {
@@ -195,8 +203,8 @@ class Fingerprint:
                 else:
                     return None, None, None, None
             elif (
-                firstbyte == Fingerprint.PACKET_RES_0
-                and secondbyte == Fingerprint.PACKET_RES_1
+                    firstbyte == Fingerprint.PACKET_RES_0
+                    and secondbyte == Fingerprint.PACKET_RES_1
             ):
                 break
         packet[0] = firstbyte
@@ -226,8 +234,8 @@ class Fingerprint:
             if firstbyte and secondbyte:
                 # Data exists.
                 if (
-                    firstbyte == Fingerprint.PACKET_DATA_0
-                    and secondbyte == Fingerprint.PACKET_DATA_1
+                        firstbyte == Fingerprint.PACKET_DATA_0
+                        and secondbyte == Fingerprint.PACKET_DATA_1
                 ):
                     data = bytearray()
                     data.append(firstbyte)
@@ -411,7 +419,6 @@ class Fingerprint:
                 return -1
         return None
 
-
 # Initialize GPIO
 GPIO.setmode(GPIO.BOARD)
 GPIO.setwarnings(False)
@@ -421,115 +428,285 @@ GPIO.setup(12, GPIO.OUT)
 # Initialize Fingerprint object
 f = Fingerprint("/dev/ttyUSB0", 9600)
 
-class CardVerificationApp(QMainWindow):
+
+class NewUserWindow(QMainWindow):
     def __init__(self):
         super().__init__()
 
-        # Initialize RFID reader
-        self.rfid_reader = SimpleMFRC522()
+        # Set window dimensions
+        self.width = 480
+        self.height = 800
+        self.setGeometry(0, 0, self.width, self.height)
 
-        # Set window size
-        self.window_width = 480
-        self.window_height = 800
-        self.setGeometry(0, 0, self.window_width, self.window_height)
+        # Set background image
+        self.background_image = QLabel(self)
+        self.background_image.setPixmap(QPixmap("images/background.png"))
+        self.background_image.setGeometry(0, 0, self.width, self.height)
 
-        # Set window title
-        self.setWindowTitle("User Verification")
+        self.backbtn = imgbutton2(self, "images/icons/BackIcon.png", 30, 30, (5, 44), self.openUserMenu)
+        self.backbtn.clicked.connect(self.close)
 
-        # Add 'Back' button
-        self.back_btn = QPushButton('Back', self)
-        self.back_btn.move(10, 10)
-        self.back_btn.clicked.connect(self.show_menu_grid_window)
-        self.back_btn.clicked.connect(self.close)
-        self.back_btn.setStyleSheet(BUTTON_STYLE)
-
-        # Create label to display user details
-        self.user_label = QLabel("Scan RFID card", self)
-        self.user_label.setGeometry(100, 150, 280, 60)
-        self.user_label.setAlignment(Qt.AlignCenter)
-        self.user_label.setFont(QFont("Arial", 14))
-
-        # Create verify button
-        self.verify_button = QPushButton("Verify Card", self)
-        self.verify_button.setGeometry(100, 100, 280, 60)
-        self.verify_button.clicked.connect(self.verify_card)
-
-        verify_fps = QPushButton("Verify Finger", self)
-        verify_fps.clicked.connect(self.verify)
-        verify_fps.setGeometry(100, 300, 280, 60)
-
-
-        self.user_label1 = QLabel("Scan your finger", self)
-        self.user_label1.setGeometry(100, 350, 280, 60)
-        self.user_label1.setAlignment(Qt.AlignCenter)
-        self.user_label1.setFont(QFont("Arial", 14))
-
-        #Create timer for resetting the verify button
-        self.reset_timer = QTimer()
-        self.reset_timer.timeout.connect(self.reset_button)
-
-    def verify_card(self):
-        try:
-            # Prompt user to scan RFID card
-            self.user_label.setText("Place RFID card on reader or press Ctrl+C to cancel.")
-            rfid_id = self.rfid_reader.read_id()
-
-            # Check if RFID card is associated with a user in the CSV file
-            with open("users.csv", "r") as file:
+        def get_employee_info(employee_id):
+            with open('data/EmpMaster-Epitage.csv', 'r') as file:
                 reader = csv.reader(file)
                 for row in reader:
-                    if row[3] == str(rfid_id):
-                        # User found
-                        self.user_label.setText("Verified user with ID: " + row[1] + row[2])
-                        break
-                else:
-                    # User not found
-                    self.user_label.setText("Access denied.")
+                    if len(row) > 0 and row[0] == employee_id:
+                        if len(row) > 2:
+                            return row[1], row[2]  # Return EmployeeName and Date of Birth
+                        else:
+                            break  # Handle the case where the row doesn't have enough elements
+            return None  # Return None if employee info is not found
 
-            # Start the timer for button reset
-            self.reset_timer.start(5000)  # 30 seconds
+        # Parse column from CSV file
+        column_list = []
+        dob_dict = {}  # Dictionary to store EmployeeName and Date of Birth mapping
+        with open('data/EmpMaster-Epitage.csv', 'r') as file:
+            reader = csv.reader(file)
+            next(reader)  # Skip the first row if it contains headers
+            for row in reader:
+                if len(row) > 0:  # Check if the row has at least one element
+                    column_list.append(row[0])  # Append EmpID to column_list
+                    dob_dict[row[0]] = row[2]  # Store empID and Date of Birth mapping
 
+        name_id = QLabel('ID:', self)
+        name_id.move(18, 102)
+
+        # Placeholder image path
+        placeholder_image_path = "images/placeholderimg.png"
+
+        # QLabel to display employee picture
+        picture_label = QLabel(self)
+        picture_label.setGeometry(369, 96, 94, 142)
+        # picture_label.setStylesheet()
+        picture_label.setPixmap(QPixmap(placeholder_image_path))
+        picture_label.setScaledContents(True)
+
+        combo = QComboBox(self)
+        combo.addItems(column_list)
+        combo.setEditable(True)
+        combo.setInsertPolicy(QComboBox.NoInsert)
+        combo.completer().setCompletionMode(QtWidgets.QCompleter.PopupCompletion)
+
+        combo.setStyleSheet("QComboBox { height: 35px; }")
+        combo.move(108, 96)
+        combo.setFixedWidth(255)
+        combo.setFixedHeight(30)
+
+        def combo_text_changed():
+            selected_employee_id = combo.currentText()
+            if selected_employee_id:
+                employee_info = get_employee_info(selected_employee_id)
+                if employee_info is not None:
+                    employee_name, dob = employee_info
+                    text_id.setText(str(employee_name))  # Display EmployeeName
+                    text_dob.setText(dob)
+                    # Update employee picture based on the selected ID
+                    image_path = f'data/emp-photos/{selected_employee_id}.jpg'  # Replace with your image path
+                    picture_label.setPixmap(QPixmap(image_path))
+                    return
+            text_id.clear()
+            text_dob.clear()
+            picture_label.setPixmap(QPixmap(placeholder_image_path))  # Show placeholder image if no ID selected
+
+        combo.currentTextChanged.connect(combo_text_changed)
+
+        def save_employee_info():
+            employee_id = combo.currentText()
+            employee_name = text_id.text()
+            dob = text_dob.text()
+            rfid = label_rfid.text()
+            fingerprint = label_fing.text()
+
+            # Check if any of the fields are empty
+            if not employee_id or not employee_name or not dob or not rfid or not fingerprint:
+                return
+
+            # Open the CSV file in append mode and write the new user data
+            with open('/data/EmpMaster-Epitage.csv', 'a', newline='') as file:
+                writer = csv.writer(file)
+                writer.writerow([employee_id, employee_name, dob, rfid, fingerprint])
+
+            # Clear the input fields and reset the combo box
+            combo.setCurrentIndex(-1)
+            text_id.clear()
+            text_dob.clear()
+            label_rfid.clear()
+            label_fing.clear()
+            picture_label.setPixmap(QPixmap(placeholder_image_path))
+
+            # Optional: Update the combo box and dob_dict with the new user data
+            column_list.append(employee_id)
+            dob_dict[employee_id] = dob
+            combo.addItem(employee_id)
+
+        save_button = QPushButton('Save', self)
+        save_button.move(246, 729)
+        save_button.setFixedSize(85, 35)
+        save_button.clicked.connect(save_employee_info)
+
+        name_id = QLabel('ID:', self)
+        name_id.move(18, 102)
+
+        # Placeholder image path
+        placeholder_image_path = "images/placeholderimg.png"
+
+        # QLabel to display employee picture
+        picture_label = QLabel(self)
+        picture_label.setGeometry(369, 96, 94, 142)
+        # picture_label.setStylesheet()
+        picture_label.setPixmap(QPixmap(placeholder_image_path))
+        picture_label.setScaledContents(True)
+
+        combo = QComboBox(self)
+        combo.addItems(column_list)
+        combo.setEditable(True)
+        combo.setInsertPolicy(QComboBox.NoInsert)
+        combo.completer().setCompletionMode(QtWidgets.QCompleter.PopupCompletion)
+
+        combo.setStyleSheet("QComboBox { height: 35px; }")
+        combo.move(108, 96)
+        combo.setFixedWidth(255)
+        combo.setFixedHeight(30)
+
+        def combo_text_changed():
+            selected_employee_id = combo.currentText()
+            if selected_employee_id:
+                employee_info = get_employee_info(selected_employee_id)
+                if employee_info is not None:
+                    employee_name, dob = employee_info
+                    text_id.setText(str(employee_name))  # Display EmployeeName
+                    text_dob.setText(dob)
+                    # Update employee picture based on the selected ID
+                    image_path = f'data/emp-photos/{selected_employee_id}.jpg'  # Replace with your image path
+                    picture_label.setPixmap(QPixmap(image_path))
+                    return
+            text_id.clear()
+            text_dob.clear()
+            picture_label.setPixmap(QPixmap(placeholder_image_path))  # Show placeholder image if no ID selected
+
+        combo.currentTextChanged.connect(combo_text_changed)
+
+        label_id = QLabel('Name', self)
+        label_id.move(18, 139)
+
+        text_id = QLineEdit(self)
+        text_id.setReadOnly(False)
+        text_id.move(108, 134)
+        text_id.resize(255, 30)
+
+        label_photo = QLabel('Photo', self)
+        label_photo.move(18, 176)
+
+        text_photo = QLineEdit(self)
+        text_photo.setReadOnly(False)
+        text_photo.move(108, 171)
+        text_photo.resize(255, 30)
+
+        label_dob = QLabel('Birth Date', self)
+        label_dob.move(18, 213)
+
+        text_dob = QLineEdit(self)
+        text_dob.setReadOnly(False)
+        text_dob.move(108, 208)
+        text_dob.resize(255, 30)
+
+        label_rfid = QLineEdit(self)
+        label_rfid.setReadOnly(False)
+        label_rfid.move(128, 246)
+        label_rfid.resize(350, 30)
+
+        self.rfidcardbtn = imgbutton(self, "images/icons/RFIDcard.png", 100, 100, (17, 246), self.register_rfid)
+
+        label_fing = QLineEdit(self)
+        label_fing.setReadOnly(False)
+        label_fing.move(128, 372)
+        label_fing.resize(355, 30)
+
+        self.fingerbtn = imgbutton(self, "images/icons/fingerbtn.png", 100, 100, (17, 372), self.enrollid)
+
+        label_face = QLineEdit(self)
+        label_face.setReadOnly(False)
+        label_face.move(128, 498)
+        label_face.resize(355, 200)
+
+        self.facebtn = imgbutton(self, "images/icons/facebtn.png", 100, 100, (17, 498), self.openUserMenu)
+
+        self.cancelbtn = imgbutton(self, "images/icons/facebtn.png", 100, 100, (17, 498), self.openUserMenu)
+        self.okbtn = imgbutton(self, "images/icons/facebtn.png", 100, 100, (17, 498), self.openUserMenu)
+        self.show()
+
+    def openUserMenu(self):
+        from UserMenu import UserWindow
+        self.openUserMenu = UserWindow()
+        self.openUserMenu.show()
+
+    def enrollid(self):
+        
+        # Capture fingerprint
+        fingerprint = f.capture_finger()  #
+        self.user_data = [employee_id, employee_name, dob]
+
+        # Enroll fingerprint
+        enrolled = f.enroll(fingerprint)  #
+        
+       # if enrolled:
+            # Save fingerprint data to CSV file
+         #   with open("users.csv", "a", newline="") as file:
+          #      writer = csv.writer(file)
+           #     writer.writerow([employee_id, first_name, last_name, enrolled])
+            #    writer.writerow([fn, ln, eid, rfid_id, enrolled])
+
+            #print("Fingerprint enrolled successfully.")
+        #else:
+         #   print("Failed to enroll fingerprint.")
+
+    def register_rfid(self):
+        try:
+
+            print("Place Card on reader.")
+            self.user_data = [employee_id, employee_name, dob]
+            rfid_id = self.rfid_reader.read_id()
+
+            if not rfid_id:
+                QMessageBox.critical(self, "Error", "RFID card not detected.")
+                return
+
+            self.user_data.append(rfid_id)
+
+            fingerprint = f.capture_finger()
+            enrolled = f.enroll(fingerprint)
+
+            self.user_data.append(enrolled)
+
+            with open("data/EmpMaster-Epitage.csv", "a", newline="") as file:
+                writer = csv.writer(file)
+                writer.writerow(self.user_data)
+
+            print("User data saved to CSV file.")
+
+            #with open("users.csv", "r") as file:
+            #reader = csv.reader(file)
+            #for row in reader:
+            #    if rfid_id == row[3]:
+            #        print("RFID Card is already registered.")
+            #        return
+            
+            #with open("users.csv", "a") as file:
+                #writer = csv.writer(file)
+                #writer.writerow([fn, ln, eid, rfid_id, enrolled])
+
+            #print("RFID Assignment Success.")
+            
         except KeyboardInterrupt:
-            # User cancelled operation
-            self.user_label.setText("Operation cancelled.")
+            print("User Manual Exit.")
 
         except Exception as e:
-            # Error occurred
-            self.user_label.setText("Error: " + str(e))
+            print("Error:",e)
 
-    def verify(self):
-        idtemp = f.identify()
-        if f.capture_finger():  # capture_finger function
-            if idtemp == -1:
-                GPIO.output(11, GPIO.HIGH)
-                #print("You are not recognized!")
-                self.user_label1.setText("Invalid User")
+        finally:
+            GPIO.cleanup()
 
-            else:
-                GPIO.output(12, GPIO.HIGH)
-                #print("Verified! User ID: %d" % idtemp)
-                self.user_label1.setText("Verified!! User  ID: %d" % idtemp)
-        else:
-            print("Failed to capture finger.")
 
-        time.sleep(2)
-        GPIO.output(11, GPIO.LOW)
-        GPIO.output(12, GPIO.LOW)
-
-    def reset_button(self):
-        # Reset the verify button and label
-        self.user_label.setText("Scan an RFID card")
-        self.verify_button.setEnabled(True)
-
-    def closeEvent(self, event):
-        # Close the connection to the RFID reader
-        GPIO.cleanup()
-        event.accept()
-
-    def show_menu_grid_window(self):
-        from MenuScreenV4 import MenuWindow
-        self.menu_grid_window = MenuWindow()
-        self.menu_grid_window.show()
 if __name__ == "__main__":
     # Initialize the fingerprint sensor
     if f.init():
@@ -537,13 +714,7 @@ if __name__ == "__main__":
     else:
         print("Failed to initialize fingerprint sensor.")
         sys.exit(1)
-
-    # Initialize the PyQt application
     app = QApplication(sys.argv)
-
-    # Create the main window
-    window = CardVerificationApp()
+    window = NewUserWindow()
     window.show()
-
-    # Run the application event loop
     sys.exit(app.exec_())
