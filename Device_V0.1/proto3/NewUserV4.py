@@ -615,7 +615,7 @@ class NewUserWindow(QMainWindow):
         label_rfid.move(128, 246)
         label_rfid.resize(350, 30)
 
-        self.rfidcardbtn = imgbutton(self, "images/icons/RFIDcard.png", 100, 100, (17, 246), self.register_rfid)
+        self.rfidcardbtn = imgbutton(self, "images/icons/RFIDcard.png", 100, 100, (17, 246), self.register_rfid())
 
         label_fing = QLineEdit(self)
         label_fing.setReadOnly(False)
