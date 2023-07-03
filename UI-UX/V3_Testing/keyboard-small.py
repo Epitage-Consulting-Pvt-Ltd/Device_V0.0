@@ -48,7 +48,7 @@ class VirtualKeyboard(QtWidgets.QWidget):
 if __name__ == "__main__":
     app = QtWidgets.QApplication([])
     window = QtWidgets.QMainWindow()
-    window.setGeometry(100, 100, 480, 800)  # Set window size and position
+    window.setGeometry(0, 0, 480, 800)  # Set window size and position
 
     label = QtWidgets.QLabel("Text Input:")
     text_input = QtWidgets.QLineEdit()
