@@ -58,7 +58,7 @@ class MyWindow(QMainWindow):
             selected_employee_name = combo.currentText()
             if selected_employee_name:
                 employee_info = get_employee_info(selected_employee_name)
-                if employee_info is not Non
+                if employee_info is not Null
                     employee_id, dob = employee_info
                     text_id.setText(str(employee_id))
                     text_dob.setText(dob)

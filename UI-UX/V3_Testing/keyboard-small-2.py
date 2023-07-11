@@ -7,7 +7,7 @@ class VirtualKeyboard(QtWidgets.QDialog):
         self.target = target
 
         self.setWindowTitle("Virtual Keyboard")
-        self.setGeometry(0, 0, 400, 300)
+        self.setGeometry(0, 0, 300, 200)
 
         layout = QtWidgets.QVBoxLayout()
         self.setLayout(layout)
