@@ -4,7 +4,9 @@ from PyQt5.QtGui import QPixmap, QFont
 from PyQt5.QtCore import Qt, QTimer, QDateTime
 from datetime import datetime
 from utilities.components import create_img_button
+import os
 
+os.environ["QT_QPA_PLATFORM"] = "eglfs"
 class SplashWindow(QMainWindow):
     def __init__(self):
         super().__init__()
